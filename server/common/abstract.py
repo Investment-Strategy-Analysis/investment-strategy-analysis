@@ -12,8 +12,8 @@ class User(BaseModel):
     login: str
     password_hash: str
     restriction: Restriction
-    last_answer: Optional[List[float]]
-    timestamp: Optional[str]
+    last_answer: Optional[List[float]] = None
+    timestamp: Optional[str] = None
 
 
 class InvestItem(BaseModel):
