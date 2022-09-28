@@ -7,6 +7,6 @@ COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . server/
+COPY . services/user_service/
 
-CMD ["uvicorn" , "server.api.api:app" , "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn" , "services.user_service.api.api:app" , "--host", "0.0.0.0", "--port", "8000"]

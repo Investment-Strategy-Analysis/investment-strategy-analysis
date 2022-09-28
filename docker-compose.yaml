@@ -1,11 +1,11 @@
 version: "3.6"
 
 services:
-  user-server:
-    container_name: user-server
+  user-service:
+    container_name: user_service
     build:
-      context: ./server
-      dockerfile: user-server.dockerfile
+      context: services/user_service
+      dockerfile: user-service.dockerfile
     networks:
       - default
     ports:

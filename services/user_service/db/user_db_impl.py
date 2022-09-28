@@ -1,4 +1,4 @@
-from server.common.abstract import User
+from services.user_service.common.abstract import User
 import sqlite3
 
 

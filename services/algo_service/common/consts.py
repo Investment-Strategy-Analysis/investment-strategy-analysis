@@ -1,4 +1,4 @@
-from server.common.abstract import InvestItem
+from services.algo_service.common.abstract import InvestItem
 
 CURRENT_INDEXES = [
     InvestItem(name='Индекс РТС (IRTS)', country='russia', id='IRTS'),
@@ -6,4 +6,3 @@ CURRENT_INDEXES = [
     InvestItem(name='Индекс Мосбиржи голубые фишки (MOEXBC)', country='russia', id='MOEXBC'),
     InvestItem(name='Индекс Мосбиржи корпоративных облигаций (RUCBITR)', country='russia', id='RUCBITR')
 ]
-DATEFMT = "%Y-%m-%dT%H:%M:%S"

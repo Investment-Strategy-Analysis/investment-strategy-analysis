@@ -1,9 +1,9 @@
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from server.common.abstract import *
-from server import business_logic as bl
-from server.common.consts import DATEFMT
+import services.user_service.business_logic as bl
+from services.user_service.common.abstract import *
+from services.user_service.common.consts import DATEFMT
 
 logging.basicConfig()
 logging.basicConfig(format='%(asctime)s.%(msecs)03dZ %(name)s %(levelname)s %(message)s',

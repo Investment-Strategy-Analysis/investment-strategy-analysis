@@ -1,5 +1,8 @@
-from server.db.abstract import Restriction
 from typing import Tuple, List
+
+
+class Restriction:  # ???
+    pass
 
 
 def get_some_solutions(restriction: Restriction) -> Tuple[List[List[float]], List[str]]:
