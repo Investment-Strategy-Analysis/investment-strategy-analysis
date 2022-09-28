@@ -2,7 +2,7 @@ from typing import Optional, List, Dict
 from pydantic import BaseModel
 
 
-class Settigns(BaseModel):
+class Settings(BaseModel):
     strategy: str = "default"
     restrictions: Dict[str, float] = dict()
     period: str = "year"
@@ -11,13 +11,13 @@ class Settigns(BaseModel):
     # other
 
 
-class lastAnswer(BaseModel):
+class LastAnswer(BaseModel):
     result: Optional[List[float]] = None
-    settings: Optional[Settigns] = None
+    settings: Optional[Settings] = None
 
 
-class UserSettigns(BaseModel):
-    last_answer: lastAnswer = lastAnswer()
+class UserSettings(BaseModel):
+    last_answer: LastAnswer = LastAnswer()
     photo: Optional[bytes] = None
     email: Optional[str] = None
     # other extra info
@@ -26,5 +26,5 @@ class UserSettigns(BaseModel):
 class User(BaseModel):
     login: str      # id
     password: str   # hash
-    settings: Settigns = Settigns()
-    user_settings: UserSettigns = UserSettigns()
+    settings: Settings = Settings()
+    user_settings: UserSettings = UserSettings()
