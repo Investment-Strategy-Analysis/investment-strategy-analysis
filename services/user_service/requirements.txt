@@ -3,4 +3,5 @@ pydantic
 uvicorn
 aiohttp
 db-sqlite3
+sqlitedict
 investpy
