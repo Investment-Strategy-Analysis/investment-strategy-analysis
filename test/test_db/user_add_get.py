@@ -51,3 +51,11 @@ def test_add_same_users(u1, u2, u3):
     assert get_user_by_login(u1.login) == u1
     assert get_user_by_login(u2.login) == None
     assert get_user_by_login(u3.login) == u3
+
+
+@pytest.mark.parametrize("u1", test_data_one_user)
+def test_change_user_data(u1):
+    add_new_user(u1)
+    u1.password = "new_pass"
+    assert get_user_by_login(u1.login) == u1
+    assert get_user_by_login(u1.login).password == "new_pass"
