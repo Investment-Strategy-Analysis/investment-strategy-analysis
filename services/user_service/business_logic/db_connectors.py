@@ -1,5 +1,5 @@
 from services.user_service.common.abstract import User, Settings, UserSettings
-from services.user_service.db.user_db_api import add_new_user as __add_new_user
+from services.user_service.db.user_db_api import save_user as __add_new_user
 from services.user_service.db.user_db_api import get_user_by_login as __get_user_by_login
 
 
