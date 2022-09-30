@@ -23,3 +23,20 @@ def test_delete_user(u1):
     delete_user_by_login(u1.login)
     assert get_user_by_login(u1.login) == None
 
+
+@pytest.mark.parametrize("u1, u2, u3", test_data_few_users)
+def test_delete_few_users(u1, u2, u3):
+    save_user(u1)
+    save_user(u2)
+    save_user(u3)
+    assert get_user_by_login(u1.login) == u1
+    delete_user_by_login(u2.login)
+    delete_user_by_login(u1.login)
+    assert get_user_by_login(u1.login) == None
+
+
+@pytest.mark.parametrize("u1, u2, u3", test_data_few_users)
+def test_delete_nonexistent_users(u1, u2, u3):
+    delete_user_by_login(u2.login)
+    delete_user_by_login(u1.login)
+    assert get_user_by_login(u1.login) == None
