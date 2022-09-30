@@ -1,0 +1,6 @@
+fastapi
+pydantic
+uvicorn
+aiohttp
+db-sqlite3
+investpy

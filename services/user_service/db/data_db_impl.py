@@ -1,4 +1,3 @@
-from typing import List
 import sqlite3
 import logging
 from server.abstract import OperationWithInfo
