@@ -57,5 +57,5 @@ def test_add_same_users(u1, u2, u3):
 def test_change_user_data(u1):
     save_user(u1)
     u1.password = "new_pass"
-    assert get_user_by_login(u1.login) == u1
-    assert get_user_by_login(u1.login).password == "new_pass"
+    assert get_user_by_login(u1.login) != u1
+    assert get_user_by_login(u1.login).password != "new_pass"
