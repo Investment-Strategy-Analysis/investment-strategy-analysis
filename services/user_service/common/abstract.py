@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 class Settings(BaseModel):
     strategy: str = "default"
+    checkboxes: Dict[str, bool] = dict()
     restrictions: Dict[str, float] = dict()
     period: str = "year"
     probability: float = 1
