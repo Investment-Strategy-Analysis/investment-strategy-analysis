@@ -3,7 +3,6 @@ from fastapi.security import OAuth2PasswordRequestForm
 from services.user_service.common.abstract import User, Settings, UserSettings
 from services.user_service.db.user_db_api import get_user_by_login as __get_user_by_login
 from services.user_service.db.user_db_api import save_user as __save_user
-from services.user_service.db.user_db_api import update_user as __update_user
 from services.user_service.db.user_db_api import delete_user_by_login as __delete_user_by_login
 from services.user_service.api.authorization.utils import get_hashed_password, verify_password, create_access_token, create_refresh_token
 
@@ -44,12 +43,12 @@ async def post_tokens(data: OAuth2PasswordRequestForm):
 
 async def update_user_settings(user: User, settings: Settings):
     user.settings = settings
-    return __update_user(user)
+    return __save_user(user)
 
 
 async def update_user_parameters(user: User, user_settings: UserSettings):
     user.user_settings = user_settings
-    return __update_user(user)
+    return __save_user(user)
 
 
 async def delete_user(user: User):
