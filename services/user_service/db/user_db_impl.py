@@ -17,14 +17,8 @@ def get_db():
 
 def save_user(user: User):
     db = get_db()
-    db[user.login] = dict(user)
+    db[user.login] = user
     logging.info(f'Saved user: {user.login}.')
-
-
-def dict_to_User(dictionary: dict) -> User:
-    ans = User(login=dictionary['login'], password=dictionary['password'])
-    # ans.settings.strategy = dictionary['password']
-    return ans
 
 
 def get_user_by_login(login: str) -> Optional[User]:
@@ -32,7 +26,7 @@ def get_user_by_login(login: str) -> Optional[User]:
     if login in db.keys():
         result = db[login]
         if result != 'deleted':
-            return dict_to_User(result)
+            return result
         else:
             return None
     else:

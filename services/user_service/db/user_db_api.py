@@ -22,6 +22,11 @@ def __small_example():
     print(get_user_by_login(a.login))
     delete_user_by_login(a.login)
     print(get_user_by_login(a.login))
+    save_user(a)
+    print(get_user_by_login(a.login))
+    a.password = 'second'
+    save_user(a)
+    print(get_user_by_login(a.login))
 
 
 if __name__ == '__main__':
