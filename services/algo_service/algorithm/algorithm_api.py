@@ -1,8 +1,5 @@
 from typing import Tuple, List
-
-
-class Restriction:  # ???
-    pass
+from services.algo_service.common.abstract import Restriction
 
 
 def get_some_solutions(restriction: Restriction) -> Tuple[List[List[float]], List[str]]:

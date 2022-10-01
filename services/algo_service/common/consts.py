@@ -1,4 +1,5 @@
 from services.algo_service.common.abstract import InvestItem
+DATEFMT = "%Y-%m-%dT%H:%M:%S"
 
 CURRENT_INDEXES = [
     InvestItem(name='Индекс РТС (IRTS)', country='russia', id='IRTS'),
