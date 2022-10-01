@@ -8,6 +8,10 @@ def save_user(user: User):  # if it's a new user creates it.
     return __save_user(user)
 
 
+def update_user(user: User):
+    pass    # TODO
+
+
 def get_user_by_login(login: str) -> User:
     return __get_user_by_login(login)
 

@@ -5,7 +5,3 @@ aiohttp
 db-sqlite3
 sqlitedict
 investpy
-python-jose
-passlib
-python-multipart
-bcrypt

@@ -12,3 +12,11 @@ class InvestItem(BaseModel):
     id: str
     history: InvestItemHistory = InvestItemHistory()
 
+
+class Restriction(BaseModel):  # ???
+    pass
+
+
+class AlgorithmParams(BaseModel):
+    login: str
+    restriction: Restriction

@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional, List, Dict
 from pydantic import BaseModel
 
@@ -29,3 +30,17 @@ class User(BaseModel):
     password: str   # hash
     settings: Settings = Settings()
     user_settings: UserSettings = UserSettings()
+
+
+class TokenPayload(BaseModel):
+    expires_delta: str
+    login: str
+
+
+class Restriction(BaseModel):  # ???
+    pass
+
+
+class AlgorithmParams(BaseModel):
+    login: str
+    restriction: Restriction

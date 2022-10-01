@@ -1,11 +1,14 @@
 import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordRequestForm
 import services.user_service.business_logic as bl
 from services.user_service.common.abstract import *
 from services.user_service.common.consts import DATEFMT, OK
+from services.user_service.api.authorization.deps import get_current_user
+from services.user_service.common.helpers import post
+from services.user_service.common.endpoints import *
 
-logging.basicConfig()
 logging.basicConfig(format='%(asctime)s.%(msecs)03dZ %(name)s %(levelname)s %(message)s',
                     datefmt=DATEFMT,
                     level=logging.INFO)
@@ -30,59 +33,76 @@ app.add_middleware(
 # swagger - "http://0.0.0.0:8000/docs"
 
 
-@app.get("/")
-async def get_operations() -> dict[str, dict[str, str]]:
-    operations = [ping, get_user, post_user]
+@app.get("/", summary="Show all operations and their descriptions")
+async def get_operations(user: User = Depends(get_current_user)) -> dict[str, dict[str, str]]:
+    logging.info(f"{user.login} get operations")
+    operations = [ping, get_user, post_user, post_user_settings, post_user_parameters, delete_user]
     return {"Operations": dict(map(lambda x: (x.__name__, x.__doc__), operations))}
 
 
-@app.get("/ping")
+@app.get("/ping", summary="Return pong")
 async def ping() -> str:
     """just return ping"""
     logging.info("ping")
     return "pong"
 
 
-@app.get("/user/{login}")
-async def get_user(login: str) -> User:
+@app.get("/user", summary="Return current user", response_model=User)
+async def get_user(user: User = Depends(get_current_user)) -> User:
     """get user by login"""
     logging.info("get user")
-    user = await bl.get_user(login)
-    if user is None:
-        error = f"User with login={login} not found"
-        logging.error(error)
-        return error      # remove later
     return user
 
 
-@app.post("/user")
+@app.post('/login', summary="Create access and refresh tokens for user")
+async def post_tokens(data: OAuth2PasswordRequestForm = Depends()):
+    return await bl.post_tokens(data)
+
+
+@app.post("/user", summary="Create new user")
 async def post_user(user: User):
     """post user"""
-    logging.info("post user")
+    logging.info(f"try post user {user.login}")
     await bl.post_user(user)
     return OK
 
-
-@app.post("/user/{login}/settings")
-async def post_user_settings(login: str, settings: Settings):
-    """post user"""
+ 
+@app.post("/user/settings", summary="Update settings for current user")
+async def post_user_settings(settings: Settings, user: User = Depends(get_current_user)):
+    """update settings for current user"""
     logging.info("update user settings")
-    await bl.update_user_settings(login, settings)
+    await bl.update_user_settings(user, settings)
     return OK
 
 
 # TODO(more detail?)
-@app.post("/user/{login}/parameters")
-async def post_user_parameters(login: str, user_settings: UserSettings):
-    """post user"""
+@app.post("/user/parameters", summary="Update parameters for current user")
+async def post_user_parameters(user_settings: UserSettings, user: User = Depends(get_current_user)):
+    """update parameters for current user"""
     logging.info("update user parameters")
-    await bl.update_user_parameters(login, user_settings)
+    await bl.update_user_parameters(user, user_settings)
     return OK
 
 
-@app.delete("/user/{login}")
-async def delete_user(login: str):
-    """delete user"""
+@app.delete("/user", summary="Delete current user")
+async def delete_user(user: User = Depends(get_current_user)):
+    """delete current user"""
     logging.info("delete user")
-    await bl.delete_user(login)
+    await bl.delete_user(user)
     return OK
+
+
+# connectors (also without aith later)          TODO(not connect, fix later)
+
+@app.post('/solutions', summary="Get some solutions")
+async def post_solutions(restriction: Restriction, user: User = Depends(get_current_user)):
+    logging.info(f"solutions, {user.login}")
+    algorithm_params = AlgorithmParams(login=user.login, restriction=restriction)
+    return await post(SOLUTIONS, algorithm_params.json())
+
+
+@app.post('/best_solutions', summary="Get best solutions")
+async def post_best_solutions(restriction: Restriction, user: User = Depends(get_current_user)):
+    logging.info(f"best solutions, {user.login}")
+    algorithm_params = AlgorithmParams(login=user.login, restriction=restriction)
+    return await post(BEST_SOLUTIONS, algorithm_params.json())
