@@ -10,4 +10,6 @@ COPY . services/ui_service/
 
 EXPOSE 3000
 
+#CMD npm run build
+#CMD npm run serve
 CMD npm start
