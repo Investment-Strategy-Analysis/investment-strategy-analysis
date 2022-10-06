@@ -25,5 +25,15 @@ services:
     ports:
       - "8001:8000"
 
+  ui-service:
+    container_name: ui_service
+    build:
+      context: services/ui_service
+      dockerfile: ui-service.dockerfile
+    networks:
+      - backend
+    ports:
+      - "3000:3000"
+
 networks:
   backend:
