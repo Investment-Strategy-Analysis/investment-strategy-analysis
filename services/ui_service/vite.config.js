@@ -20,6 +20,7 @@ export default defineConfig({
         main: resolve(root, 'index.html'),
         login: resolve(root, 'login', 'index.html'),
         signup: resolve(root, 'signup', 'index.html'),
+        assets: resolve(root, 'assets', 'imgs'),
       }
     },
     target: 'esnext',
