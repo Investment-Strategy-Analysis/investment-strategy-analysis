@@ -33,7 +33,7 @@ services:
     networks:
       - backend
     ports:
-      - "3000:3000"
+      - "5173:5173"
 
 networks:
   backend:
