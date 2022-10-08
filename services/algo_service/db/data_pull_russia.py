@@ -84,7 +84,3 @@ def renew_all_data_if_necessary():
                     index.date_till += datetime.timedelta(days=1)
     for (_, index) in CURRENT_INDEXES.items():
         save_history(index)
-
-
-
-renew_all_data_if_necessary()

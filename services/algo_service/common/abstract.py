@@ -1,6 +1,7 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Dict, List
 import datetime
+from services.user_service.common.abstract import Restriction  # used in algo as well!!!
 
 
 class InvestItem(BaseModel):
@@ -12,10 +13,7 @@ class InvestItem(BaseModel):
     history: List[float] = []
 
 
-class Restriction(BaseModel):  # ???
-    pass
+class InvestStrategy(BaseModel):
+    profit: float = 0
 
-
-class AlgorithmParams(BaseModel):
-    login: str
-    restriction: Restriction
+    distribution: Dict[str, float] = dict()  # [0 .. 1] (= % / 100) For all CURRENT_INDEXES.
