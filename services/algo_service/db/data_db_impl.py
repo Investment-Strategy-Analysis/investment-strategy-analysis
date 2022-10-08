@@ -16,22 +16,12 @@ def get_db():
 
 def save_history(item: InvestItem):
     db = get_db()
-    db[item.id] = item.history.data
+    db[item.id] = (item.date_from, item.date_till, item.history)
     logging.info(f'Saved history: {item.id}.')
 
 
 def load_history(item: InvestItem) -> InvestItem:
-    item.history.data = None
     db = get_db()
     if item.id in db.keys():
-        result = db[item.id]
-        if result != 'deleted':
-            item.history.data = result
+        (item.date_from, item.date_till, item.history) = db[item.id]
     return item
-
-
-def delete_history(item: InvestItem):
-    item.history.data = None
-    db = get_db()
-    db[item.id] = 'deleted'
-    logging.info(f'Deleted history: {item.id}.')

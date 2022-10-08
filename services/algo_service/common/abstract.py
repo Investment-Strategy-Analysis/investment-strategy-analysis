@@ -1,16 +1,15 @@
 from pydantic import BaseModel
 from typing import Optional, List
-
-
-class InvestItemHistory(BaseModel):
-    data: Optional[List[float]] = None
+import datetime
 
 
 class InvestItem(BaseModel):
-    name: str
-    country: str
-    id: str
-    history: InvestItemHistory = InvestItemHistory()
+    name: str = ''
+    country: str = ''
+    id: str = ''
+    date_from: datetime.date = datetime.date(1000, 1, 1)
+    date_till: datetime.date = datetime.date(1000, 1, 1)
+    history: List[float] = []
 
 
 class Restriction(BaseModel):  # ???
