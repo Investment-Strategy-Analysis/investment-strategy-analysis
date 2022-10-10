@@ -42,6 +42,11 @@ class TokenPayload(BaseModel):
     login: str
 
 
-class AlgorithmParams(BaseModel):  # why do we need login ? Alex will not use this type.
-    login: str
+class AlgorithmParams(BaseModel):
     restriction: Restriction
+
+
+# copy-paste from algo-service
+class InvestStrategy(BaseModel):
+    profit: float = 0
+    distribution: Dict[str, float] = dict()  # [0 .. 1] (= % / 100) For all CURRENT_INDEXES.

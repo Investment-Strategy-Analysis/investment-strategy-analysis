@@ -1,10 +1,10 @@
-from typing import List
+from typing import List, Tuple
 from services.algo_service.common.abstract import Restriction, InvestStrategy
 from services.algo_service.algorithm.algorithm_impl import get_solutions as __get_solutions
 
 
 # returns the best solution and all found
-def get_solutions(restriction: Restriction) -> (InvestStrategy, List[InvestStrategy]):
+def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[InvestStrategy]]:
     return __get_solutions(restriction)
 
 

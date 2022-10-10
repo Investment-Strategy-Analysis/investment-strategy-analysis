@@ -1,8 +1,8 @@
 import logging
 from fastapi import FastAPI
 from services.algo_service.common.consts import DATEFMT
-from services.algo_service.common.abstract import AlgorithmParams
-from services.algo_service.algorithm.algorithm_api import get_some_solutions, get_best_solution
+from services.algo_service.common.abstract import Restriction
+from services.algo_service.algorithm.algorithm_api import get_solutions
 
 logging.basicConfig(format='%(asctime)s.%(msecs)03dZ %(name)s %(levelname)s %(message)s',
                     datefmt=DATEFMT,
@@ -20,13 +20,6 @@ async def ping() -> str:
     return "pong"
 
 
-@app.post('/solutions', summary="Get some solutions")
-async def post_solutions(params: AlgorithmParams):
-    logging.info(f"solutions, {params.login}")
-    return get_some_solutions(params.restriction)
-
-
-@app.post('/best_solutions', summary="Get best solutions")
-async def post_best_solutions(params: AlgorithmParams):
-    logging.info(f"best_solutions, {params.login}")
-    return get_best_solution(params.restriction)
+@app.post('/solutions', summary="Get solutions")
+async def post_solutions(restriction: Restriction):
+    return get_solutions(restriction)

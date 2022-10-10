@@ -1,11 +1,11 @@
-from typing import List
+from typing import List, Tuple
 from services.algo_service.common.abstract import Restriction, InvestStrategy
 from services.algo_service.common.singletons import LAST_RENEW_TIME
 import datetime
 from services.algo_service.db.data_pull_russia import renew_all_data_if_necessary
 
 
-def get_solutions(restriction: Restriction) -> (InvestStrategy, List[InvestStrategy]):
+def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[InvestStrategy]]:
     if LAST_RENEW_TIME + datetime.timedelta(hours=1) < datetime.datetime.now():
         renew_all_data_if_necessary()
 
