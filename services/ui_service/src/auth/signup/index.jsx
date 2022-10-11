@@ -2,6 +2,7 @@
 import { render } from 'solid-js/web';
 
 import './sign_up_style.css';
+import '../../assets/js/requests';
 import AuthBlock from "../../components/AuthBlock/AuthBlock";
 import NavBar from "../../components/NavBar/NavBar";
 
@@ -11,7 +12,7 @@ function SignUp() {
         <>
             <NavBar/>
             <AuthBlock title={title}>
-                <form action="">
+                {/*<form action="">*/}
                     <div class="auth-field-block">
                         <label for="username_field">Username</label>
                         <input type="text" name="username" class="form-control" id="username_field" placeholder="Username"
@@ -19,15 +20,15 @@ function SignUp() {
                     </div>
                     <div class="auth-field-block">
                         <label for="floatingPassword">Password</label>
-                        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password"/>
+                        <input type="password" name="password" class="form-control" id="password_field" placeholder="Password"/>
                     </div>
                     <div class="auth-field-block">
                         <label for="floatingPasswordAgain">Password again</label>
-                        <input type="password" class="form-control" id="floatingPasswordAgain" placeholder="Password again"/>
+                        <input type="password" class="form-control" id="password_again_field" placeholder="Password again"/>
                     </div>
 
-                    <button class="auth-button w-100 btn btn-primary" type="submit">Sign up</button>
-                </form>
+                    <button class="auth-button w-100 btn btn-primary" type="submit" onclick="signup()">Sign up</button>
+                {/*</form>*/}
             </AuthBlock>
         </>
     );
