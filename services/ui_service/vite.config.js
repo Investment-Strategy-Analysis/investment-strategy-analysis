@@ -17,10 +17,13 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: resolve(root, 'index.html'),
-        login: resolve(root, 'login', 'index.html'),
-        signup: resolve(root, 'signup', 'index.html'),
-        assets: resolve(root, 'assets', 'imgs'),
+        analyzer: resolve(root, 'analyzer', 'index.html'),
+        login: resolve(root, 'auth', 'login', 'index.html'),
+        signup: resolve(root, 'auth', 'signup', 'index.html'),
+        static: {
+          images: resolve(root, 'assets', 'imgs'),
+          js: resolve(root, 'assets', 'js'),
+        }
       }
     },
     target: 'esnext',

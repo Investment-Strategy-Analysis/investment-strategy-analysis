@@ -1,11 +1,11 @@
-import styles from './App.css';
-import NavBar from "./components/NavBar/NavBar";
-import RiskTile from "./components/RiskTile/RiskTile";
-import StrategyTile from "./components/StrategyTile/StrategyTile";
-import SettingsTile from "./components/SettingsTile/SettingsTile";
-import GraphicTile from "./components/GraphicTile/GraphicTile";
+import styles from './Analyzer.css';
+import NavBar from "../NavBar/NavBar";
+import RiskTile from "../RiskTile/RiskTile";
+import StrategyTile from "../StrategyTile/StrategyTile";
+import SettingsTile from "../SettingsTile/SettingsTile";
+import GraphicTile from "../GraphicTile/GraphicTile";
 
-function App() {
+function Analyzer() {
     return (
         <>
             <NavBar/>
@@ -32,4 +32,4 @@ function App() {
     );
 }
 
-export default App;
+export default Analyzer;
