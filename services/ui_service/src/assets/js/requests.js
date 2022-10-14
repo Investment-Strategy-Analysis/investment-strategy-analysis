@@ -2,6 +2,16 @@ const SERVER = "http://localhost:8000";
 let ACCESS_TOKEN = null;
 let REFRESH_TOKEN = null;
 
+function setWrongPasswordStyle() {
+    const passwordAgainTag = document.getElementById("password_again_field");
+    passwordAgainTag.style["border-color"] = "#af0000";
+}
+
+function resetPasswordStyle() {
+    const passwordAgainTag = document.getElementById("password_again_field");
+    passwordAgainTag.style["border-color"] = "#d0d7de";
+}
+
 async function login() {
 	const login = document.getElementById("username_field").value;
     const password = document.getElementById("password_field").value;
@@ -46,7 +56,12 @@ async function login() {
 async function signup() {
     const login = document.getElementById("username_field").value;
     const password = document.getElementById("password_field").value;
-    console.log(login, password)
+    const passwordAgain = document.getElementById("password_again_field").value;
+
+    if (password !== passwordAgain) {
+        setWrongPasswordStyle();
+        return;
+    }
     const options = {
         method: "POST",
         body: JSON.stringify({ "login": login, "password": password }),
