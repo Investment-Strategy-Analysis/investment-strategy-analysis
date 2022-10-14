@@ -1,14 +1,19 @@
-from datetime import datetime
 from typing import Optional, List, Dict
 from pydantic import BaseModel
 
 
+class Restriction(BaseModel):
+    target_profit: float = 0  # used to find best point in pareto front
+    upper_border: Dict[str, float] = dict()  # [0 .. 1] less then. For all CURRENT_INDEXES
+    lower_border: Dict[str, float] = dict()  # [0 .. 1] more then. For all CURRENT_INDEXES
+    analysis_time: int = 0                     # how many days to analyse
+
+
 class Settings(BaseModel):
     strategy: str = "default"
-    checkboxes: Dict[str, bool] = dict()
-    restrictions: Dict[str, float] = dict()
-    period: str = "year"
-    probability: float = 1
+    checkboxes: Dict[str, bool] = dict()     # true/false For all checkboxes.
+    # checkboxes - We need to do function that gives us Restriction.upper_border and Restriction.lower_border from this
+    restrictions: Restriction = dict()
     risk: float = 0
     # other
 
@@ -37,10 +42,11 @@ class TokenPayload(BaseModel):
     login: str
 
 
-class Restriction(BaseModel):  # ???
-    pass
-
-
 class AlgorithmParams(BaseModel):
-    login: str
     restriction: Restriction
+
+
+# copy-paste from algo-service
+class InvestStrategy(BaseModel):
+    profit: float = 0
+    distribution: Dict[str, float] = dict()  # [0 .. 1] (= % / 100) For all CURRENT_INDEXES.

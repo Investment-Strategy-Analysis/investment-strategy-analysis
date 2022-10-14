@@ -1,0 +1,16 @@
+.logo {
+    height: 40px;
+    box-sizing: border-box;
+    border: 1px solid #3BE9E9;
+    border-radius: 20px;
+}
+
+.user-icon {
+    font-size: 25pt;
+    color: #d2d2d2;
+}
+
+.user-icon:hover {
+    color: #f2f2f2;
+}
+

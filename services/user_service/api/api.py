@@ -2,6 +2,7 @@ import logging
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
+from typing import Tuple, List
 import services.user_service.business_logic as bl
 from services.user_service.common.abstract import *
 from services.user_service.common.consts import DATEFMT, OK
@@ -92,17 +93,10 @@ async def delete_user(user: User = Depends(get_current_user)):
     return OK
 
 
-# connectors (also without aith later)          TODO(not connect, fix later)
+# connectors (also without auth later)
 
-@app.post('/solutions', summary="Get some solutions")
-async def post_solutions(restriction: Restriction, user: User = Depends(get_current_user)):
+@app.post('/solutions', summary="Get solutions")
+async def post_solutions(restriction: Restriction, user: User = Depends(get_current_user)) -> Tuple[InvestStrategy, List[InvestStrategy]]:
     logging.info(f"solutions, {user.login}")
-    algorithm_params = AlgorithmParams(login=user.login, restriction=restriction)
+    algorithm_params = AlgorithmParams(restriction=restriction)
     return await post(SOLUTIONS, algorithm_params.json())
-
-
-@app.post('/best_solutions', summary="Get best solutions")
-async def post_best_solutions(restriction: Restriction, user: User = Depends(get_current_user)):
-    logging.info(f"best solutions, {user.login}")
-    algorithm_params = AlgorithmParams(login=user.login, restriction=restriction)
-    return await post(BEST_SOLUTIONS, algorithm_params.json())
