@@ -14,6 +14,7 @@ class InvestItem(BaseModel):
 
 class InvestStrategy(BaseModel):
     profit: float = 0
+    risk: float = 0
     distribution: Dict[str, float] = dict()  # [0 .. 1] (= % / 100) For all CURRENT_INDEXES.
 
 
