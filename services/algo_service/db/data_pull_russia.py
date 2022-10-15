@@ -14,7 +14,7 @@ def pull_data(date='2010-10-23'):
         data_dict = json.loads(result.text)
         if 'history' in data_dict:
             if 'data' in data_dict['history']:
-                return {i[1]: i[5] for i in data_dict['history']['data'] if i[1] in CURRENT_INDEXES.keys()}
+                return {i[1].upper(): i[5] for i in data_dict['history']['data'] if i[1].upper() in CURRENT_INDEXES.keys()}
             else:
                 logging.info(f'Failed to parse, no data: {LINK_PULL_DATA}{date}. Error code = {result.status_code}')
                 return None
@@ -66,6 +66,7 @@ def renew_all_data_if_necessary():
                 else:
                     if min_date is None or min_date > index.date_till + datetime.timedelta(days=1):
                         min_date = index.date_till + datetime.timedelta(days=1)
+    max_date = datetime.date(2009, 10, 10)  # Delete when DB fixed!
     for date in daterange(min_date, max_date):
         if date.weekday() <= 4:
             data = pull_data(date.strftime(DATE_PULL))
@@ -80,7 +81,11 @@ def renew_all_data_if_necessary():
                 if index.date_till.weekday() == 4:
                     index.date_till += datetime.timedelta(days=2)
                 if index.date_till < date:
-                    index.history.append(index.history[-1])
                     index.date_till += datetime.timedelta(days=1)
+                    if len(index.history) > 0:
+                        index.history.append(index.history[-1])
+                    else:
+                        logging.info(f'Failed call [-1] of history of {index_id} {date}.')
+                        index.date_from = index.date_till
     for (_, index) in CURRENT_INDEXES.items():
         save_history(index)
