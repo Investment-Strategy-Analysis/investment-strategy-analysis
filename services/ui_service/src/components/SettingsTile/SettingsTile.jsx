@@ -22,18 +22,20 @@ function SettingsTile() {
     return (
         <Tile>
             <div class="block">
-                <h5>Settings</h5>
-                <For each={checkboxSettings()}>{(checkbox, _) =>
-                    <SettingCheckbox name={checkbox.name} boxid={checkbox.boxid}/>
-                }</For>
-
-                <hr/>
-                <h5>Time period</h5>
-                <div class="btn-group" role="group" aria-label="Time period">
-                    <For each={timeSettings()}>{(radio, _) =>
-                        <SettingRadio name={radio.name} radioid={radio.radioid} groupname={radio.groupname} checked={radio.checked}/>
+                <form id="settingsForm" method="post">
+                    <h5>Settings</h5>
+                    <For each={checkboxSettings()}>{(checkbox, _) =>
+                        <SettingCheckbox name={checkbox.name} boxid={checkbox.boxid}/>
                     }</For>
-                </div>
+
+                    <hr/>
+                    <h5>Time period</h5>
+                    <div class="btn-group" role="group" aria-label="Time period">
+                        <For each={timeSettings()}>{(radio, _) =>
+                            <SettingRadio name={radio.name} radioid={radio.radioid} groupname={radio.groupname} checked={radio.checked}/>
+                        }</For>
+                    </div>
+                </form>
             </div>
         </Tile>
     );

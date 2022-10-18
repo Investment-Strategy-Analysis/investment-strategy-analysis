@@ -4,9 +4,9 @@ import Tile from "../Tile/Tile";
 function RiskTile() {
     return (
         <Tile>
-            <div class={styles.risk}>
-                <label for="riskRange" class="form-label"><h5>Risk</h5></label>
-                <input type="range" class="form-range" id="riskRange"/>
+            <div class={styles.profit}>
+                <label for="riskRange" class="form-label"><h5>Profit</h5></label>
+                <input type="range" class="form-range" id="profitRange"/>
             </div>
         </Tile>
     );

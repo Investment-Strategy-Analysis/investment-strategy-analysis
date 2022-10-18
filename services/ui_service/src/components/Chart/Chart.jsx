@@ -5,12 +5,9 @@ function Charts() {
 
   return (
     <>
-
       {chartData() &&
         <SolidChart
-
           {...chartData()}
-
           canvasOptions={{
             width: 200,
             height: 150
