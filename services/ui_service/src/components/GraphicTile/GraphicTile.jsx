@@ -1,50 +1,54 @@
 import Tile from "../Tile/Tile";
+import { createSignal, createEffect } from "solid-js";
+import styles from './GraphicTile.module.css';
+import Charts from '../Chart/Chart';
 
-d3.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv", function(err, rows){
-  function unpack(rows, key) {
-  return rows.map(function(row) { return row[key]; });
-}
+const [chartData, setChartData] = createSignal({});
 
-var trace1 = {
-  type: "scatter",
-  mode: "lines",
-  x: unpack(rows, 'Date'),
-  y: unpack(rows, 'AAPL.High'),
-  line: {color: '#17BECF'}
-}
+createEffect(() => {
+  const fetchData = async () => {
+    const res = await fetch("http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=2c36818bb5ca9e829313dd736fd15859")
+    const data = await res.json();
 
-var trace2 = {
-  type: "scatter",
-  mode: "lines",
-  x: unpack(rows, 'Date'),
-  y: unpack(rows, 'AAPL.Low'),
-  line: {color: '#7F7F7F'}
-}
+    setChartData({
+      type: "line",
+      data: {
+        labels: data.map((d) => ""),
+        datasets: [
+          {
+            label: "???",
+            fill: false,
+            // backgroundColor: [
+            //   "#0d6efd",
+            //   "#28a745",
+            //   "#dc3545",
+            //   "#ffc107",
+            //   "#17a2b8",
+            //
+            // ],
+            data: data.map((d) => (d.lat))
+          }
+        ]
+      }
+    })
 
-var data = [trace1,trace2];
-
-var layout = {
-  title: 'Random Graphic',
-  xaxis: {
-    range: ['2016-07-01', '2016-12-31'],
-    type: 'date'
-  },
-  yaxis: {
-    autorange: true,
-    range: [86.8700008333, 138.870004167],
-    type: 'linear'
   }
-};
+  fetchData()
+});
 
-Plotly.newPlot('graphic', data, layout);
-})
 
 function GraphicTile() {
+
   return (
       <Tile>
-        <div id="graphic"></div>
+          <div class={styles.GraphicTile}>
+              <h3><b>Risk</b> vs <b>Profit</b></h3>
+              <Charts />
+          </div>
       </Tile>
   );
 }
+
+export { chartData }
 
 export default GraphicTile;

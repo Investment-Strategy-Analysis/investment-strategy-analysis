@@ -1,0 +1,10 @@
+.strategy {
+    padding: 8px;
+}
+
+.strategySelector {
+    margin-top: -7px;
+    margin-right: 8px;
+    display: inline;
+    float: left;
+}

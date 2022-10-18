@@ -1,26 +1,19 @@
-import styles from './StrategyTile.css';
+import styles from './StrategyTile.module.css';
 import Tile from "../Tile/Tile";
 
 function StrategyTile() {
     return (
         <Tile>
-            <div class="strategy">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button"
-                           aria-expanded="false" style="">Default</a>
-                        <ul class="dropdown-menu" style="">
-                            <li><a class="dropdown-item" href="#">Risky</a></li>
-                            <li><a class="dropdown-item" href="#">Safety</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            <li>
-                                <hr class="dropdown-divider"/>
-                            </li>
-                            <li><a class="dropdown-item" href="#">Default</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div> Some text </div>
+            <h5>Strategy</h5>
+            <div class={styles.strategy}>
+                <div class={styles.strategySelector}>
+                    <select class="form-select" aria-label="Default select example">
+                        <option value="0" selected>Default</option>
+                        <option value="1">Risky</option>
+                        <option value="2">Safety</option>
+                    </select>
+                </div>
+                <div> Some text about strategy </div>
             </div>
         </Tile>
     );
