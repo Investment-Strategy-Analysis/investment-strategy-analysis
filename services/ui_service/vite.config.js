@@ -21,6 +21,7 @@ export default defineConfig({
         analyzer: resolve(root, 'analyzer', 'index.html'),
         login: resolve(root, 'auth', 'login', 'index.html'),
         signup: resolve(root, 'auth', 'signup', 'index.html'),
+        profile: resolve(root, 'profile', 'index.html'),
         static: {
           images: resolve(root, 'assets', 'imgs'),
           js: resolve(root, 'assets', 'js'),

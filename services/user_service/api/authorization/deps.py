@@ -21,10 +21,10 @@ async def get_current_user(token: str = Depends(reuseable_oauth)) -> User:
             token, JWT_SECRET_KEY, algorithms=[ALGORITHM]
         )
         token_data = TokenPayload(expires_delta=payload["expires_delta"], login=payload["login"])
-        
+
         if datetime.strptime(token_data.expires_delta, JWT_DATEFMT) < datetime.now():
             raise HTTPException(
-                status_code = status.HTTP_401_UNAUTHORIZED,
+                status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Token expired",
                 headers={"WWW-Authenticate": "Bearer"},
             )

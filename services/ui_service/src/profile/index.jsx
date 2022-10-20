@@ -5,8 +5,34 @@ import './profile.css';
 import AuthBlock from "../components/AuthBlock/AuthBlock";
 import NavBar from "../components/NavBar/NavBar";
 import SavedConfig from "../components/SavedConfig/SavedConfig";
+import {USER_SERVER} from "../assets/js/constants";
 
 function Profile() {
+    function login() {
+        const access_token = Cookies.get('ACCESS_TOKEN');
+        if (access_token === undefined) {
+            window.location.replace(`/auth/login/`);
+        }
+        // Cookies.set('REFRESH_TOKEN', data['refresh_token']);
+
+        const options = {
+            method: "GET",
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${access_token}`
+            }
+        };
+        const response = fetch(
+            `${USER_SERVER}/user`,
+            options,
+        );
+        response.then(resp => {
+            if (resp.status === 401 || resp.status === 403) {
+                window.location.replace(`/auth/login/`);
+            }
+        });
+    }
+
     function setWrongPasswordStyle() {
         const passwordAgainTag = document.getElementById("password_again_field");
         passwordAgainTag.style["border-color"] = "#af0000";
@@ -39,7 +65,8 @@ function Profile() {
         // Todo: add api for profile updating
     }
 
-    const title = "Change Username or Password";
+    login();
+
     return (
         <>
             <NavBar/>
@@ -50,6 +77,7 @@ function Profile() {
                         <SavedConfig/>
                     </div>
                     <div class="col-md-4">
+                        <h5 class="title">Change Username or Password</h5>
                         <div class="auth-field-block">
                             <label for="username_field">Username</label>
                             <input type="text" name="username" class="form-control" id="username_field" placeholder="Username"/>

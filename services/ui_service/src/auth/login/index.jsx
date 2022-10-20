@@ -1,6 +1,7 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
 
+import Cookies from 'js-cookie'
 import './log_in_style.css';
 import AuthBlock from "../../components/AuthBlock/AuthBlock";
 import NavBar from "../../components/NavBar/NavBar";
