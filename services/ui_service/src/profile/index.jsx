@@ -1,6 +1,7 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
 
+import Cookies from 'js-cookie';
 import './profile.css';
 import AuthBlock from "../components/AuthBlock/AuthBlock";
 import NavBar from "../components/NavBar/NavBar";
@@ -27,7 +28,7 @@ function Profile() {
             options,
         );
         response.then(resp => {
-            if (resp.status === 401 || resp.status === 403) {
+            if (resp.status === 401 || resp.status === 400 || resp.status === 403) {
                 window.location.replace(`/auth/login/`);
             }
         });
