@@ -47,7 +47,7 @@ function Analyzer() {
     return (
         <>
             <NavBar/>
-            <div class="container">
+            <div class="container-md">
                 <div class="row mb-2">
                     <div class="col-md-4">
                         <RiskTile/>

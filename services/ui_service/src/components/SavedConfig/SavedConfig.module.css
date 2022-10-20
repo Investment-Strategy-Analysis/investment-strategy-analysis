@@ -1,0 +1,12 @@
+.open-button {
+    float: right;
+}
+
+.tileContent {
+    display: flex;
+}
+
+.description {
+    margin-top: 3px;
+    width: 100%;
+}

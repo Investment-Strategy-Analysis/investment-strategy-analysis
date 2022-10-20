@@ -1,10 +1,10 @@
-import styles from './Tile.css';
+import styles from './Tile.module.css';
 import {children} from "solid-js";
 
 function Tile(props) {
     const c = children(() => props.children);
     return (
-        <div class="tile"> {c()} </div>
+        <div class={styles.Tile}> {c()} </div>
     )
 }
 
