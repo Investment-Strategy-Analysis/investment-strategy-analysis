@@ -48,7 +48,7 @@ function SignUp() {
         }
     }
 
-    const title = "Sing Up to HISA"
+    const title = "Sign Up to HISA"
     return (
         <>
             <NavBar/>
