@@ -1,27 +1,24 @@
 from services.algo_service.common.abstract import InvestItem
-from sqlitedict import SqliteDict
 import logging
+from services.algo_service.common.helpers import db_engine, db_session
+from services.algo_service.db.tables import Base
+import services.algo_service.db.tables as T
 
-
-file_db_name = 'DataDB.db'
-singleton_database = None
-
-
-def get_db():
-    global singleton_database
-    if singleton_database is None:
-        singleton_database = SqliteDict(file_db_name, autocommit=True)
-    return singleton_database
+__engine = db_engine()
+__session = db_session(__engine)
+Base.metadata.create_all(__engine)  # create tables if not exists
 
 
 def save_history(item: InvestItem):
-    db = get_db()
-    db[item.id] = (item.date_from, item.date_till, item.history)
-    logging.info(f'Saved history: {item.id}.')
+    if item.id is not None:
+        invest_item = T.InvestItem(id=item.id, date_from=item.date_from, date_till=item.date_till, history=item.history)
+    else:
+        invest_item = T.InvestItem(date_from=item.date_from, date_till=item.date_till, history=item.history)
+    __session.add(invest_item)
+    __session.commit()
+    logging.info(f'Saved history: {invest_item.id}')
 
 
-def load_history(item: InvestItem) -> InvestItem:
-    db = get_db()
-    if item.id in db.keys():
-        (item.date_from, item.date_till, item.history) = db[item.id]
-    return item
+def load_history(item_id: str) -> InvestItem:
+    invest_item = __session.query(T.InvestItem).filter(T.InvestItem.id == item_id).first()
+    return invest_item

@@ -6,7 +6,7 @@ import datetime
 class InvestItem(BaseModel):
     name: str = ''
     country: str = ''
-    id: str = ''
+    id: Optional[str] = None
     date_from: datetime.date = datetime.date(1000, 1, 1)
     date_till: datetime.date = datetime.date(1000, 1, 1)
     history: List[float] = []

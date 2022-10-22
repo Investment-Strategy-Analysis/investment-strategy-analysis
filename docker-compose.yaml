@@ -12,8 +12,10 @@ services:
       - "8000:8000"
     env_file:
       - jwt.env
+      - user-db.env
     depends_on:
       - algo-service
+      - user-db
 
   algo-service:
     container_name: algo_service
@@ -22,8 +24,12 @@ services:
       dockerfile: algo-service.dockerfile
     networks:
       - backend
+    env_file:
+      - algo-db.env
     ports:
       - "8001:8000"
+    depends_on:
+      - algo-db
 
   ui-service:
     container_name: ui_service
@@ -34,6 +40,32 @@ services:
       - backend
     ports:
       - "5001:5001"
+    depends_on:
+      - user-service
+  
+  user-db:
+    container_name: user_db
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "user_db"
+      POSTGRES_USER: "hisa-user"
+      POSTGRES_PASSWORD: "LAhOGLC/vHwxXK4RCFD7Qn54+ek="
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+  
+  algo-db:
+    container_name: algo_db
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "algo_db"
+      POSTGRES_USER: "hisa-user"
+      POSTGRES_PASSWORD: "66I50dYw7EOM4+FKPRxazHTKLS4="
+    networks:
+      - backend
+    ports:
+      - "5433:5432"
 
 networks:
   backend:

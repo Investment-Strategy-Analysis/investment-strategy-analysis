@@ -2,7 +2,7 @@ import logging
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
-from typing import Tuple, List
+from typing import Tuple
 import services.user_service.business_logic as bl
 from services.user_service.common.abstract import *
 from services.user_service.common.consts import DATEFMT, OK

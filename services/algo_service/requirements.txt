@@ -6,3 +6,6 @@ db-sqlite3
 sqlitedict
 investpy
 xmltodict
+psycopg2-binary
+sqlmodel
+SQLAlchemy

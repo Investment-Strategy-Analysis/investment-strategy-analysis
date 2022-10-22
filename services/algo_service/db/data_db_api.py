@@ -8,7 +8,7 @@ def save_history(item: InvestItem):  # if it's a new user creates it.
 
 
 def load_history(item: InvestItem) -> InvestItem:
-    return __load_history(item)
+    return __load_history(item.id)
 
 
 def __small_example():
