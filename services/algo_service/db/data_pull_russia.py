@@ -1,3 +1,5 @@
+import random
+
 import requests
 import logging
 import json
@@ -43,7 +45,7 @@ def daterange(start_date, end_date):
 
 
 def renew_all_data_if_necessary():
-    if not CURRENT_INDEXES['RTSI'].history:
+    if not CURRENT_INDEXES['IMOEX'].history:
         for (_, index) in CURRENT_INDEXES.items():
             load_history(index)
     dates = pull_date()
@@ -66,7 +68,6 @@ def renew_all_data_if_necessary():
                 else:
                     if min_date is None or min_date > index.date_till + datetime.timedelta(days=1):
                         min_date = index.date_till + datetime.timedelta(days=1)
-    max_date = datetime.date(2009, 10, 10)  # Delete when DB fixed!
     for date in daterange(min_date, max_date):
         if date.weekday() <= 4:
             data = pull_data(date.strftime(DATE_PULL))
@@ -87,5 +88,9 @@ def renew_all_data_if_necessary():
                     else:
                         logging.info(f'Failed call [-1] of history of {index_id} {date}.')
                         index.date_from = index.date_till
+        if random.randint(0, 90) == 0:
+            print(date)
+            for (_, index) in CURRENT_INDEXES.items():
+                save_history(index)
     for (_, index) in CURRENT_INDEXES.items():
         save_history(index)

@@ -13,7 +13,7 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
 
 def example_test():
     from services.algo_service.common.singletons import CURRENT_INDEXES
-    best, front = get_solutions(Restriction(target_profit=13,
+    best, front = get_solutions(Restriction(target_profit=10,
                                             checkboxes={i: False for i in CHECKBOXES},
                                             upper_border={i: 1 for i in CURRENT_INDEXES.keys()},
                                             lower_border={i: 0 for i in CURRENT_INDEXES.keys()},
