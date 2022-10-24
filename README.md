@@ -1,5 +1,5 @@
 
-Investment Strategy Analysis
+# Investment Strategy Analysis
 
 ### Инструкция по запуску
 
