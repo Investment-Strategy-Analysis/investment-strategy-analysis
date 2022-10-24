@@ -1,7 +1,7 @@
 
 # Investment Strategy Analysis
 
-### Инструкция по запуску
-
+## Инструкция по запуску
+### Запуск на Linux
 
 
