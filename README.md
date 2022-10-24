@@ -1,8 +1,7 @@
 # investment-strategy-analysis
 Investment Strategy Analysis
 
-### Run
+### Инструкция по запуску
 
-```bash
-$ ./scripts/start.sh
-```
+
+
