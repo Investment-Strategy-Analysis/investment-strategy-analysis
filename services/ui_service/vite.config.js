@@ -22,6 +22,7 @@ export default defineConfig({
         login: resolve(root, 'auth', 'login', 'index.html'),
         signup: resolve(root, 'auth', 'signup', 'index.html'),
         profile: resolve(root, 'profile', 'index.html'),
+        hisa: resolve(root, 'hisa', 'index.html'),
         static: {
           images: resolve(root, 'assets', 'imgs'),
           js: resolve(root, 'assets', 'js'),
