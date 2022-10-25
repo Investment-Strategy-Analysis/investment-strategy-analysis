@@ -8,7 +8,7 @@
 2. Скачайте проект на локальный компьютер.  
 3. Перейдите в ту директорию, куда скачали проект, зайди в папку "scripts" и запустите в терминале sudo ./start.sh  
 4. После этого начнет подниматься сервер, это может занять продолжительное время. Как только все запустится, основной сервер будет работать по адресу http://localhost:8000:
-![port80000](https://drive.google.com/file/d/1oYSkfNufK1YjTDdRjfRZSMZoY_68Q65J/view?usp=sharing) 
+![port80000](https://www.shkolazhizni.ru/img/content/i187/187867_or.jpg) 
 
 
 
