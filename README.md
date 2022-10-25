@@ -10,7 +10,7 @@
 4. После этого начнет подниматься сервер, это может занять продолжительное время. Как только все запустится, основной сервер будет работать по адресу                http://localhost:8000:     
    
    <p align="center">
-      <img width="460" height="300" src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/main_server.png">
+      <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/main_server.png">
    </p>
    
 5. Страница с регистрацией доступна в браузере по адресу http://localhost:5001/auth/signup/:    
