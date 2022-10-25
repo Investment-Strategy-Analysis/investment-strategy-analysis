@@ -8,7 +8,7 @@
 
 1. Установите Docker Compose (можно через терминал, как, например [здесь](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-ru)). Также, скорее всего, потребуется установить [Node.js](https://help.reg.ru/support/servery-vps/oblachnyye-servery/ustanovka-programmnogo-obespecheniya/kak-ustanovit-node-js-na-ubuntu)  
 2. Скачайте проект на локальный компьютер.  
-3. Перейдите в ту директорию, куда скачали проект, зайди в папку "scripts" и запустите в терминале sudo ./start.sh  
+3. Перейдите в ту директорию, куда скачали проект, зайди в папку "scripts" и запустите в терминале `sudo ./start.sh`. 
 4. После этого начнет подниматься сервер, это может занять продолжительное время. Как только все запустится, основной сервер будет работать по адресу                http://localhost:8000:     
    
    <p align="center">
@@ -22,7 +22,7 @@
     
    ![port5001_login](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/log_in.png)   
 7. Если страницы регистрации и авторизации не отображаются, можно поднять контейнер для ui_service отдельно. Убедитесь, что Node.js уже установлен.  
-8. Не отключая уже запущенный сервер, вернитесь в корневую папку и перейдите в директорию services/ui_service:
+8. Не отключая уже запущенный сервер, вернитесь в корневую папку и перейдите в директорию "services/ui_service":
 
     <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/ui_service.png">
@@ -44,4 +44,7 @@
    <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/docker-compose.png">
    </p>
+   
+4. Перейдите в ту директорию, куда скачали проект, зайди в папку "scripts" и запустите в терминале `./start.sh`.
+5. Если при запуске докера никаких сообщений о проблемах с WSL не было, но на шагах 3-4 все равно возникает ошибка, попробуйте все же проделать действия из пункта 2. 
 
