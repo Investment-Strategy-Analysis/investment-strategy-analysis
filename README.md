@@ -8,7 +8,9 @@
 2. Скачайте проект на локальный компьютер.  
 3. Перейдите в ту директорию, куда скачали проект, зайди в папку "scripts" и запустите в терминале sudo ./start.sh  
 4. После этого начнет подниматься сервер, это может занять продолжительное время. Как только все запустится, основной сервер будет работать по адресу http://localhost:8000:   
-![port80000](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/main_server.png) 
+![port8000](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/main_server.png) 
+5. Страница с регистрацией доступна в браузере по адресу http://localhost:5001/auth/signup/:  
+![port5001_signup](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/sign_up.png) 
 
 
 
