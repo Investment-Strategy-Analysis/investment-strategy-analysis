@@ -2,7 +2,7 @@
 # Investment Strategy Analysis
 
 ## Инструкция по запуску
-[Linux](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/README.md#Запуск-на-Linux)
+[Linux](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/README.md#Запуск-на-Linux)  
 [Windows](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/README.md#Запуск-на-Windows)
 ### Запуск на Linux  
 
@@ -38,5 +38,6 @@
 
 ### Запуск на Windows
 1. Установите и запустите [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/). Если при запуске возникает ошибка, пробуйте перезапустить еще раз, периодически перезагружая компьютер. Обычно он запускается только с 3-5 раза.  
-2. Если при запуске докера выдается сообщение о проблемах с WSL, проделайте шаги 1-6 по вот [этой инструкции](https://learn.microsoft.com/ru-ru/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package). В частности, это нужно для того, чтобы у под Windows запускались скрипты `.sh`
+2. Если при запуске докера выдается сообщение о проблемах с WSL, проделайте шаги 1-6 по вот [этой инструкции](https://learn.microsoft.com/ru-ru/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package). В частности, это нужно для того, чтобы у под Windows запускались скрипты `.sh`.
+3. Скаячайте проект из репозитория и запустите файл `docker-compose.yaml`.
 
