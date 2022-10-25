@@ -14,6 +14,7 @@
    
    ![port5001_signup](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/sign_up.png) 
 6. Страница автоизации доступна в браузере по адресу http://localhost:5001/auth/login/:  
+    
    ![port5001_login](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/log_in.png)    
    
 
