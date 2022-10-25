@@ -26,7 +26,7 @@
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/ui_service.png">
    </p>
 
-   
+ 9. Выполните последовательно в данной директории команды `npm install`, затем `npm run dev`.
 
 
 
