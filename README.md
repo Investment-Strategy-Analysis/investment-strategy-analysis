@@ -2,6 +2,8 @@
 # Investment Strategy Analysis
 
 ## Инструкция по запуску
+[Linux](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/README.md#Запуск-на-Linux)
+[Windows](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/README.md#Запуск-на-Windows)
 ### Запуск на Linux  
 
 1. Установите Docker Compose (можно через терминал, как, например [здесь](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-ru)). Также, скорее всего, потребуется установить [Node.js](https://help.reg.ru/support/servery-vps/oblachnyye-servery/ustanovka-programmnogo-obespecheniya/kak-ustanovit-node-js-na-ubuntu)  
