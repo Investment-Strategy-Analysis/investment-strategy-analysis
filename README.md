@@ -11,7 +11,8 @@
    
    ![port8000](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/main_server.png)   
 5. Страница с регистрацией доступна в браузере по адресу http://localhost:5001/auth/signup/:    
-![port5001_signup](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/sign_up.png) 
+   
+   ![port5001_signup](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/sign_up.png) 
 
 
 
