@@ -27,6 +27,13 @@
    </p>
 
  9. Выполните последовательно в данной директории команды `npm install`, затем `npm run dev`.
+ 10. После этого страницы должны стать доступны в браузере по адресам, указанным в пунктах 5 и 6 соответственно. Также эти страницы могут быть доступны по альтернативным адресам, перечисленным в консоли (для примера ниже это адреса  http://172.22.224.1:5001/auth/signup,  http://172.22.224.1:5001/auth/login и т.д.):
+     
+     <p align="center">
+      <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/local_addresses.png">
+   </p>
+
+
 
 
 
