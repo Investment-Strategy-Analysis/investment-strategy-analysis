@@ -34,10 +34,14 @@
      <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/my_local_addresses.png">
    </p>
-11. Чтобы остановить работу любого сервера, нажмите `npm install`.
+11. Чтобы остановить работу любого сервера, нажмите Ctrl + C.
 
 ### Запуск на Windows
 1. Установите и запустите [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/). Если при запуске возникает ошибка, пробуйте перезапустить еще раз, периодически перезагружая компьютер. Обычно он запускается только с 3-5 раза.  
 2. Если при запуске докера выдается сообщение о проблемах с WSL, проделайте шаги 1-6 по вот [этой инструкции](https://learn.microsoft.com/ru-ru/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package). В частности, это нужно для того, чтобы у под Windows запускались скрипты `.sh`.
-3. Скаячайте проект из репозитория и запустите файл `docker-compose.yaml`.
+3. Скачайте проект из репозитория и запустите файл `docker-compose.yaml`.Это можно сделать, например, через IDE, нажав на 2 зеленые стрелочки:  
+
+   <p align="center">
+      <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/docker-compose.png">
+   </p>
 
