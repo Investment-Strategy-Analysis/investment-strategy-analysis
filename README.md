@@ -32,7 +32,7 @@
      <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/my_local_addresses.png">
    </p>
-11. Чтобы остановить работу любого сервера, нажмите `Ctrl+C`.
+11. Чтобы остановить работу любого сервера, нажмите `npm install`.
 
 
 
