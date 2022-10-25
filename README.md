@@ -20,7 +20,12 @@
     
    ![port5001_login](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/log_in.png)   
 7. Если страницы регистрации и авторизации не отображаются, можно поднять контейнер для ui_service отдельно. Убедитесь, что Node.js уже установлен.  
-8. Не отключая уже запущенный сервер, вернитесь в корневую папку
+8. Не отключая уже запущенный сервер, вернитесь в корневую папку и перейдите в директорию services/ui_service:
+
+    <p align="center">
+      <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/ui_service.png">
+   </p>
+
    
 
 
