@@ -64,7 +64,7 @@
 
     <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/ui_service.png">
-   </p>
+    </p>
 
  12. Выполните последовательно в данной директории команды `npm install`, затем `npm run dev`.
  13. После этого страницы должны стать доступны в браузере по адресам, указанным в пунктах 8 и 9 соответственно. Также эти страницы могут быть доступны по альтернативным адресам, перечисленным в консоли (для примера ниже это адреса  http://172.22.224.1:5001/auth/signup,  http://172.22.224.1:5001/auth/login и т.д.):
