@@ -63,7 +63,7 @@
 11. Не отключая уже запущенный сервер, вернитесь в корневую папку и перейдите в директорию "services/ui_service":
 
    <p align="center">
-      <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/docker-compose.png">
+      <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/ui_service.png">
    </p>
 
  12. Выполните последовательно в данной директории команды `npm install`, затем `npm run dev`.
