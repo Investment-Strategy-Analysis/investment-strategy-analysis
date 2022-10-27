@@ -14,22 +14,24 @@
    <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/main_server.png">
    </p>
+5. Титульная страница доступна в браузере по адресу: http://localhost:5001/hisa/:
+   ![title_page](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/title_page.png) 
    
-5. Страница с регистрацией доступна в браузере по адресу http://localhost:5001/auth/signup/:    
+6. Страница с регистрацией доступна в браузере по адресу http://localhost:5001/auth/signup/:    
    
    ![port5001_signup](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/sign_up.png) 
-6. Страница автоизации доступна в браузере по адресу http://localhost:5001/auth/login/:  
+7. Страница авторизации доступна в браузере по адресу http://localhost:5001/auth/login/:  
     
    ![port5001_login](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/log_in.png)   
-7. Если страницы регистрации и авторизации не отображаются, можно поднять контейнер для ui_service отдельно. Убедитесь, что Node.js уже установлен.  
-8. Не отключая уже запущенный сервер, вернитесь в корневую папку и перейдите в директорию "services/ui_service":
+8. Если страницы регистрации и авторизации, а также титульная страница, не отображаются, можно поднять контейнер для ui_service отдельно. Убедитесь, что Node.js уже    установлен.  
+9. Не отключая уже запущенный сервер, вернитесь в корневую папку и перейдите в директорию "services/ui_service":
 
     <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/ui_service.png">
    </p>
 
- 9. Выполните последовательно в данной директории команды `npm install`, затем `npm run dev`.
- 10. После этого страницы должны стать доступны в браузере по адресам, указанным в пунктах 5 и 6 соответственно. Также эти страницы могут быть доступны по альтернативным адресам, перечисленным в консоли (для примера ниже это адреса  http://172.22.224.1:5001/auth/signup,  http://172.22.224.1:5001/auth/login и т.д.):
+ 10. Выполните последовательно в данной директории команды `npm install`, затем `npm run dev`.
+ 11. После этого страницы должны стать доступны в браузере по адресам, указанным в пунктах 5-7 соответственно. Также эти страницы могут быть доступны по альтернативным адресам, перечисленным в консоли (для примера ниже это адреса  http://172.22.224.1:5001/auth/signup,  http://172.22.224.1:5001/auth/login и т.д.):
      
      <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/my_local_addresses.png">
@@ -48,29 +50,32 @@
    
 5. Перейдите в ту директорию, куда скачали проект, зайди в папку "scripts" и запустите в терминале `./start.sh`.
 6. Если при запуске докера никаких сообщений о проблемах с WSL не было, но на шагах 4-5 все равно возникает ошибка, попробуйте все же проделать действия из пункта 2. 
-7.   После этого начнет подниматься сервер, это может занять продолжительное время. Как только все запустится, основной сервер будет работать по адресу                http://localhost:8000:     
+7. После этого начнет подниматься сервер, это может занять продолжительное время. Как только все запустится, основной сервер будет работать по адресу                 http://localhost:8000:     
    
    <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/main_server.png">
    </p>
-8. Страница с регистрацией доступна в браузере по адресу http://localhost:5001/auth/signup/:    
+8. Титульная страница доступна в браузере по адресу: http://localhost:5001/hisa/:
+   
+   ![title_page](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/title_page.png) 
+9. Страница с регистрацией доступна в браузере по адресу http://localhost:5001/auth/signup/:    
    
    ![port5001_signup](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/sign_up.png) 
-9. Страница автоизации доступна в браузере по адресу http://localhost:5001/auth/login/:  
+10. Страница автоизации доступна в браузере по адресу http://localhost:5001/auth/login/:  
     
    ![port5001_login](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/log_in.png)   
-10. Если страницы регистрации и авторизации не отображаются, можно поднять контейнер для ui_service отдельно. Убедитесь, что Node.js уже установлен.  
-11. Не отключая уже запущенный сервер, вернитесь в корневую папку и перейдите в директорию "services/ui_service":
+11. Если страницы регистрации и авторизации, а также титульная страница, не отображаются, можно поднять контейнер для ui_service отдельно. Убедитесь, что Node.js уже установлен.  
+12. Не отключая уже запущенный сервер, вернитесь в корневую папку и перейдите в директорию "services/ui_service":
 
    <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/ui_service.png">
    </p>
 
- 12. Выполните последовательно в данной директории команды `npm install`, затем `npm run dev`.
- 13. После этого страницы должны стать доступны в браузере по адресам, указанным в пунктах 8 и 9 соответственно. Также эти страницы могут быть доступны по альтернативным адресам, перечисленным в консоли (для примера ниже это адреса  http://172.22.224.1:5001/auth/signup,  http://172.22.224.1:5001/auth/login и т.д.):
+ 13. Выполните последовательно в данной директории команды `npm install`, затем `npm run dev`.
+ 14. После этого страницы должны стать доступны в браузере по адресам, указанным в пунктах 8-10 соответственно. Также эти страницы могут быть доступны по альтернативным адресам, перечисленным в консоли (для примера ниже это адреса  http://172.22.224.1:5001/auth/signup,  http://172.22.224.1:5001/auth/login и т.д.):
      
      <p align="center">
       <img src="https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/my_local_addresses.png">
    </p>
-14. Чтобы остановить работу любого сервера, нажмите Ctrl + C. 
+15. Чтобы остановить работу любого сервера, нажмите Ctrl + C. 
 
