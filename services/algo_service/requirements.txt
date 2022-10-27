@@ -5,4 +5,5 @@ aiohttp
 db-sqlite3
 sqlitedict
 investpy
+scipy
 xmltodict
