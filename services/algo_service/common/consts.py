@@ -4,9 +4,9 @@ LINK_PULL_DATA = 'https://iss.moex.com/iss/history/engines/stock/markets/index/s
 LINK_PULL_DATES = 'https://iss.moex.com/iss/statistics/engines/stock/markets/index/analytics'
 
 CHECKBOXES = [
-    'Только Российские активы',
-    'Без акций',
-    'Без облигаций',
-    'Без золота',
-    'Высокая диверсификация'
+    'only_russian_assets',
+    'without_assets',
+    'without_bonds',
+    'without_gold',
+    'high_diversification'
 ]

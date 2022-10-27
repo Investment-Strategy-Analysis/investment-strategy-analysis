@@ -6,11 +6,12 @@ import datetime
 from services.algo_service.db.data_pull_russia import renew_all_data_if_necessary
 import numpy as np
 import operator
+import logging
 from scipy.optimize import minimize
 
 
 def parse_checkboxes(restriction: Restriction):
-    if restriction.upper_border is None:
+    if restriction.upper_border is None or not restriction.upper_border:
         restriction.upper_border = {i: 1 for i in CURRENT_INDEXES.keys()}
         restriction.lower_border = {i: 0 for i in CURRENT_INDEXES.keys()}
         if restriction.checkboxes[CHECKBOXES[0]]:
@@ -106,5 +107,5 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
             distribution = get_x0(bounds, shift=-i)
             tmp_profit, tmp_risk = get_profit_and_risk(data, distribution, invest_period=1)
             rest.append(InvestStrategy(distribution=get_dist(distribution, keys), profit=tmp_profit, risk=tmp_risk))
-
+        logging.info(f'Algo answer = {rest[0]}')
         return rest[0], rest
