@@ -13,11 +13,11 @@ async def post(path: str, data: str):
 
 def db_engine():
     username = os.environ.get("DB_USER")
-    password = os.environ.get("DB_PASSWORD")
+    password = os.environ.get("USER_DB_PASSWORD")
     engine = create_engine(f"postgresql+psycopg2://{username}:{password}@user-db:5432/user_db", echo=True)
     return engine
 
 
 def db_session(engine):
-    Session = sessionmaker(bind=engine)
+    Session = sessionmaker(bind=engine, autoflush=True)
     return Session()

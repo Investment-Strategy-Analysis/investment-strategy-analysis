@@ -6,9 +6,10 @@ from typing import Tuple
 import services.user_service.business_logic as bl
 from services.user_service.common.abstract import *
 from services.user_service.common.consts import DATEFMT, OK
-from services.user_service.api.authorization.deps import get_current_user
+from services.user_service.api.authorization.deps import get_current_user, refresh_tokens
 from services.user_service.common.helpers import post
 from services.user_service.common.endpoints import *
+from deprecated import deprecated
 
 logging.basicConfig(format='%(asctime)s.%(msecs)03dZ %(name)s %(levelname)s %(message)s',
                     datefmt=DATEFMT,
@@ -52,12 +53,19 @@ async def ping() -> str:
 @app.get("/user", summary="Return current user", response_model=User)
 async def get_user(user: User = Depends(get_current_user)) -> User:
     """get user by login"""
+    user.password = ""      # not show
     logging.info("get user")
     return user
 
 
+@app.get("/token/refresh", summary="refresh tokens")
+async def get_token_refresh(tokens: Tokens = Depends(refresh_tokens)) -> Tokens:
+    """refresh tokens"""
+    return tokens
+
+
 @app.post('/login', summary="Create access and refresh tokens for user")
-async def post_tokens(data: OAuth2PasswordRequestForm = Depends()):
+async def post_tokens(data: OAuth2PasswordRequestForm = Depends()) -> Tokens:
     return await bl.post_tokens(data)
 
 
@@ -68,7 +76,7 @@ async def post_user(user: User):
     await bl.post_user(user)
     return OK
 
- 
+
 @app.post("/user/settings", summary="Update settings for current user")
 async def post_user_settings(settings: Settings, user: User = Depends(get_current_user)):
     """update settings for current user"""
@@ -77,12 +85,36 @@ async def post_user_settings(settings: Settings, user: User = Depends(get_curren
     return OK
 
 
-# TODO(more detail?)
+@deprecated(version='1', reason="Use more specific /user/photo, /user/email, ...")
 @app.post("/user/parameters", summary="Update parameters for current user")
 async def post_user_parameters(user_settings: UserSettings, user: User = Depends(get_current_user)):
     """update parameters for current user"""
     logging.info("update user parameters")
     await bl.update_user_parameters(user, user_settings)
+    return OK
+
+
+@app.post("/user/email", summary="Update email for current user")
+async def post_user_email(email: Email, user: User = Depends(get_current_user)):
+    """update email for current user"""
+    logging.info("update user email")
+    await bl.update_user_email(user, email)
+    return OK
+
+
+@app.post("/user/password", summary="Update password for current user")
+async def post_user_password(password: Password, user: User = Depends(get_current_user)):
+    """update password for current user"""
+    logging.info("update user password")
+    await bl.update_user_password(user, password)
+    return OK
+
+
+@app.post("/user/photo", summary="Update photo for current user")
+async def post_user_photo(photo: Photo, user: User = Depends(get_current_user)):
+    """update photo for current user"""
+    logging.info("update user photo")
+    await bl.update_user_photo(user, photo)
     return OK
 
 
@@ -95,7 +127,6 @@ async def delete_user(user: User = Depends(get_current_user)):
 
 
 # connectors (also without auth later)
-
 @app.post('/solutions', summary="Get solutions")
 async def post_solutions(restriction: Restriction, user: User = Depends(get_current_user)) -> Tuple[InvestStrategy, List[InvestStrategy]]:
     logging.info(f"solutions, {user.login}")

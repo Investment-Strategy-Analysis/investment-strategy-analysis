@@ -2,6 +2,18 @@ from typing import Optional, List, Dict
 from pydantic import BaseModel
 
 
+class Email(BaseModel):
+    email: str
+
+
+class Password(BaseModel):
+    password: str
+
+
+class Photo(BaseModel):
+    photo: bytes
+
+
 class Restriction(BaseModel):
     target_profit: float = 0  # used to find best point in pareto front
     checkboxes: Dict[str, bool] = dict()     # true/false For all checkboxes.
@@ -26,7 +38,7 @@ class LastAnswer(BaseModel):
 
 
 class UserSettings(BaseModel):
-    last_answer: LastAnswer = LastAnswer()
+    last_answer: Optional[LastAnswer] = LastAnswer()
     photo: Optional[bytes] = None
     email: Optional[str] = None
     # other extra info
@@ -52,3 +64,13 @@ class AlgorithmParams(BaseModel):
 class InvestStrategy(BaseModel):
     profit: float = 0
     distribution: Dict[str, float] = dict()  # [0 .. 1] (= % / 100) For all CURRENT_INDEXES.
+
+
+class Tokens(BaseModel):
+    access_token: str
+    refresh_token: str
+
+
+class UsernamePassword(BaseModel):
+    username: str
+    password: str
