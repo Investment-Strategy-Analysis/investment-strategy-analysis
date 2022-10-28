@@ -11,13 +11,13 @@ export function ResultTile() {
 
             <Switch fallback={<i>empty now</i>}>
                 <Match when={results().length > 0} keyed>
-                    <For each={results()}>{(name, value) =>
+                    <For each={results()}>{(info) =>
                         <div class="row">
                             <div class="col-6">
-                                {name}
+                                {info[0]}
                             </div>
                             <div class="col-6">
-                                {value}
+                                {info[1]}
                             </div>
                         </div>
                     }</For>
