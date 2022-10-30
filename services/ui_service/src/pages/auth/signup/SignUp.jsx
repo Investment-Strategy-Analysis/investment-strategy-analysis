@@ -1,12 +1,15 @@
-/* @refresh reload */
-import { render } from 'solid-js/web';
-
-import './sign_up_style.css';
-import AuthBlock from "../../components/AuthBlock/AuthBlock";
-import NavBar from "../../components/NavBar/NavBar";
-import {USER_SERVER} from "../../assets/js/constants";
+import './SignUp.css';
+import AuthBlock from "../../../components/AuthBlock/AuthBlock";
+import {USER_SERVER} from "../../../js/web_constants";
+import {signup} from "../../../js/authorization";
+import {useRoutes} from "solid-app-router";
 
 function SignUp() {
+
+    function showInvalidMessage() {
+        const passwordAgainTag = document.getElementById("errorMessage");
+        passwordAgainTag.style["display"] = "block";
+    }
 
     function setWrongPasswordStyle() {
         const passwordAgainTag = document.getElementById("password_again_field");
@@ -18,8 +21,8 @@ function SignUp() {
         passwordAgainTag.style["border-color"] = "#d0d7de";
     }
 
-    async function signup() {
-        const login = document.getElementById("username_field").value;
+    async function _signup() {
+        const username = document.getElementById("username_field").value;
         const password = document.getElementById("password_field").value;
         const passwordAgain = document.getElementById("password_again_field").value;
 
@@ -27,32 +30,23 @@ function SignUp() {
             setWrongPasswordStyle();
             return;
         }
-        const options = {
-            method: "POST",
-            body: JSON.stringify({ "login": login, "password": password }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }
-        const response = await fetch(
-            `${USER_SERVER}/user`,
-            options,
-        );
-        console.log("Execution response: ", response);
+
+        const response = await signup(username, password);
 
         if (response.ok) {
-            console.log("OK");
-            window.location.replace(`/auth/login/`)
+            window.location.replace(`/auth/login/`);
         } else {
-            alert(response.body)
+            showInvalidMessage();
         }
     }
 
     const title = "Sign Up to HISA"
     return (
         <>
-            <NavBar/>
             <AuthBlock title={title}>
+                <div class="error-message" id="errorMessage">
+                    Incorrect username or password.
+                </div>
                 <div class="auth-field-block">
                     <label for="username_field">Username</label>
                     <input type="text" name="username" class="form-control" id="username_field" placeholder="Username"
@@ -67,10 +61,10 @@ function SignUp() {
                     <input onkeypress={resetPasswordStyle} type="password" class="form-control" id="password_again_field" placeholder="Password again"/>
                 </div>
 
-                <button class="auth-button w-100 btn btn-primary" type="submit" onclick={signup}>Sign up</button>
+                <button class="auth-button w-100 btn btn-primary" type="submit" onclick={_signup}>Sign up</button>
             </AuthBlock>
         </>
     );
 }
 
-render(() => <SignUp />, document.getElementById('root'));
+export default SignUp;
