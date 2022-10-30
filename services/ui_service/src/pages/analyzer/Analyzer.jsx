@@ -39,7 +39,13 @@ function Analyzer() {
         if (response.ok) {
             const data = await response.json();
             const chartDataset = data[1].sort((a, b) => a.profit - b.profit);
-            setChartData(transformData(chartDataset));
+            const bestDistribution = data[0]['distribution'];
+            const config = Object.keys(bestDistribution).map((key) => [key, bestDistribution[key]]);
+            const bestProfit = data[0]['profit'];
+            const bestPoint = data[1].map((point) => point.profit === bestProfit ? point.risk : null )
+
+            setResults(config);
+            setChartData(transformData(chartDataset, bestPoint));
         }
     }
 
