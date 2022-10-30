@@ -54,3 +54,7 @@
 .auth-button:hover {
     background-color: #2c974b;
 }
+
+.auth-button:active {
+    background-color: #236b37;
+}

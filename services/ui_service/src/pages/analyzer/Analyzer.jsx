@@ -1,10 +1,9 @@
 import styles from './Analyzer.css';
-import NavBar from "../NavBar/NavBar";
-import RiskTile from "../RiskTile/RiskTile";
-import StrategyTile from "../StrategyTile/StrategyTile";
-import SettingsTile from "../SettingsTile/SettingsTile";
-import GraphicTile, {setChartData, transformData} from "../GraphicTile/GraphicTile";
-import {ALGO_SERVER, checkboxFormData, timeFormData} from "../../assets/js/constants";
+import RiskTile from "../../components/RiskTile/RiskTile";
+import StrategyTile from "../../components/StrategyTile/StrategyTile";
+import SettingsTile from "../../components/SettingsTile/SettingsTile";
+import GraphicTile, {setChartData, transformData} from "../../components/GraphicTile/GraphicTile";
+import {ALGO_SERVER, checkboxFormData, timeFormData} from "../../js/web_constants";
 
 function constructRequestBody() {
     let body = {};
@@ -46,7 +45,6 @@ function Analyzer() {
 
     return (
         <>
-            <NavBar/>
             <div class="container-md">
                 <div class="row mb-2">
                     <div class="col-md-4">
