@@ -6,6 +6,10 @@ import GraphicTile, {setChartData, transformData} from "../../components/Graphic
 import {ALGO_SERVER, checkboxSettings, profit, timeSettings} from "../../js/web_constants";
 import {ResultTile, setResults} from "../../components/ResultTile/ResultTile";
 
+/**
+ * Generate settings request body
+ * @return {object}
+ */
 function constructRequestBody() {
     let body = {};
 
@@ -24,7 +28,13 @@ function constructRequestBody() {
 
 function Analyzer() {
 
-    async function getSolution(body) {
+    /**
+     * Make solution request
+     * @return {Promise<void>}
+     */
+    async function getSolution() {
+        let body = constructRequestBody()
+
         const options = {
             method: "POST",
             body: JSON.stringify(body),
@@ -64,7 +74,7 @@ function Analyzer() {
                 <div class="row mb-2">
                     <div class="col-md-4">
                         <SettingsTile/>
-                        <button type="button" class="btn btn-primary btn-lg run-button" onClick={() => getSolution(constructRequestBody())}>Find optimal configuration</button>
+                        <button type="button" class="btn btn-primary btn-lg run-button" onClick={() => getSolution()}>Find optimal configuration</button>
                         <ResultTile/>
                     </div>
                     <div class="col-md-8">

@@ -1,6 +1,10 @@
 import Cookies from 'js-cookie';
 import {USER_SERVER} from "./web_constants";
 
+/**
+ * Check access token. If cookies does not contain token, or it is overdue redirect to login page.
+ * @return {Promise<boolean>}
+ */
 export async function checkToken() {
     const access_token = Cookies.get('ACCESS_TOKEN');
     if (access_token === undefined) {
@@ -28,6 +32,12 @@ export async function checkToken() {
 
 }
 
+/**
+ * Request to login and save tokens to cookies.
+ * @param {string} username
+ * @param {string} password
+ * @return {Promise<Response>}
+ */
 export async function login(username, password) {
     const details = {
         "grant_type": "",
@@ -66,6 +76,12 @@ export async function login(username, password) {
     return response;
 }
 
+/**
+ * Request to sign up.
+ * @param {string} username
+ * @param {string} password
+ * @return {Promise<Response>}
+ */
 export async function signup(username, password) {
     const options = {
         method: "POST",
