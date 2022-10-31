@@ -4,6 +4,7 @@ import StrategyTile from "../../components/StrategyTile/StrategyTile";
 import SettingsTile from "../../components/SettingsTile/SettingsTile";
 import GraphicTile, {setChartData, transformData} from "../../components/GraphicTile/GraphicTile";
 import {ALGO_SERVER, checkboxFormData, timeFormData} from "../../js/web_constants";
+import {ResultTile, setResults} from "../../components/ResultTile/ResultTile";
 
 function constructRequestBody() {
     let body = {};
@@ -64,6 +65,7 @@ function Analyzer() {
                     <div class="col-md-4">
                         <SettingsTile/>
                         <button type="button" class="btn btn-primary btn-lg run-button" onClick={() => getSolution(constructRequestBody())}>Find optimal configuration</button>
+                        <ResultTile/>
                     </div>
                     <div class="col-md-8">
                         <GraphicTile/>
