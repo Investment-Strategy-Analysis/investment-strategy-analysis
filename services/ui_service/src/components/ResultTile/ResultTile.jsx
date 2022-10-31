@@ -13,10 +13,10 @@ export function ResultTile() {
                 <Match when={results().length > 0} keyed>
                     <For each={results()}>{res =>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-8">
                                 {res[0]}
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 {Math.floor(res[1] * 100) / 100}
                             </div>
                         </div>
