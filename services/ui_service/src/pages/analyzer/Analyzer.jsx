@@ -45,6 +45,7 @@ function Analyzer() {
             const bestProfit = data[0]['profit'];
             const bestPoint = data[1].map((point) => point.profit === bestProfit ? point.risk : null )
 
+            console.log(config)
             setResults(config);
             setChartData(transformData(chartDataset, bestPoint));
         }
