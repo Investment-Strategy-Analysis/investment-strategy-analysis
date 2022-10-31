@@ -11,13 +11,13 @@ export function ResultTile() {
 
             <Switch fallback={<i>empty now</i>}>
                 <Match when={results().length > 0} keyed>
-                    <For each={results()}>{(name, value) =>
+                    <For each={results()}>{res =>
                         <div class="row">
                             <div class="col-6">
-                                {name}
+                                {res[0]}
                             </div>
                             <div class="col-6">
-                                {value.Fixed(2)}
+                                {Math.floor(res[1] * 100) / 100}
                             </div>
                         </div>
                     }</For>
