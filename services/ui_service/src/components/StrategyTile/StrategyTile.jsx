@@ -8,12 +8,12 @@ function StrategyTile() {
             <div class={styles.strategy}>
                 <div class={styles.strategySelector}>
                     <select class="form-select" aria-label="Default select example">
-                        <option value="0" selected>Default</option>
+                        <option value="0" selected>Custom</option>
                         <option value="1">Risky</option>
                         <option value="2">Safety</option>
                     </select>
                 </div>
-                <div> Some text about strategy </div>
+                <div> You can create new strategy! </div>
             </div>
         </Tile>
     );

@@ -15,4 +15,9 @@ const timeFormData = [
     { name: "five_years",  radioid: "threeYears", },
 ];
 
-export { USER_SERVER, ALGO_SERVER, checkboxFormData, timeFormData };
+const initProfit = 50;
+const maxProfit = 100;
+const minProfit = 0;
+const stepProfit = 1;
+
+export { USER_SERVER, ALGO_SERVER, checkboxFormData, timeFormData, initProfit, maxProfit, minProfit, stepProfit };
