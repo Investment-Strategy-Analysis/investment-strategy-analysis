@@ -51,7 +51,6 @@ function LogIn() {
             `${USER_SERVER}/login`,
             options,
         );
-        console.log("Execution response: ", response);
 
         if (response.ok) {
             let data = await response.json();
