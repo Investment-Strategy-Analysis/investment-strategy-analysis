@@ -11,13 +11,14 @@ const checkboxFormData = [
 
 const timeFormData = [
     { name: "one_year",    radioid: "oneYear",    },
-    { name: "three_years", radioid: "twoYears",   },
-    { name: "five_years",  radioid: "threeYears", },
+    { name: "three_years", radioid: "threeYears",   },
+    { name: "five_years",  radioid: "fiveYears", },
+    { name: "ten_years",  radioid: "tenYears", },
 ];
 
 const initProfit = 50;
 const maxProfit = 100;
 const minProfit = 0;
-const stepProfit = 1;
+const stepProfit = 0.1;
 
 export { USER_SERVER, ALGO_SERVER, checkboxFormData, timeFormData, initProfit, maxProfit, minProfit, stepProfit };

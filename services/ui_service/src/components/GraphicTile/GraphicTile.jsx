@@ -2,6 +2,7 @@ import Tile from "../Tile/Tile";
 import {createSignal, createEffect} from "solid-js";
 import styles from './GraphicTile.module.css';
 import Charts from '../Chart/Chart';
+import {formatFloat} from "../../js/utils";
 
 const [chartData, setChartData] = createSignal({});
 
@@ -9,16 +10,17 @@ function transformData(dataset, bestPoint) {
     let mainColor = "#3BE9E9";
     let bestColor = "#80ea29";
     let bestBackgroundColor = "#b7e88f";
+    console.log(bestPoint)
 
     return {
         type: "line",
         data: {
-            labels: dataset.map((d) => d.profit),
+            labels: dataset.map((d) => formatFloat(d.profit)),
             datasets: [
                 {
                     label: "The best configuration",
                     fill: false,
-                    data: bestPoint,
+                    data: bestPoint.map(formatFloat),
                     borderColor: bestColor,
                     pointBackgroundColor: bestBackgroundColor,
                     pointBorderWidth: 0,
@@ -28,7 +30,7 @@ function transformData(dataset, bestPoint) {
                 {
                     label: "risk(profit)",
                     fill: false,
-                    data: dataset.map((d) => (d.risk)),
+                    data: dataset.map((d) => formatFloat(d.risk)),
                     borderColor: mainColor,
                     pointBackgroundColor: mainColor,
                     pointBorderWidth: 3,

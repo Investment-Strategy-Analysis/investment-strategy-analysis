@@ -29,7 +29,7 @@ function ProfitTile() {
                 <label for="profitRange" class="form-label"><h5>Profit</h5></label>
                 <span class={styles.profitValue}>
                     <div class="input-group">
-                        <input type="number" class="form-control" id="profitRangeNumber" min={minProfit} max={maxProfit} step="1"
+                        <input type="number" class="form-control" id="profitRangeNumber" min={minProfit} max={maxProfit} step={stepProfit}
                                onChange={() => setProfit(getRangeNumber().value)}/>
                         <div class={styles.percentGroup}>
                             <span class="input-group-text">%</span>
@@ -37,7 +37,7 @@ function ProfitTile() {
                     </div>
                 </span>
                 <div class={styles.profitRange}>
-                    <input type="range" class="form-range" id="profitRange" min={minProfit} max= step={stepProfit}
+                    <input type="range" class="form-range" id="profitRange" min={minProfit} max={maxProfit} step={stepProfit}
                            onChange={() => setProfit(getRange().value)}/>
                 </div>
             </div>
