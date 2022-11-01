@@ -14,9 +14,10 @@ function SettingsTile() {
     ]);
 
     const [ timeSettings, setTimeSettings ] = createSignal([
-        { name: "1 year",  radioid: "oneYear",    groupname: "timeRadio", checked: true },
-        { name: "3 years", radioid: "twoYears",   groupname: "timeRadio", checked: false },
-        { name: "5 years", radioid: "threeYears", groupname: "timeRadio", checked: false },
+        { name: "1 year",  radioid: "oneYear",    groupname: "timeRadio", checked: false },
+        { name: "3 years", radioid: "threeYears",   groupname: "timeRadio", checked: false },
+        { name: "5 years", radioid: "fiveYears", groupname: "timeRadio", checked: false },
+        { name: "10 years", radioid: "tenYears", groupname: "timeRadio", checked: true },
     ]);
 
     return (

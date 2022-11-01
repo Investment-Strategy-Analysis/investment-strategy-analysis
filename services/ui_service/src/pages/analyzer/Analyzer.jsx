@@ -1,5 +1,5 @@
 import styles from './Analyzer.css';
-import RiskTile from "../../components/RiskTile/RiskTile";
+import ProfitTile from "../../components/ProfitTile/ProfitTile";
 import StrategyTile from "../../components/StrategyTile/StrategyTile";
 import SettingsTile from "../../components/SettingsTile/SettingsTile";
 import GraphicTile, {setChartData, transformData} from "../../components/GraphicTile/GraphicTile";
@@ -56,7 +56,7 @@ function Analyzer() {
             <div class="container-md">
                 <div class="row mb-2">
                     <div class="col-md-4">
-                        <RiskTile/>
+                        <ProfitTile/>
                     </div>
                     <div class="col-md-8">
                         <StrategyTile/>
