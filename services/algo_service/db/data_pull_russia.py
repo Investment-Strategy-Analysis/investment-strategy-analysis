@@ -66,7 +66,6 @@ def renew_all_data_if_necessary():
                 else:
                     if min_date is None or min_date > index.date_till + datetime.timedelta(days=1):
                         min_date = index.date_till + datetime.timedelta(days=1)
-    max_date = datetime.date(2009, 10, 10)  # Delete when DB fixed!
     for date in daterange(min_date, max_date):
         if date.weekday() <= 4:
             data = pull_data(date.strftime(DATE_PULL))

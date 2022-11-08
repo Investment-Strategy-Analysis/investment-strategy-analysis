@@ -5,6 +5,7 @@ import StrategyTile from "../StrategyTile/StrategyTile";
 import SettingsTile from "../SettingsTile/SettingsTile";
 import GraphicTile, {setChartData, transformData} from "../GraphicTile/GraphicTile";
 import {ALGO_SERVER, checkboxFormData, timeFormData} from "../../assets/js/constants";
+import {setResults, ResultTile} from "../ResultTile/ResultTile";
 
 function constructRequestBody() {
     let body = {};
@@ -40,7 +41,13 @@ function Analyzer() {
         if (response.ok) {
             const data = await response.json();
             const chartDataset = data[1].sort((a, b) => a.profit - b.profit);
-            setChartData(transformData(chartDataset));
+            const bestDistribution = data[0]['distribution'];
+            const config = Object.keys(bestDistribution).map((key) => [key, bestDistribution[key]]);
+            const bestProfit = data[0]['profit'];
+            const bestPoint = data[1].map((point) => point.profit === bestProfit ? point.risk : null )
+
+            setResults(config);
+            setChartData(transformData(chartDataset, bestPoint));
         }
     }
 
@@ -60,6 +67,7 @@ function Analyzer() {
                     <div class="col-md-4">
                         <SettingsTile/>
                         <button type="button" class="btn btn-primary btn-lg run-button" onClick={() => getSolution(constructRequestBody())}>Find optimal configuration</button>
+                        <ResultTile/>
                     </div>
                     <div class="col-md-8">
                         <GraphicTile/>
