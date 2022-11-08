@@ -1,24 +1,53 @@
+import {createSignal} from "solid-js";
+
 const USER_SERVER = "http://localhost:8000";
 const ALGO_SERVER = "http://localhost:8001";
 
-const checkboxFormData = [
-    { name: "only_russian_assets",  boxid: "onlyRussianAssets" },
-    { name: "without_assets",       boxid: "withoutAssets" },
-    { name: "without_bonds",        boxid: "withoutBonds" },
-    { name: "without_gold",         boxid: "withoutGold" },
-    { name: "high_diversification", boxid: "highDiversification" },
-];
+const [checkboxSettings, setCheckboxSettings] = createSignal([
+    {name: "Only russian assets", boxid: "onlyRussianAssets"},
+    {name: "Without assets", boxid: "withoutAssets"},
+    {name: "Without bonds", boxid: "withoutBonds"},
+    {name: "Without gold", boxid: "withoutGold"},
+    {name: "High diversification", boxid: "highDiversification"},
+]);
 
-const timeFormData = [
-    { name: "one_year",    radioid: "oneYear",    },
-    { name: "three_years", radioid: "threeYears",   },
-    { name: "five_years",  radioid: "fiveYears", },
-    { name: "ten_years",  radioid: "tenYears", },
-];
+const [timeSettings, setTimeSettings] = createSignal([
+    {name: "1 year", radioid: "oneYear", checked: false},
+    {name: "3 years", radioid: "threeYears", checked: false},
+    {name: "5 years", radioid: "fiveYears", checked: false},
+    {name: "10 years", radioid: "tenYears", checked: true},
+]);
 
 const initProfit = 50;
 const maxProfit = 100;
 const minProfit = 0;
 const stepProfit = 0.1;
 
-export { USER_SERVER, ALGO_SERVER, checkboxFormData, timeFormData, initProfit, maxProfit, minProfit, stepProfit };
+const [profit, setProfit] = createSignal(initProfit);
+
+const [strategyOption, setStrategyOption] = createSignal([
+    {name: "Custom", description: "You can create new strategy!", id: "custom"},
+    {name: "Safety", description: "Minimal risk", id: "safety"},
+    {name: "Risky", description: "Maximal profit", id: "risky"},
+]);
+
+const [strategy, setStrategy] = createSignal(strategyOption()[0])
+
+export {
+    USER_SERVER,
+    ALGO_SERVER,
+    checkboxSettings,
+    setCheckboxSettings,
+    timeSettings,
+    setTimeSettings,
+    initProfit,
+    maxProfit,
+    minProfit,
+    stepProfit,
+    profit,
+    setProfit,
+    strategyOption,
+    setStrategyOption,
+    strategy,
+    setStrategy
+};

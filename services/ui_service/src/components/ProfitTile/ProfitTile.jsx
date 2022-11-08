@@ -1,10 +1,9 @@
 import styles from './ProfitTile.module.css';
 import Tile from "../Tile/Tile";
-import {createEffect, createSignal} from "solid-js";
-import {initProfit, maxProfit, minProfit, stepProfit} from "../../js/web_constants";
+import {createEffect} from "solid-js";
+import {maxProfit, minProfit, profit, setProfit, stepProfit} from "../../js/web_constants";
 
 function ProfitTile() {
-    const [profit, setProfit] = createSignal(initProfit);
     const getRange = () => document.getElementById("profitRange");
     const getRangeNumber = () => document.getElementById("profitRangeNumber");
 

@@ -3,22 +3,9 @@ import { createSignal, For } from 'solid-js';
 import Tile from "../Tile/Tile";
 import SettingCheckbox from "../SettingCheckbox/SettingCheckbox";
 import SettingRadio from "../SettingRadio/SettingRadio";
+import {checkboxSettings, timeSettings} from "../../js/web_constants";
 
 function SettingsTile() {
-    const [ checkboxSettings, setCheckboxSettings ] = createSignal([
-        { name: "Only russian assets",  boxid: "onlyRussianAssets" },
-        { name: "Without assets",       boxid: "withoutAssets" },
-        { name: "Without bonds",        boxid: "withoutBonds" },
-        { name: "Without gold",         boxid: "withoutGold" },
-        { name: "High diversification", boxid: "highDiversification" },
-    ]);
-
-    const [ timeSettings, setTimeSettings ] = createSignal([
-        { name: "1 year",  radioid: "oneYear",    groupname: "timeRadio", checked: false },
-        { name: "3 years", radioid: "threeYears",   groupname: "timeRadio", checked: false },
-        { name: "5 years", radioid: "fiveYears", groupname: "timeRadio", checked: false },
-        { name: "10 years", radioid: "tenYears", groupname: "timeRadio", checked: true },
-    ]);
 
     return (
         <Tile>
@@ -33,7 +20,7 @@ function SettingsTile() {
                     <h5>Time period</h5>
                     <div class="btn-group" role="group" aria-label="Time period">
                         <For each={timeSettings()}>{(radio, _) =>
-                            <SettingRadio name={radio.name} radioid={radio.radioid} groupname={radio.groupname} checked={radio.checked}/>
+                            <SettingRadio name={radio.name} radioid={radio.radioid} groupname="timeRadio" checked={radio.checked}/>
                         }</For>
                     </div>
                 </form>
