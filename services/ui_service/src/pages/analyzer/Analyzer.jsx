@@ -3,17 +3,17 @@ import ProfitTile from "../../components/ProfitTile/ProfitTile";
 import StrategyTile from "../../components/StrategyTile/StrategyTile";
 import SettingsTile from "../../components/SettingsTile/SettingsTile";
 import GraphicTile, {setChartData, transformData} from "../../components/GraphicTile/GraphicTile";
-import {ALGO_SERVER, checkboxFormData, timeFormData} from "../../js/web_constants";
+import {ALGO_SERVER, checkboxSettings, profit, timeSettings} from "../../js/web_constants";
 import {ResultTile, setResults} from "../../components/ResultTile/ResultTile";
 
 function constructRequestBody() {
     let body = {};
 
     let params = {};
-    checkboxFormData.forEach(element => params[element.name] = document.getElementById(element.boxid).checked);
-    timeFormData.forEach(element => params[element.name] = document.getElementById(element.radioid).checked);
+    checkboxSettings().forEach(element => params[element.boxid] = document.getElementById(element.boxid).checked);
+    timeSettings().forEach(element => params[element.radioid] = document.getElementById(element.radioid).checked);
 
-    body["target_profit"] = document.getElementById("profitRange").value / 100
+    body["target_profit"] = profit() / 100
     body["checkboxes"] = params;
     body["upper_border"] = {}
     body["lower_border"] = {}
