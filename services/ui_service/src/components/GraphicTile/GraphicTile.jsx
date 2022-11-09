@@ -10,7 +10,6 @@ function transformData(dataset, bestPoint) {
     let mainColor = "#3BE9E9";
     let bestColor = "#80ea29";
     let bestBackgroundColor = "#b7e88f";
-    console.log(bestPoint)
 
     return {
         type: "line",
