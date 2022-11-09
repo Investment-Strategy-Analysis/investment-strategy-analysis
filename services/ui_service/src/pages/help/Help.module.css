@@ -5,14 +5,11 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	background-color: #f0f0f0;
+	font-size: large;
 }
 
 .MainTitle {
 	padding-top: 50px;
 	text-align: center;
-}
-
-.Comment {
-	padding-top: 20px;
-	text-align: center;
+	padding-bottom: 20px;
 }
