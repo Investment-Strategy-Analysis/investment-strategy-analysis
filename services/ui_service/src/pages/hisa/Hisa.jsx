@@ -25,12 +25,12 @@ function Hisa() {
                         Investment Strategy<br/>
                         Analysis
                     </h1>
-                    <ul class="ad">
-                        <li>Invest with HISA  👨‍🎓 </li>
+                    <ul class={styles.Ul}>
+                        <li class={styles.Li}>Invest with HISA  👨‍🎓 </li>
                         <br/>
-                        <li>Select suitable asset options 💰💶</li>
+                        <li class={styles.Li}>Select suitable asset options 💰💶</li>
                         <br/>
-                        <li>Create your own business plan 🧰</li>
+                        <li class={styles.Li}>Create your own business plan 🧰</li>
                     </ul>
                 </div>
 
