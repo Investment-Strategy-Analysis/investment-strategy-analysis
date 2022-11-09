@@ -10,8 +10,8 @@ function constructRequestBody() {
     let body = {};
 
     let params = {};
-    checkboxSettings().forEach(element => params[element.boxid] = document.getElementById(element.boxid).checked);
-    timeSettings().forEach(element => params[element.radioid] = document.getElementById(element.radioid).checked);
+    checkboxSettings().forEach(element => params[element.id] = document.getElementById(element.id).checked);
+    timeSettings().forEach(element => params[element.id] = document.getElementById(element.id).checked);
 
     body["target_profit"] = profit() / 100
     body["checkboxes"] = params;
