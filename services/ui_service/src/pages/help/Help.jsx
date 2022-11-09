@@ -11,7 +11,7 @@ function Help() {
                         income level and your willingness to take risks.
                     </p>
                     <ul>
-                        <li>The title page is available <a href="/hisa/">here</a>. You can also get
+                        <li>The title page is available <a href="/">here</a>. You can also get
                             to it by clicking on the <strong>HISA</strong> logo
                             on the left corner.
                         </li>
