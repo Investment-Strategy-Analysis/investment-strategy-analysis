@@ -30,6 +30,7 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
     front = list(STRATEGIES.values())  # DEBUG
     best = front[0]
     for ans in front:
-        if abs(ans.profit - restriction.target_profit) < abs(best.profit - restriction.target_profit):
+        if abs(ans.profit - 1 - restriction.target_profit) < abs(best.profit - 1 - restriction.target_profit):
             best = ans
+    logging.info(f"Target = {restriction.target_profit}, Best = {best}, Front = {front}")
     return best, front

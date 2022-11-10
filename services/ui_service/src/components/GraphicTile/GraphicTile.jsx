@@ -5,40 +5,80 @@ import Charts from '../Chart/Chart';
 
 const [chartData, setChartData] = createSignal({});
 
-function transformData(dataset) {
+function transformData(dataset, bestPoint) {
+    let mainColor = "#3BE9E9";
+    let bestColor = "#80ea29";
+    let bestBackgroundColor = "#b7e88f";
+
     return {
         type: "line",
         data: {
             labels: dataset.map((d) => d.profit),
             datasets: [
                 {
+                    label: "The best configuration",
+                    fill: false,
+                    data: bestPoint,
+                    borderColor: bestColor,
+                    pointBackgroundColor: bestBackgroundColor,
+                    pointBorderWidth: 0,
+                    pointRadius: 9,
+                    pointHoverRadius: 10,
+                },
+                {
                     label: "risk(profit)",
                     fill: false,
                     data: dataset.map((d) => (d.risk)),
-                    borderColor: "#3BE9E9"
-                }
-            ]
+                    borderColor: mainColor,
+                    pointBackgroundColor: mainColor,
+                    pointBorderWidth: 3,
+                    pointRadius: 4,
+                    pointHoverRadius: 9,
+                },
+            ],
         },
+        options: {
+            scales: {
+                xAxes: [{
+                    offset: true,
+                    gridLines: {
+                        offsetGridLines: false,
+                        display: true,
+                        borderDash: [6, 2],
+                        tickMarkLength: 5
+                    },
+                }],
+                yAxes: [{
+                    offset: true,
+                    gridLines: {
+                        offsetGridLines: false,
+                        display: true,
+                        borderDash: [6, 2],
+                        tickMarkLength: 5
+                    },
+                }]
+            },
+        }
     }
 }
 
 
-function GraphicTile() {
+    function GraphicTile() {
 
-    createEffect(() => {
-        // setChartData(transformData([]))
-    });
+        createEffect(() => {
+            // setChartData(transformData([]))
+        });
 
-    return (
-        <Tile>
-            <div class={styles.GraphicTile}>
-                <h3><b>Risk</b> vs <b>Profit</b></h3>
-                <Charts/>
-            </div>
-        </Tile>
-    );
-}
+        return (
+            <Tile>
+                <div class={styles.GraphicTile}>
+                    <h3><b>Risk</b> vs <b>Profit</b></h3>
+                    <Charts/>
+                </div>
+            </Tile>
+        );
+    }
 
-export {chartData, setChartData, transformData}
+    export {chartData, setChartData, transformData}
 
-export default GraphicTile;
+    export default GraphicTile;

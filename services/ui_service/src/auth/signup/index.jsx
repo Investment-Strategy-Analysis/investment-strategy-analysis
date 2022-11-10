@@ -44,7 +44,7 @@ function SignUp() {
             console.log("OK");
             window.location.replace(`/auth/login/`)
         } else {
-            alert(response.body)
+            alert("This login already used!")
         }
     }
 

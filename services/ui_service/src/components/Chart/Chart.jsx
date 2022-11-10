@@ -1,5 +1,5 @@
-import SolidChart from "solid-chart.js";
 import { chartData } from '../GraphicTile/GraphicTile';
+import SolidChart from "solid-charts-js";
 
 function Charts() {
 
