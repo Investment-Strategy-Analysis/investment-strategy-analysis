@@ -4,7 +4,7 @@ services:
   user-service:
     container_name: user_service
     build:
-      context: services/user_service
+      context: services
       dockerfile: user-service.dockerfile
     networks:
       - backend
@@ -20,7 +20,7 @@ services:
   algo-service:
     container_name: algo_service
     build:
-      context: services/algo_service
+      context: services
       dockerfile: algo-service.dockerfile
     networks:
       - backend

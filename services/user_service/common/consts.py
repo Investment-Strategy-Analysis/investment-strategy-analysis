@@ -1,6 +1,7 @@
 import aiohttp
+from services.common.consts import DATEFMT
 
-DATEFMT = "%Y-%m-%dT%H:%M:%S"
+
 JWT_DATEFMT = "%Y-%m-%d %H:%M:%S.%f"
 OK = "ok"
 

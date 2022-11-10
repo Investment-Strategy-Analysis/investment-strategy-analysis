@@ -5,10 +5,18 @@ from services.user_service.common.helpers import db_session, db_engine
 from services.user_service.db.tables import Base
 from services.user_service.api.authorization.utils import get_hashed_password
 import services.user_service.db.tables as T
+from services.common.helpers import to_analysis_time
 
 __engine = db_engine()
 __session = db_session(__engine)
 Base.metadata.create_all(__engine)  # create tables if not exists
+
+
+def __analysis_time_int(analysis_time):
+    if isinstance(analysis_time, str):
+        return to_analysis_time(analysis_time).value.days
+    else:
+        return analysis_time
 
 
 def get_user_by_login(login: str) -> Optional[User]:
@@ -33,7 +41,7 @@ def save_user(user: User):
         checkboxes=user.settings.restrictions.checkboxes,
         upper_border=user.settings.restrictions.upper_border,
         lower_border=user.settings.restrictions.lower_border,
-        analysis_time=user.settings.restrictions.analysis_time)
+        analysis_time=__analysis_time_int(user.settings.restrictions.analysis_time))
     __session.add(restrictions)
     settings = T.Settings(
         strategy=user.settings.strategy,
@@ -56,7 +64,7 @@ def update_settings(login: str, settings: Settings):
     user.settings.restrictions.checkboxes = settings.restrictions.checkboxes
     user.settings.restrictions.upper_border = settings.restrictions.upper_border
     user.settings.restrictions.lower_border = settings.restrictions.lower_border
-    user.settings.restrictions.analysis_time = settings.restrictions.analysis_time
+    user.settings.restrictions.analysis_time = __analysis_time_int(settings.restrictions.analysis_time)
     user.settings.strategy = settings.strategy
     user.settings.risk = settings.risk
     __session.add(user)
@@ -66,7 +74,7 @@ def update_settings(login: str, settings: Settings):
 
 def update_user_settings(login: str, user_settings: UserSettings):
     user = __session.query(T.User).filter(T.User.login == login).first()
-    assert user_settings.last_answer is None, "last answer can't update"
+    # assert user_settings.last_answer is None, "last answer can't update"  FIXME
     user.user_settings.photo = user_settings.photo
     user.user_settings.email = user_settings.email
     __session.add(user)
