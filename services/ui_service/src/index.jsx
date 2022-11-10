@@ -30,6 +30,10 @@ const routes = [
         path: '/auth/signup',
         component: lazy(() => import('./pages/auth/signup/SignUp'))
     },
+    {
+        path: '*',
+        component: lazy(() => import('./pages/notFound/NotFound'))
+    },
 ];
 
 function App() {
