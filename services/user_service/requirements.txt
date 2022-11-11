@@ -9,4 +9,8 @@ python-jose
 passlib
 python-multipart
 bcrypt
+psycopg2-binary
+sqlmodel
+SQLAlchemy
+deprecated
 pytest

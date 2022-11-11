@@ -12,7 +12,9 @@ def get_hashed_password(password: str) -> str:
     return password_context.hash(password)
 
 
-def verify_password(password: str, hashed_pass: str) -> bool:
+def verify_password(password: str, hashed_pass: str, pass_hashed: bool = False) -> bool:
+    if pass_hashed:
+        return password == hashed_pass
     return password_context.verify(password, hashed_pass)
 
 
