@@ -1,6 +1,6 @@
-from typing import Optional, List, Dict
+from typing import Optional, List
 from pydantic import BaseModel
-
+from services.common.abstract import *
 
 class Email(BaseModel):
     email: str
@@ -12,16 +12,6 @@ class Password(BaseModel):
 
 class Photo(BaseModel):
     photo: bytes
-
-
-class Restriction(BaseModel):
-    target_profit: float = 0  # used to find best point in pareto front
-    checkboxes: Dict[str, bool] = dict()     # true/false For all checkboxes.
-    upper_border: Optional[Dict[str, float]] = None  # [0 .. 1] less then. For all CURRENT_INDEXES.
-                                                     # Or None if it isn't advanced request.
-    lower_border: Optional[Dict[str, float]] = None  # [0 .. 1] more then. For all CURRENT_INDEXES.
-                                                     # Or None if it isn't advanced request.
-    analysis_time: int = 0                     # how many days to analyse
 
 
 class Settings(BaseModel):
@@ -38,7 +28,7 @@ class LastAnswer(BaseModel):
 
 
 class UserSettings(BaseModel):
-    last_answer: Optional[LastAnswer] = LastAnswer()
+    last_answer: Optional[LastAnswer] = None
     photo: Optional[bytes] = None
     email: Optional[str] = None
     # other extra info
@@ -58,12 +48,6 @@ class TokenPayload(BaseModel):
 
 class AlgorithmParams(BaseModel):
     restriction: Restriction
-
-
-# copy-paste from algo-service
-class InvestStrategy(BaseModel):
-    profit: float = 0
-    distribution: Dict[str, float] = dict()  # [0 .. 1] (= % / 100) For all CURRENT_INDEXES.
 
 
 class Tokens(BaseModel):

@@ -1,9 +1,8 @@
 import logging
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-
-from services.algo_service.common.consts import DATEFMT
 from services.algo_service.common.abstract import Restriction
+from services.algo_service.common.consts import DATEFMT
 from services.algo_service.algorithm.algorithm_api import get_solutions
 
 logging.basicConfig(format='%(asctime)s.%(msecs)03dZ %(name)s %(levelname)s %(message)s',

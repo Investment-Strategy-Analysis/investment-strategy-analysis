@@ -10,6 +10,8 @@ from services.user_service.api.authorization.deps import get_current_user, refre
 from services.user_service.common.helpers import post
 from services.user_service.common.endpoints import *
 from deprecated import deprecated
+from services.common.helpers import to_analysis_time
+from services.common.singletons import STRATEGIES
 
 logging.basicConfig(format='%(asctime)s.%(msecs)03dZ %(name)s %(levelname)s %(message)s',
                     datefmt=DATEFMT,
@@ -126,9 +128,27 @@ async def delete_user(user: User = Depends(get_current_user)):
     return OK
 
 
+### algorithm
+@app.get('/settings/analysis_times', summary="show possible analysis times")
+async def get_analysis_times() -> AnyList:  # data=[AnalysisTimeInfo]
+    return AnyList(data=[time.value for time in AnalysisTime])
+
+
+@app.get('/settings/checkboxes', summary="show possible checkboxes")
+async def get_checkboxes() -> AnyList:      # data=[CheckboxInfo]
+    return AnyList(data=[checkbox.value for checkbox in Checkbox])
+
+
+@app.get('/settings/strategies', summary="show possible strategies")
+async def get_strategies() -> AnyList:      # data=[InvestStrategy]
+    return AnyList(data=list(STRATEGIES.values()))
+
+
 # connectors (also without auth later)
 @app.post('/solutions', summary="Get solutions")
 async def post_solutions(restriction: Restriction, user: User = Depends(get_current_user)) -> Tuple[InvestStrategy, List[InvestStrategy]]:
     logging.info(f"solutions, {user.login}")
+    if isinstance(restriction.analysis_time, str):
+        restriction.analysis_time = to_analysis_time(restriction.analysis_time).value.days
     algorithm_params = AlgorithmParams(restriction=restriction)
     return await post(SOLUTIONS, algorithm_params.json())
