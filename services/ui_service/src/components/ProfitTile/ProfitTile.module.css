@@ -1,0 +1,16 @@
+.profit {
+
+}
+
+.profitValue {
+    float: right;
+}
+
+.percentGroup span {
+    border-radius: 0 0.375rem 0.375rem 0;
+}
+
+.profitRange {
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
