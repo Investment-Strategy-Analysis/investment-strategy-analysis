@@ -35,8 +35,8 @@ jobs:
         
     - name: Run algo tests
       run: |
-        docker run investment-strategy-analysis-algo-service:latest pytest tests/* 
+        docker run investment-strategy-analysis-algo-service:latest pytest
         
     - name: Run user tests
       run: |
-        docker run investment-strategy-analysis-user-service:latest pytest tests/*
+        docker run investment-strategy-analysis-user-service:latest pytest
