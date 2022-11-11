@@ -9,3 +9,4 @@ xmltodict
 psycopg2-binary
 sqlmodel
 SQLAlchemy
+pytest
