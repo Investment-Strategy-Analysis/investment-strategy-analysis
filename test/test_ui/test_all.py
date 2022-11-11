@@ -1,4 +1,3 @@
-from test.test_ui.signup_test import SignUpTests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromiumOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
@@ -14,6 +13,9 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.opera import OperaDriverManager
 
+from test.test_ui.signup_test import SignUpTests
+from test.test_ui.login_test import LogInTests
+
 if __name__ == '__main__':
     driver_options = ChromiumOptions()
     driver_options.add_argument("--headless")
@@ -23,6 +25,7 @@ if __name__ == '__main__':
                               options=driver_options)
     print('Starting tests for Chromium...')
     SignUpTests(driver)
+    LogInTests(driver)
     print('All tests passed')
     print('===')
     driver.close()

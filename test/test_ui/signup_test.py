@@ -1,7 +1,10 @@
 import random
 import string
 import time
+
 from selenium.webdriver.common.by import By
+
+import page_checkers
 
 
 def generate_random_string(length):
@@ -43,12 +46,7 @@ class SignUpTests:
         self.driver.get('http://localhost:5001/auth/signup/')
         time.sleep(10)
 
-        assert 'Sign Up to HISA' in self.driver.page_source
-        assert 'Password' in self.driver.page_source
-        assert 'Password again' in self.driver.page_source
-        assert 'Sign up' in self.driver.page_source
-        assert 'Analyzer' in self.driver.page_source
-        assert 'Help' in self.driver.page_source
+        page_checkers.sign_up_page_check(self.driver)
 
     def password_mismatch_test(self):
         """Поле повторного ввода пароля подсвечивается красным, если пароли
@@ -77,7 +75,27 @@ class SignUpTests:
         sign_up_button.click()
         time.sleep(10)
 
-        assert 'Log In to HISA' in self.driver.page_source
+        page_checkers.log_in_page_check(self.driver)
+
+    def sign_up_once_again_test(self):
+        """Пробуем зарегистрировать еще одного пользователя"""
+        self.driver.get('http://localhost:5001/auth/signup/')
+        time.sleep(10)
+
+        username_input = self.page_objects.get_username_input()
+        username_input.send_keys('Ivan')
+
+        password_input = self.page_objects.get_password_input()
+        password_input.send_keys('aaa')
+
+        password_again_input = self.page_objects.get_password_again_input()
+        password_again_input.send_keys('aaa')
+
+        sign_up_button = self.page_objects.get_sign_up_button()
+        sign_up_button.click()
+        time.sleep(10)
+
+        page_checkers.log_in_page_check(self.driver)
 
     def analyzer_link_test(self):
         """При нажатии на кнопку 'Analyzer' попадаем на главную страницу выбора стратегии"""
@@ -88,16 +106,12 @@ class SignUpTests:
         analyzer_link.click()
         time.sleep(10)
 
-        assert 'Strategy' in self.driver.page_source
-        assert 'Settings' in self.driver.page_source
-        assert 'Risk' in self.driver.page_source
-        assert 'Profit' in self.driver.page_source
-        assert 'Time period' in self.driver.page_source
-        assert 'Find optimal configuration' in self.driver.page_source
+        page_checkers.main_page_check(self.driver)
 
     def run_all_tests(self):
         self.characteristic_inscriptions_test()
         self.password_mismatch_test()
         self.successful_sign_up_test()
+        self.sign_up_once_again_test()
         self.analyzer_link_test()
         print('Sign up tests passed')
