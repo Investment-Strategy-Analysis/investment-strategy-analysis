@@ -1,0 +1,15 @@
+.create-account {
+	width: 340px;
+	margin: 0 auto;
+	padding: 20px;
+	text-align: center;
+	border-radius: 6px;
+	border: 1px solid #d0d7de;
+}
+
+.error-message {
+	text-align: center;
+	color: #af0000;
+	padding-bottom: 15px;
+	display: none;
+}

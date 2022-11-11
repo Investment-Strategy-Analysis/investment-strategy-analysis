@@ -1,19 +1,29 @@
 import styles from './StrategyTile.module.css';
 import Tile from "../Tile/Tile";
+import {setStrategy, strategy, strategyOption} from "../../js/web_constants";
+import {For} from "solid-js";
 
 function StrategyTile() {
+
+    function handleStrategyOptionClick(event) {
+        let option = event.currentTarget.value;
+        let strategyData = strategyOption().filter(it => it.id === option)[0];
+
+        setStrategy(strategyData);
+    }
+
     return (
         <Tile>
             <h5>Strategy</h5>
             <div class={styles.strategy}>
                 <div class={styles.strategySelector}>
-                    <select class="form-select" aria-label="Default select example">
-                        <option value="0" selected>Default</option>
-                        <option value="1">Risky</option>
-                        <option value="2">Safety</option>
+                    <select class="form-select" id="strategyOptionSelector" onChange={handleStrategyOptionClick}>
+                        <For each={strategyOption()}>{(option, _) =>
+                            <option value={option.id}> {option.name} </option>
+                        }</For>
                     </select>
                 </div>
-                <div> Some text about strategy </div>
+                <div> {strategy().description} </div>
             </div>
         </Tile>
     );

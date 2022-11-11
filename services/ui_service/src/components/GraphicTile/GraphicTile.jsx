@@ -2,6 +2,7 @@ import Tile from "../Tile/Tile";
 import {createSignal, createEffect} from "solid-js";
 import styles from './GraphicTile.module.css';
 import Charts from '../Chart/Chart';
+import {formatFloat} from "../../js/utils";
 
 const [chartData, setChartData] = createSignal({});
 
@@ -13,12 +14,12 @@ function transformData(dataset, bestPoint) {
     return {
         type: "line",
         data: {
-            labels: dataset.map((d) => d.profit),
+            labels: dataset.map((d) => formatFloat(d.profit)),
             datasets: [
                 {
                     label: "The best configuration",
                     fill: false,
-                    data: bestPoint,
+                    data: bestPoint.map(formatFloat),
                     borderColor: bestColor,
                     pointBackgroundColor: bestBackgroundColor,
                     pointBorderWidth: 0,
@@ -28,7 +29,7 @@ function transformData(dataset, bestPoint) {
                 {
                     label: "risk(profit)",
                     fill: false,
-                    data: dataset.map((d) => (d.risk)),
+                    data: dataset.map((d) => formatFloat(d.risk)),
                     borderColor: mainColor,
                     pointBackgroundColor: mainColor,
                     pointBorderWidth: 3,
@@ -63,22 +64,22 @@ function transformData(dataset, bestPoint) {
 }
 
 
-    function GraphicTile() {
+function GraphicTile() {
 
-        createEffect(() => {
-            // setChartData(transformData([]))
-        });
+    createEffect(() => {
+        // setChartData(transformData([]))
+    });
 
-        return (
-            <Tile>
-                <div class={styles.GraphicTile}>
-                    <h3><b>Risk</b> vs <b>Profit</b></h3>
-                    <Charts/>
-                </div>
-            </Tile>
-        );
-    }
+    return (
+        <Tile>
+            <div class={styles.GraphicTile}>
+                <h3><b>Risk</b> vs <b>Profit</b></h3>
+                <Charts/>
+            </div>
+        </Tile>
+    );
+}
 
-    export {chartData, setChartData, transformData}
+export {chartData, setChartData, transformData}
 
-    export default GraphicTile;
+export default GraphicTile;
