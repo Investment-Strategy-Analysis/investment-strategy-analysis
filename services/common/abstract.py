@@ -65,7 +65,7 @@ class InvestStrategy(BaseModel):
     description: Optional[str] = None
     profit: float = 0
     risk: float = 0
-    distribution: Dict[str, float] = {Index.RTSI.name : 1}   # key - Index.name, [0 .. 1] (= % / 100) For all CURRENT_INDEXES
+    distribution: Dict[str, float] = {Index.IMOEX.name: 1}   # key - Index.name, [0 .. 1] (= % / 100) For all CURRENT_INDEXES
 
 
 class Restriction(BaseModel):
