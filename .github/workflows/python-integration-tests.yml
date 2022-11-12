@@ -44,14 +44,20 @@ jobs:
         python -m pip install pytest requests
 
   algo_test:
-    - needs: build
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
     - uses: actions/checkout@v3
     - name: Run algo integration tests
       run: |
         pytest test/test_integration/test_algo
 
   user_test:
-    - needs: build
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
     - uses: actions/checkout@v3
     - name: Run user integration tests
       run: |
