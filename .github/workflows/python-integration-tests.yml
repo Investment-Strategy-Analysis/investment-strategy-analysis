@@ -50,6 +50,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Run algo integration tests
+      uses: actions/setup-python@v3
       run: |
         pytest test/test_integration/test_algo
 
@@ -60,5 +61,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Run user integration tests
+      uses: actions/setup-python@v3
       run: |
         pytest test/test_integration/test_user
