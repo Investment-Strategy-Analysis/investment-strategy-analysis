@@ -48,19 +48,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
     - name: Run algo integration tests
-      uses: actions/setup-python@v3
       run: |
-        pytest test/test_integration/test_algo
+        python -m pytest test/test_integration/test_algo
 
   user_test:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
     - name: Run user integration tests
-      uses: actions/setup-python@v3
       run: |
-        pytest test/test_integration/test_user
+        python -m pytest test/test_integration/test_user
