@@ -43,20 +43,10 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install pytest requests
 
-  algo_test:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Run algo integration tests
       run: |
         python -m pytest test/test_integration/test_algo
 
-  user_test:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Run user integration tests
       run: |
         python -m pytest test/test_integration/test_user
