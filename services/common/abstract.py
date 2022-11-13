@@ -50,7 +50,7 @@ class AnalysisTime(Enum):
 
 class Index(Enum):
     IMOEX = InvestItem(name='Индекс МосБиржи индекс РТС (IMOEX)', country='russia', id='IMOEX')
-    RGBI = InvestItem(name='Индекс государственных облигаций РФ (RGBI)', country='russia', id='RGBI')
+    # RGBI = InvestItem(name='Индекс государственных облигаций РФ (RGBI)', country='russia', id='RGBI')
     MOEXBC = InvestItem(name='Индекс Мосбиржи голубые фишки (MOEXBC)', country='russia', id='MOEXBC')
     MOEXBMI = InvestItem(name='Индекс широкого рынка (MOEXBMI)', country='russia', id='MOEXBMI')
     MCXSM = InvestItem(name='Индекс средней и малой капитализации (MCXSM)', country='russia', id='MCXSM')

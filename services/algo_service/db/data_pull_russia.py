@@ -45,9 +45,11 @@ def daterange(start_date, end_date):
 
 
 def renew_all_data_if_necessary():
+    logging.info(f'Pulling Russian Data.')
     if not CURRENT_INDEXES['IMOEX'].history:
-        for (_, index) in CURRENT_INDEXES.items():
+        for index in CURRENT_INDEXES.values():
             load_history(index)
+    logging.info(f'Indes = {CURRENT_INDEXES}')
     dates = pull_date()
     needs_new_data = []
     min_date = None
@@ -68,6 +70,8 @@ def renew_all_data_if_necessary():
                 else:
                     if min_date is None or min_date > index.date_till + datetime.timedelta(days=1):
                         min_date = index.date_till + datetime.timedelta(days=1)
+    min_date = datetime.date(year=2020, month=9, day=4)
+    max_date = datetime.date(year=2021, month=9, day=4)
     for date in daterange(min_date, max_date):
         if date.weekday() <= 4:
             data = pull_data(date.strftime(DATE_PULL))
@@ -90,8 +94,9 @@ def renew_all_data_if_necessary():
                         index.date_from = index.date_till = date
             if random.randint(0, 90) == 0:
                 logging.info(f'Current date {date}. End date {max_date}')
-                for index_id in data.keys():
-                    save_history(CURRENT_INDEXES[index_id])
+                #for index_id in data.keys():
+                #    save_history(CURRENT_INDEXES[index_id])
     logging.info(f'Russian data pulling completed.')
-    for (_, index) in CURRENT_INDEXES.items():
-        save_history(index)
+    #for (_, index) in CURRENT_INDEXES.items():
+    #    save_history(index)
+    logging.info(f'Indes = {CURRENT_INDEXES}')
