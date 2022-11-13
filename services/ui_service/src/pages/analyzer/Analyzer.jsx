@@ -62,7 +62,7 @@ function Analyzer() {
 
     return (
         <>
-            <div class="container-md">
+            <div class="container-lg">
                 <div class="row mb-2">
                     <div class="col-md-4">
                         <ProfitTile/>
