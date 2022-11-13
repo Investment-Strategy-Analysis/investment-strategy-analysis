@@ -1,7 +1,7 @@
 import styles from './ResultTile.css';
 import Tile from "../Tile/Tile";
 import {createSignal, Match, Switch} from "solid-js";
-import {formatFloat} from "../../js/utils";
+import {formatFloatValue} from "../../js/utils";
 
 const [results, setResults] = createSignal([]);
 
@@ -18,7 +18,7 @@ export function ResultTile() {
                                 {res[0]}
                             </div>
                             <div class="col-4">
-                                {formatFloat(res[1])}
+                                {formatFloatValue(res[1])}
                             </div>
                         </div>
                     }</For>

@@ -1,6 +1,6 @@
 import styles from './StrategyTile.module.css';
 import Tile from "../Tile/Tile";
-import {setStrategy, strategy, strategyOption} from "../../js/web_constants";
+import {setStrategy, strategy, strategyOption} from "../../js/settings";
 import {For} from "solid-js";
 
 function StrategyTile() {

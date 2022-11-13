@@ -4,7 +4,7 @@ import {createEffect, createSignal, For} from 'solid-js';
 import Tile from "../Tile/Tile";
 import SettingCheckbox from "../SettingCheckbox/SettingCheckbox";
 import SettingRadio from "../SettingRadio/SettingRadio";
-import {checkboxSettings, timeSettings} from "../../js/web_constants";
+import {checkboxSettings, timeSettings} from "../../js/settings";
 
 function SettingsTile() {
     const activateVerticalMode = (width) => 768 < width && width <= 992
