@@ -1,24 +1,24 @@
-from typing import List, Tuple
 import datetime
+import logging
+from typing import List, Tuple
 from services.algo_service.common.abstract import Restriction, InvestStrategy, Index, Checkbox
-from services.algo_service.common.singletons import LAST_RENEW_TIME
+from services.algo_service.common.singletons import STRATEGIES, LAST_RENEW_TIME
 from services.algo_service.db.data_pull_russia import renew_all_data_if_necessary
-from services.algo_service.common.singletons import STRATEGIES
 
 
 def parse_checkboxes(restriction: Restriction):
     if restriction.upper_border is None:
-        restriction.upper_border={index.name: 1 for index in Index}
-        restriction.lower_border={index.name: 0 for index in Index}
-        if restriction.checkboxes[Checkbox.ONLY_RUSSIAN.name]:
+        restriction.upper_border = {index.value.id: 1 for index in Index}
+        restriction.lower_border = {index.value.id: 0 for index in Index}
+        if restriction.checkboxes[Checkbox.ONLY_RUSSIAN.value.id]:
             pass
-        if restriction.checkboxes[Checkbox.WITHOUT_ASSETS.name]:
+        if restriction.checkboxes[Checkbox.WITHOUT_ASSETS.value.id]:
             pass
-        if restriction.checkboxes[Checkbox.WITHOUT_BONDS.name]:
+        if restriction.checkboxes[Checkbox.WITHOUT_BONDS.value.id]:
             pass
-        if restriction.checkboxes[Checkbox.WITHOUT_GOLD.name]:
+        if restriction.checkboxes[Checkbox.WITHOUT_GOLD.value.id]:
             pass
-        if restriction.checkboxes[Checkbox.HIGH_DIVERSIFICATION.name]:
+        if restriction.checkboxes[Checkbox.HIGH_DIVERSIFICATION.value.id]:
             restriction.upper_border = {k: min(0.1, v) for (k, v) in restriction.upper_border.items()}
 
 
