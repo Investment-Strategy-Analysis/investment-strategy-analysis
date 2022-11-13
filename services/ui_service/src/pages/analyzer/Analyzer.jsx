@@ -3,7 +3,7 @@ import ProfitTile from "../../components/ProfitTile/ProfitTile";
 import StrategyTile from "../../components/StrategyTile/StrategyTile";
 import SettingsTile from "../../components/SettingsTile/SettingsTile";
 import GraphicTile, {setChartData, transformData} from "../../components/GraphicTile/GraphicTile";
-import {ALGO_SERVER, checkboxSettings, profit, timeSettings} from "../../js/web_constants";
+import {ALGO_SERVER, checkboxSettings, profit, timeSettings, USER_SERVER} from "../../js/web_constants";
 import {ResultTile, setResults} from "../../components/ResultTile/ResultTile";
 
 /**
@@ -12,16 +12,16 @@ import {ResultTile, setResults} from "../../components/ResultTile/ResultTile";
  */
 function constructRequestBody() {
     let body = {};
-
     let params = {};
-    checkboxSettings().forEach(element => params[element.id] = document.getElementById(element.id).checked);
-    timeSettings().forEach(element => params[element.id] = document.getElementById(element.id).checked);
+
+    let time_period = timeSettings().filter(element => document.getElementById(element.id).checked)[0].id.toUpperCase();
+    checkboxSettings().forEach(element => params[element.id.toUpperCase()] = document.getElementById(element.id).checked);
 
     body["target_profit"] = profit() / 100
     body["checkboxes"] = params;
+    body["analysis_time"] = time_period;
     body["upper_border"] = {}
     body["lower_border"] = {}
-    body["analysis_time"] = 0
 
     return body;
 }
@@ -35,15 +35,18 @@ function Analyzer() {
     async function getSolution() {
         let body = constructRequestBody()
 
+        const access_token = Cookies.get('ACCESS_TOKEN');
         const options = {
             method: "POST",
             body: JSON.stringify(body),
             headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${access_token}`,
                 "Content-Type": "application/json;charset=utf-8"
             }
         }
         const response = await fetch(
-            `${ALGO_SERVER}/solutions`,
+            `${USER_SERVER}/solutions`,
             options,
         );
 

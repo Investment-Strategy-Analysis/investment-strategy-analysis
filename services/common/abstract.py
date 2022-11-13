@@ -70,7 +70,7 @@ class InvestStrategy(BaseModel):
 
 class Restriction(BaseModel):
     target_profit: float = 0    # used to find best point in pareto front
-    checkboxes: Dict[str, bool] = {checkbox.name: False for checkbox in Checkbox}   # key - Checkbox.name
+    checkboxes: Dict[str, bool] = {checkbox.value.id: False for checkbox in Checkbox}   # key - Checkbox.name
     upper_border: Optional[Dict[str, float]] = None     # key - Index.name
     lower_border: Optional[Dict[str, float]] = None     # key - Index.name
-    analysis_time: Union[str, int] = AnalysisTime.YEAR_1.name
+    analysis_time: Union[str, int] = AnalysisTime.YEAR_1.value.id
