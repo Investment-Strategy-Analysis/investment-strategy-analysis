@@ -1,4 +1,5 @@
 import logging
+
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from services.algo_service.common.abstract import Restriction
@@ -14,8 +15,11 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:5001",
+    "http://localhost:8000",
     "http://0.0.0.0:5001",
+    "http://0.0.0.0:8000",
     "http://127.0.0.1:5001",
+    "http://127.0.0.1:8000",
 ]
 
 app.add_middleware(

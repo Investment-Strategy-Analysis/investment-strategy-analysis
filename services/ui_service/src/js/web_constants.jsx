@@ -12,10 +12,10 @@ const [checkboxSettings, setCheckboxSettings] = createSignal([
 ]);
 
 const [timeSettings, setTimeSettings] = createSignal([
-    {name: "1 year", id: "one_year", checked: false},
-    {name: "3 years", id: "three_years", checked: false},
-    {name: "5 years", id: "five_years", checked: false},
-    {name: "10 years", id: "ten_years", checked: true},
+    {name: "1 year", id: "year_1", checked: false},
+    {name: "3 years", id: "year_3", checked: false},
+    {name: "5 years", id: "year_5", checked: false},
+    {name: "10 years", id: "year_10", checked: true},
 ]);
 
 const initProfit = 50;
