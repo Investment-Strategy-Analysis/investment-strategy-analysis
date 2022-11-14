@@ -26,7 +26,7 @@ function constructRequestBody() {
     let time_period = timeSettings().filter(element => document.getElementById(element.id).checked)[0].id.toUpperCase();
     checkboxSettings().forEach(element => params[element.id.toUpperCase()] = document.getElementById(element.id).checked);
 
-    body["target_profit"] = profit() / 100
+    body["target_profit"] = +(profit())
     body["checkboxes"] = params;
     body["analysis_time"] = time_period;
     body["upper_border"] = {}
