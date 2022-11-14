@@ -150,5 +150,4 @@ async def post_solutions(restriction: Restriction, user: User = Depends(get_curr
     logging.info(f"solutions, {user.login}")
     if isinstance(restriction.analysis_time, str):
         restriction.analysis_time = to_analysis_time(restriction.analysis_time).value.days
-    algorithm_params = AlgorithmParams(restriction=restriction)
-    return await post(SOLUTIONS, algorithm_params.json())
+    return await post(SOLUTIONS, restriction.json())
