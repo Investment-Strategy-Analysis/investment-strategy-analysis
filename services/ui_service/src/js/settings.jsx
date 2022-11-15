@@ -12,6 +12,8 @@ const [strategyOption, setStrategyOption] = createSignal([
 
 const [strategy, setStrategy] = createSignal(strategyOption()[0])
 
+const [solutionLoaded, setSolutionLoaded] = createSignal(null);
+
 const initProfit = 50;
 const maxProfit = 100;
 const minProfit = 0;
@@ -34,4 +36,6 @@ export {
     stepProfit,
     profit,
     setProfit,
+    solutionLoaded,
+    setSolutionLoaded,
 };
