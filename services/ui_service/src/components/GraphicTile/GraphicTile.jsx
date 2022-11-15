@@ -1,8 +1,9 @@
 import Tile from "../Tile/Tile";
-import {createSignal, createEffect} from "solid-js";
+import {createSignal, createEffect, Match, Switch} from "solid-js";
 import styles from './GraphicTile.module.css';
 import Charts from '../Chart/Chart';
 import {formatFloat} from "../../js/utils";
+import {solutionLoaded} from "../../js/settings";
 
 const [chartData, setChartData] = createSignal({});
 
@@ -74,7 +75,14 @@ function GraphicTile() {
         <Tile>
             <div class={styles.GraphicTile}>
                 <h3><b>Risk</b> vs <b>Profit</b></h3>
-                <Charts/>
+                <Switch fallback={<i>Empty now</i>}>
+                    <Match when={solutionLoaded() === true}>
+                        <Charts/>
+                    </Match>
+                    <Match when={solutionLoaded() === false}>
+                        <div class={styles.Loader}></div>
+                    </Match>
+                </Switch>
             </div>
         </Tile>
     );
