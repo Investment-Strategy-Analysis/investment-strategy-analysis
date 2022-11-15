@@ -14,19 +14,10 @@ body {
 	text-align: center;
 }
 
-.auth-field-block {
-	padding-bottom: 5px;
+.user-photo {
+	width: 100%;
 }
 
-.auth-button {
-	margin-top: 5px;
-	background-color: #2da44e;
-}
-
-.auth-button:hover {
-	background-color: #2c974b;
-}
-
-.auth-button:active {
-	background-color: #236b37;
+.profile-info {
+	margin: auto 0;
 }
