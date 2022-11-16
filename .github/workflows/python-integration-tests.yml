@@ -43,6 +43,12 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install pytest requests
 
+    - name: Check services healthiness
+      uses: thegabriele97/dockercompose-health-action@main
+      with:
+        timeout: '90'
+        workdir: '.'
+
     - name: Run algo integration tests
       run: |
         python -m pytest test/test_integration/test_algo
