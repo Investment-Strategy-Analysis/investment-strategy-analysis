@@ -29,9 +29,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
     
-    - name: Build Docker
+    - name: Run Docker
       run: |
-        docker compose build
+        docker compose up -d
         
     - name: Run algo tests
       run: |
