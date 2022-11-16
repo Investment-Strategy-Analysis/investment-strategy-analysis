@@ -45,7 +45,7 @@ jobs:
 
     - name: Wait docker
       run: |
-        bash ${GITHUB_WORKSPACE}/.github/scripts/wait-docker-running.sh && sleep 30
+        bash ${GITHUB_WORKSPACE}/.github/scripts/wait-docker-running.sh && sleep 90
 
     - name: Run algo integration tests
       run: |
