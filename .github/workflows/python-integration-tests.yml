@@ -43,12 +43,14 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install pytest requests
 
-    - name: Run algo integration tests
+    - name: Wait docker
       run: |
         bash ${GITHUB_WORKSPACE}/.github/scripts/wait-docker-running.sh
+
+    - name: Run algo integration tests
+      run: |
         python -m pytest test/test_integration/test_algo
 
     - name: Run user integration tests
       run: |
-        bash ${GITHUB_WORKSPACE}/.github/wait-docker-running.sh
         python -m pytest test/test_integration/test_user
