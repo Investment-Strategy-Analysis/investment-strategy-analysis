@@ -35,8 +35,8 @@ jobs:
         
     - name: Run algo tests
       run: |
-        docker run investment-strategy-analysis-algo-service:latest python -m pytest
+        docker compose exec algo-service python -m pytest
         
     - name: Run user tests
       run: |
-        docker run investment-strategy-analysis-user-service:latest python -m pytest
+        docker compose exec user-service python -m pytest
