@@ -1,6 +1,6 @@
 #!/bin/bash
 
-secs=${INPUT_TIMEOUT}
+secs=60
 endTime=$(( $(date +%s) + secs ))
 while [ $(date +%s) -lt $endTime ]; do
   already_running=$(docker compose ps | grep -c "running")

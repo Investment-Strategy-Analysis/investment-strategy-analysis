@@ -44,15 +44,11 @@ jobs:
         python -m pip install pytest requests
 
     - name: Run algo integration tests
-      with:
-        timeout: '60'
       run: |
-        bash ${GITHUB_WORKSPACE}/scripts/wait-docker-running.sh algo-db:5433
+        bash ${GITHUB_WORKSPACE}/scripts/wait-docker-running.sh
         python -m pytest test/test_integration/test_algo
 
     - name: Run user integration tests
-      with:
-        timeout: '60'
       run: |
-        bash ${GITHUB_WORKSPACE}/scripts/wait-docker-running.sh algo-db:5433
+        bash ${GITHUB_WORKSPACE}/scripts/wait-docker-running.sh
         python -m pytest test/test_integration/test_user
