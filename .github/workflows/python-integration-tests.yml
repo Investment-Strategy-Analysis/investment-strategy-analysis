@@ -45,10 +45,10 @@ jobs:
 
     - name: Run algo integration tests
       run: |
-        bash ${GITHUB_WORKSPACE}/scripts/wait-docker-running.sh
+        bash ${GITHUB_WORKSPACE}/.github/scripts/wait-docker-running.sh
         python -m pytest test/test_integration/test_algo
 
     - name: Run user integration tests
       run: |
-        bash ${GITHUB_WORKSPACE}/scripts/wait-docker-running.sh
+        bash ${GITHUB_WORKSPACE}/.github/wait-docker-running.sh
         python -m pytest test/test_integration/test_user
