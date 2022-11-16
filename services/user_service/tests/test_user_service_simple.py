@@ -11,4 +11,5 @@ test_data_one_user = [
 @pytest.mark.parametrize("user", test_data_one_user)
 def test_add_get_one_user(user):
     save_user(user)
-    assert get_user_by_login(user.login) == user
+    user_from_db = get_user_by_login(user.login)
+    assert user_from_db.login == user.login
