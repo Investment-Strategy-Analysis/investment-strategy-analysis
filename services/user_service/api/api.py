@@ -38,7 +38,8 @@ app.add_middleware(
 @app.get("/", summary="Show all operations and their descriptions")
 async def get_operations(user: User = Depends(get_current_user)) -> dict[str, dict[str, str]]:
     logging.info(f"{user.login} get operations")
-    operations = [ping, get_user, post_user, post_user_settings, post_user_parameters, delete_user]
+    operations = [ping, get_user, post_user, post_user_settings, post_user_parameters, post_user_email, post_user_password,
+                  post_user_photo, delete_user, get_analysis_times, get_checkboxes, get_strategies, post_solutions]
     return {"Operations": dict(map(lambda x: (x.__name__, x.__doc__), operations))}
 
 
@@ -85,7 +86,7 @@ async def post_user_settings(settings: Settings, user: User = Depends(get_curren
 
 
 @deprecated(version='1', reason="Use more specific /user/photo, /user/email, ...")
-@app.post("/user/parameters", summary="Update parameters for current user")
+@app.post("/user/parameters", summary="Update parameters for current user, deprecated (Use more specific /user/photo, /user/email, ...)")
 async def post_user_parameters(user_settings: UserSettings, user: User = Depends(get_current_user)):
     """update parameters for current user"""
     logging.info("update user parameters")
