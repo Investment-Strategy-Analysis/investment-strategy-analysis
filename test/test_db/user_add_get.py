@@ -1,7 +1,7 @@
 import pytest as pytest
 import sys
 
-# sys.path.append('C:\\Users\\mozha\\HOMEWORK\\7sem\\PI\\investment-strategy-analysis')
+sys.path.append('C:\\Users\\mozha\\HOMEWORK\\7sem\\PI\\investment-strategy-analysis')
 from services.user_service.common.abstract import User
 from services.user_service.db.user_db_api import save_user, get_user_by_login
 
