@@ -9,9 +9,18 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
     return __get_solutions(restriction)
 
 
+best_invest_strat = InvestStrategy(id='Custom',
+                                   description=None,
+                                   profit=112.99998084763949,
+                                   risk=44.24218097256038,
+                                   distribution={'IMOEX': 0.2731227341646331,
+                                                 'MOEXBC': 0.05215926660875515,
+                                                 'MOEXBMI': 0.28516439616922346,
+                                                 'MCXSM': 0.38955360305738834})
+
+
 def compare_invest_starts(strat1: InvestStrategy, strat2: InvestStrategy):
     return strat1.risk == strat2.risk and strat1.profit == strat2.profit
-    # and strat1.distribution == strat2.distribution
 
 
 test_data_restriction = [
@@ -21,19 +30,11 @@ test_data_restriction = [
                 lower_border={index.value.id: 0 for index in Index},
                 analysis_time=100),
 
-    InvestStrategy(id='Custom',
-                   description=None,
-                   profit=112.99998084763949,
-                   risk=44.24218097256038,
-                   distribution={'IMOEX': 0.2731227341646331,
-                                 'MOEXBC': 0.05215926660875515,
-                                 'MOEXBMI': 0.28516439616922346,
-                                 'MCXSM': 0.38955360305738834}),
 ]
 
 
-@pytest.mark.parametrize("restrict, best_invest_strat", test_data_restriction)
-def test_example(restrict: Restriction, best_invest_strat: InvestStrategy):
+@pytest.mark.parametrize("restrict", test_data_restriction)
+def test_example(restrict: Restriction):
     print(restrict)
     best, front = get_solutions(restrict)
     print(best)
