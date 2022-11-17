@@ -28,13 +28,14 @@ test_data_restriction = [
                    distribution={'IMOEX': 0.2731227341646331,
                                  'MOEXBC': 0.05215926660875515,
                                  'MOEXBMI': 0.28516439616922346,
-                                 'MCXSM': 0.38955360305738834})
+                                 'MCXSM': 0.38955360305738834}),
 ]
 
 
 @pytest.mark.parametrize("restrict, best_invest_strat", test_data_restriction)
-def test_example(restrict, best_invest_strat):
+def test_example(restrict: Restriction, best_invest_strat: InvestStrategy):
+    print(restrict)
     best, front = get_solutions(restrict)
+    print(best)
+    print(best_invest_strat)
     assert compare_invest_starts(best, best_invest_strat)
-    # print(front)
-    # assert front
