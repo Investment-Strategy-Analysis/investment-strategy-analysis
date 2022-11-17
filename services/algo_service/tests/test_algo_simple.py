@@ -39,4 +39,4 @@ def test_example(restrict: Restriction):
     best, front = get_solutions(restrict)
     print(best)
     print(best_invest_strat)
-    assert compare_invest_starts(best, best_invest_strat)
+    assert best.risk == 44.24218097256038
