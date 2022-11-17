@@ -5,9 +5,6 @@ from services.algo_service.common.abstract import Restriction, InvestStrategy, I
 from services.algo_service.algorithm.algorithm_impl import get_solutions as __get_solutions
 
 
-# returns the best solution and all found
-
-
 def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[InvestStrategy]]:
     return __get_solutions(restriction)
 
@@ -22,7 +19,7 @@ test_data_restriction = [
 
 
 @pytest.mark.parametrize("restrict", test_data_restriction)
-def example_test(restrict):
+def test_example(restrict):
     best, front = get_solutions(restrict)
     print(best)
     assert best == None
