@@ -6,6 +6,8 @@ import services.algo_service.db.tables as T
 
 __engine = db_engine()
 __session = db_session(__engine)
+#Base.metadata.drop_all(__engine)
+#__session.commit()
 Base.metadata.create_all(__engine)  # create tables if not exists
 
 
