@@ -31,8 +31,8 @@ def parse_checkboxes(restriction: Restriction):
 
 
 def get_data_matrix(data: list):
-    # Принимает на список списков, который превращает в матрицу нампая с None до первой информации о активе
-    # 1 в первый день и тем в сколько раз оно изменялось на следующий день.
+    # Принимает на вход список списков, который превращает в np.array с None до первой информации о активе
+    # 1 в первый день и тем, во сколько раз оно изменялось на следующий день.
     max_len = max(map(len, data))
     return np.array([
         [None] * (max_len - len(x)) + [1] + list(map(operator.truediv, x[1:], x[:-1]))
@@ -40,8 +40,8 @@ def get_data_matrix(data: list):
 
 
 def get_history_extended(history, analysis_time):
-    # Принимает список истории и время которое мы хотим отрезать.
-    # Если список короче времени возвращаем что есть.
+    # Принимает список истории и время, которое мы хотим отрезать.
+    # Если список короче времени, возвращаем что есть.
     if analysis_time <= len(history):
         return history[-analysis_time:]
     else:
@@ -50,7 +50,7 @@ def get_history_extended(history, analysis_time):
 
 def get_right_input(restriction):
     # Принимает ограничения и возвращает их в другой форме.
-    # Убирает все активы которые не входят в ответ изначально.
+    # Убирает все активы, которые не входят в ответ изначально.
     # Возвращает numpy матрицу, лист пар с ограничениями для каждого актива и
     # лист названий соответствующих активов.
     keys = []
@@ -68,7 +68,7 @@ def get_right_input(restriction):
 
 def get_profit_and_risk(data, distribution, invest_period=1):
     # Принимает numpy матрицу, numpy распределение соответсвующее матрице и период ребалансировки портфеля.
-    # Считает какую даходность даст портфель в % и дисперсию производной.
+    # Считает, какую доходность даст портфель в % и дисперсию производной.
     strategy = np.zeros((data.shape[1],))
     current_distribution = np.zeros((data.shape[0],))
     start = data.shape[1]
