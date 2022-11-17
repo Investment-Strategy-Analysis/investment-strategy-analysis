@@ -40,4 +40,5 @@ def test_example(restrict: Restriction):
     print(best)
     print(best_invest_strat)
     assert best.risk == 44.24218097256038
-    assert best.profit == best_invest_strat.profit
+    assert best.profit == 112.99998084763949
+    assert best_invest_strat.profit == 112.99998084763949
