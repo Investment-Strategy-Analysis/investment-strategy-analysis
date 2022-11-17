@@ -77,8 +77,8 @@ class SignUpTests:
 
         page_checkers.log_in_page_check(self.driver)
 
-    def sign_up_once_again_test(self):
-        """Пробуем зарегистрировать еще одного пользователя"""
+    def sign_up_once_again_fail_test(self):
+        """Пробуем еще раз зарегистрировать пользователя, который уже есть"""
         self.driver.get('http://localhost:5001/auth/signup/')
         time.sleep(10)
 
@@ -90,6 +90,17 @@ class SignUpTests:
 
         password_again_input = self.page_objects.get_password_again_input()
         password_again_input.send_keys('aaa')
+
+        sign_up_button = self.page_objects.get_sign_up_button()
+        sign_up_button.click()
+        time.sleep(10)
+
+        assert 'Incorrect username or password' in self.driver.page_source
+
+    def sign_up_once_again_success_test(self):
+        username_input = self.page_objects.get_username_input()
+        username_input.clear()
+        username_input.send_keys('Ilyaa')
 
         sign_up_button = self.page_objects.get_sign_up_button()
         sign_up_button.click()
@@ -112,6 +123,7 @@ class SignUpTests:
         self.characteristic_inscriptions_test()
         self.password_mismatch_test()
         self.successful_sign_up_test()
-        self.sign_up_once_again_test()
+        self.sign_up_once_again_fail_test()
+        self.sign_up_once_again_success_test()
         self.analyzer_link_test()
         print('Sign up tests passed')

@@ -29,14 +29,14 @@ jobs:
         sudo apt-get update
         sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
     
-    - name: Build Docker
+    - name: Run Docker
       run: |
-        docker compose build
+        docker compose up -d
         
     - name: Run algo tests
       run: |
-        docker run investment-strategy-analysis-algo-service:latest pytest
+        docker compose exec algo-service python -m pytest
         
     - name: Run user tests
       run: |
-        docker run investment-strategy-analysis-user-service:latest pytest
+        docker compose exec user-service python -m pytest

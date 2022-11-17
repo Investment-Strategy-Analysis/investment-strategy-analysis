@@ -1,6 +1,6 @@
 import requests
 
-from test.test_integration.test_algo.consts import SERVER_URL
+from test.test_integration.test_user.consts import SERVER_URL
 
 
 def test_ping():

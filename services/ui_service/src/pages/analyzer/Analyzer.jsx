@@ -3,7 +3,7 @@ import ProfitTile from "../../components/ProfitTile/ProfitTile";
 import StrategyTile from "../../components/StrategyTile/StrategyTile";
 import SettingsTile from "../../components/SettingsTile/SettingsTile";
 import GraphicTile, {setChartData, transformData} from "../../components/GraphicTile/GraphicTile";
-import {ALGO_SERVER, USER_SERVER} from "../../js/web_constants";
+import {USER_SERVER} from "../../js/web_constants";
 import {ResultTile, setResults} from "../../components/ResultTile/ResultTile";
 import {
     checkboxSettings,
@@ -11,9 +11,10 @@ import {
     timeSettings,
     setTimeSettings,
     profit,
-    setStrategyOption
+    setStrategyOption, setSolutionLoaded
 } from "../../js/settings";
 import {loadCheckboxes, loadStrategies, loadTimePeriods} from "../../js/settings_loader";
+import {createSignal, Show} from "solid-js";
 
 /**
  * Generate settings request body
@@ -52,6 +53,7 @@ async function getSolution() {
             "Content-Type": "application/json;charset=utf-8"
         }
     }
+    setSolutionLoaded(false);
     const response = await fetch(
         `${USER_SERVER}/solutions`,
         options,
@@ -65,6 +67,7 @@ async function getSolution() {
         const bestProfit = data[0]['profit'];
         const bestPoint = data[1].map((point) => point.profit === bestProfit ? point.risk : null )
 
+        setSolutionLoaded(true);
         setResults(config);
         setChartData(transformData(chartDataset, bestPoint));
     } else {

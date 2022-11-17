@@ -58,7 +58,7 @@ class LogInTests:
         """Вводим верное имя пользователя, но неверный пароль"""
         username_input = self.page_objects.get_username_input()
         username_input.clear()
-        username_input.send_keys('Ivan')
+        username_input.send_keys('Ilyaa')
 
         log_in_button = self.page_objects.get_log_in_button()
         log_in_button.click()
