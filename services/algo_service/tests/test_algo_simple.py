@@ -15,13 +15,22 @@ test_data_restriction = [
                 upper_border={index.value.id: 1 for index in Index},
                 lower_border={index.value.id: 0 for index in Index},
                 analysis_time=100),
+
+    InvestStrategy(id='Custom',
+                   description=None,
+                   profit=112.99998084763949,
+                   risk=44.24218097256038,
+                   distribution={'IMOEX': 0.2731227341646331,
+                                 'MOEXBC': 0.05215926660875515,
+                                 'MOEXBMI': 0.28516439616922346,
+                                 'MCXSM': 0.38955360305738834})
 ]
 
 
-@pytest.mark.parametrize("restrict", test_data_restriction)
-def test_example(restrict):
+@pytest.mark.parametrize("restrict best_invest_strat", test_data_restriction)
+def test_example(restrict, best_invest_strat):
     best, front = get_solutions(restrict)
     print(best)
-    assert best == None
+    assert best == best_invest_strat
     print(front)
     assert front
