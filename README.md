@@ -14,6 +14,6 @@
 5. Титульная страница будет доступна в браузере по адресу: http://localhost:5001:
    ![title_page](https://github.com/Investment-Strategy-Analysis/investment-strategy-analysis/blob/main/instruction_imgs/title_page.png) 
    
-6. Чтобы остановить работу сервера, нажмите `Ctrl + C`.
+6. Чтобы остановить работу сервера, нажмите в терминале `Ctrl + C`.
 
 
