@@ -5,7 +5,7 @@
 
 1. Установите Docker (установка на [Linux](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-ru), [Windows](https://docs.docker.com/desktop/install/windows-install/)) и Node.js ([Linux](https://help.reg.ru/support/servery-vps/oblachnyye-servery/ustanovka-programmnogo-obespecheniya/kak-ustanovit-node-js-na-ubuntu), [Windows](https://nodejs.org/en/download/)).
 2. Скачайте проект на локальный компьютер.  
-3. Перейдите в ту директорию, куда скачали проект, зайди в папку "scripts" и запустите в терминале `sudo ./start.sh`. 
+3. Перейдите в ту директорию, куда скачали проект. На Linux зайдите в папку "scripts" и запустите в терминале `sudo ./start.sh`. На Windows запустите в терминале `docker-compose up --build --force-recreate`.
 4. После этого начнет подниматься сервер, это может занять продолжительное время. Как только все запустится, основной сервер будет работать по адресу                http://localhost:8000:     
    
    <p align="center">
