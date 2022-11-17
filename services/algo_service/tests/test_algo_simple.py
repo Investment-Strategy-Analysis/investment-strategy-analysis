@@ -31,7 +31,7 @@ test_data_restriction = [
 ]
 
 
-@pytest.mark.parametrize("restrict best_invest_strat", test_data_restriction)
+@pytest.mark.parametrize("restrict, best_invest_strat", test_data_restriction)
 def test_example(restrict, best_invest_strat):
     best, front = get_solutions(restrict)
     # print(best)
