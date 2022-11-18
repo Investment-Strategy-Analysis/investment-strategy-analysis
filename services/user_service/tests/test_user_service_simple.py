@@ -38,7 +38,7 @@ def test_add_get_unregistered_users(u1, u2, u3):
     save_user(u2)
     assert get_user_by_login(u1.login).login == u1.login
     assert get_user_by_login(u2.login).login == u2.login
-    assert get_user_by_login(u3.login).login == None
+    assert get_user_by_login(u3.login) == None
     delete_user_by_login(u1.login)
     delete_user_by_login(u2.login)
 
