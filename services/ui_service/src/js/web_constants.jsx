@@ -1,5 +1,3 @@
-import {createSignal} from "solid-js";
-
 const USER_SERVER = "http://localhost:8000";
 const ALGO_SERVER = "http://localhost:8001";
 

@@ -7,7 +7,7 @@ export function formatFloat(percent) {
     if (percent === null) {
         return null;
     }
-    return Math.round(percent) / 100;
+    return Math.round(percent * 10) / 1000;
 }
 
 /**

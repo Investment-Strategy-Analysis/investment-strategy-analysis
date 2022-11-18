@@ -1,7 +1,7 @@
 import styles from './StrategyTile.module.css';
 import Tile from "../Tile/Tile";
-import {setStrategy, strategy, strategyOption} from "../../js/settings";
-import {For} from "solid-js";
+import {checkboxSettings, setStrategy, strategy, strategyOption, timeSettings} from "../../js/settings";
+import {createEffect, For} from "solid-js";
 
 function StrategyTile() {
 
@@ -11,6 +11,23 @@ function StrategyTile() {
 
         setStrategy(strategyData);
     }
+
+    createEffect(() => {
+        timeSettings().forEach((it) => it.checked = false);
+        timeSettings()
+            .filter((it) => it.id === strategy().time_period)
+            .forEach((it) => {
+                it.checked = true;
+                document.getElementById(it.id).checked = true;
+            });
+    })
+
+    createEffect(() => {
+        checkboxSettings().forEach((it) => {
+            it.checked = strategy().checkboxes.some((checkbox) => it.id === checkbox);
+            document.getElementById(it.id).checked = it.checked;
+        })
+    })
 
     return (
         <Tile>

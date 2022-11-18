@@ -4,8 +4,6 @@ import styles from './SavedConfig.module.css';
 
 const [configurations, setConfigurations] = createSignal([
     {config: "SavedConfig #1", _id: 1},
-    {config: "SavedConfig #2", _id: 2},
-    {config: "SavedConfig #3", _id: 3},
 ]);
 
 function SavedConfig() {
