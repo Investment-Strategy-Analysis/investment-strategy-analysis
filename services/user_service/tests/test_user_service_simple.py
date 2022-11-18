@@ -36,9 +36,9 @@ def test_add_get_few_users(u1, u2, u3):
 def test_add_get_unregistered_users(u1, u2, u3):
     save_user(u1)
     save_user(u2)
-    assert get_user_by_login(u1.login) == u1
-    assert get_user_by_login(u2.login) == u2
-    assert get_user_by_login(u3.login) == None
+    assert get_user_by_login(u1.login).login == u1.login
+    assert get_user_by_login(u2.login).login == u2.login
+    assert get_user_by_login(u3.login).login == None
     delete_user_by_login(u1.login)
     delete_user_by_login(u2.login)
 
@@ -49,10 +49,7 @@ def test_add_same_users(u1, u2, u3):
         save_user(u1)
         save_user(u1)
     except Exception as e:
+        delete_user_by_login(u1.login)
         return
     assert "Same user saved twice"
-    # save_user(u3)
-    # save_user(u1)
-    # assert get_user_by_login(u1.login) == u1
-    # assert get_user_by_login(u2.login) == None
-    # assert get_user_by_login(u3.login) == u3
+    delete_user_by_login(u1.login)
