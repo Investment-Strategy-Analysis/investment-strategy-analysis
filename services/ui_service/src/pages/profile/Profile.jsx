@@ -2,8 +2,8 @@ import './Profile.css';
 import SavedConfig from "../../components/SavedConfig/SavedConfig";
 import {createSignal} from "solid-js";
 
-const [username, setUsername] = createSignal("Username");
-const [email, seEmail] = createSignal("username@email.com");
+const [username, setUsername] = createSignal("hisa");
+const [email, seEmail] = createSignal("hisa@yandex.ru");
 
 function Profile() {
 
@@ -31,9 +31,6 @@ function Profile() {
                                 {email()}
                             </p>
                         </div>
-                        {/*<div class="row">*/}
-                        {/*    <button type="button" class="btn btn-outline-secondary" onClick={() => window.location.replace('/auth/change_password?next=/profile')}>Change Password</button>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
                 <div class="row mb-2 ms-2 me-2">
