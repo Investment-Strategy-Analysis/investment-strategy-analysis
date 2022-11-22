@@ -37,7 +37,8 @@ class UserSettings(BaseModel):
 class User(BaseModel):
     login: str      # id
     password: str   # hash
-    settings: Settings = Settings()
+    current_settings: Settings = Settings()
+    settings: List[Settings] = []
     user_settings: UserSettings = UserSettings()
 
 

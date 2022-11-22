@@ -1,10 +1,12 @@
 from fastapi import status, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
-from typing import Union
+from typing import Union, List
 from services.user_service.common.abstract import User, Settings, UserSettings, Email, Password, Photo, Tokens, UsernamePassword
 from services.user_service.db.user_db_api import get_user_by_login as __get_user_by_login
 from services.user_service.db.user_db_api import save_user as __save_user
-from services.user_service.db.user_db_api import update_settings as __update_settings
+from services.user_service.db.user_db_api import reset_settings as __reset_settings
+from services.user_service.db.user_db_api import save_from_current_settings as __save_from_current_settings
+from services.user_service.db.user_db_api import update_current_settings as __update_current_settings
 from services.user_service.db.user_db_api import update_user_settings as __update_user_settings
 from services.user_service.db.user_db_api import update_user_email as __update_user_email
 from services.user_service.db.user_db_api import update_user_password as __update_user_password
@@ -44,8 +46,20 @@ async def post_tokens(data: Union[OAuth2PasswordRequestForm, UsernamePassword], 
     return Tokens(access_token=create_access_token(user.login), refresh_token=create_refresh_token(user.login))
 
 
-async def update_user_settings(user: User, settings: Settings):
-    return __update_settings(user.login, settings)
+async def save_settings(user: User, user_settings: UserSettings):
+    return __save_settings(user.login,user_settings)
+
+
+async def save_from_current_settings(user: User):
+    return __save_from_current_settings(user.login)
+
+
+async def reset_settings(user: User, settings: List[Settings]):
+    return __reset_settings(user.login, settings)
+
+
+async def update_current_settings(user: User, settings: Settings):
+    return __update_current_settings(user.login, settings)
 
 
 async def update_user_parameters(user: User, user_settings: UserSettings):
