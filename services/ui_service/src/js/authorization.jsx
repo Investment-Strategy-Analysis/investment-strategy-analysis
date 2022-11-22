@@ -80,12 +80,13 @@ export async function login(username, password) {
  * Request to sign up.
  * @param {string} username
  * @param {string} password
+ * @param {string} email
  * @return {Promise<Response>}
  */
-export async function signup(username, password) {
+export async function signup(username, password, email) {
     const options = {
         method: "POST",
-        body: JSON.stringify({ "login": username, "password": password }),
+        body: JSON.stringify({ "login": username, "password": password, "user_settings": {"email": email} }),
         headers: {
             "Content-Type": "application/json"
         }

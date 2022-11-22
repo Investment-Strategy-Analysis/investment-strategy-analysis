@@ -34,7 +34,9 @@ def save_user(user: User):
     last_answer = T.LastAnswer()
     __session.add(last_answer)
     user_settings = T.UserSettings(
-        last_answer=last_answer)
+        email=user.user_settings.email,
+        last_answer=last_answer
+    )
     __session.add(user_settings)
     restrictions = T.Restriction(
         target_profit=user.settings.restrictions.target_profit,

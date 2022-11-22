@@ -1,11 +1,33 @@
 import './Profile.css';
 import SavedConfig from "../../components/SavedConfig/SavedConfig";
 import {createSignal} from "solid-js";
+import {USER_SERVER} from "../../js/web_constants";
 
 const [username, setUsername] = createSignal("hisa");
-const [email, seEmail] = createSignal("hisa@yandex.ru");
+const [email, setEmail] = createSignal("hisa@yandex.ru");
+
+async function loadProfile() {
+    const access_token = Cookies.get('ACCESS_TOKEN');
+    const options = {
+        headers: {
+            'accept': 'application/json',
+            'Authorization': `Bearer ${access_token}`,
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    }
+    const response = await fetch(
+        `${USER_SERVER}/user`,
+        options
+    );
+    if (response.ok) {
+        let userData = await response.json();
+        setUsername(userData.login);
+        setEmail(userData.user_settings.email);
+    }
+}
 
 function Profile() {
+    loadProfile().then((_) => console.log("OK"));
 
     return (
         <>
