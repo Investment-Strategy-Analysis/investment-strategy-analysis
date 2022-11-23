@@ -46,10 +46,6 @@ async def post_tokens(data: Union[OAuth2PasswordRequestForm, UsernamePassword], 
     return Tokens(access_token=create_access_token(user.login), refresh_token=create_refresh_token(user.login))
 
 
-async def save_settings(user: User, user_settings: UserSettings):
-    return __save_settings(user.login,user_settings)
-
-
 async def save_from_current_settings(user: User):
     return __save_from_current_settings(user.login)
 
