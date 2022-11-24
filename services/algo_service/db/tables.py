@@ -25,7 +25,7 @@ class InvestItem(Base):
     id = Column(String, primary_key=True)
     date_from = Column("date_from", Date, nullable=False, default=datetime.date(1000, 1, 1))
     date_till = Column("date_till", Date, nullable=False, default=datetime.date(1000, 1, 1))
-    history = Column("lower_border", ARRAY(Float, dimensions=1), nullable=False, default=[])
+    history = Column("history", ARRAY(Float, dimensions=1), nullable=False, default=[])
 
     def __repr__(self):
         return f"InvestItem(id={self.id}, date_from={self.date_from}, date_till={self.date_till}, " \
