@@ -6,12 +6,11 @@ from services.user_service.db.tables import Base
 from services.user_service.api.authorization.utils import get_hashed_password
 import services.user_service.db.tables as T
 from services.common.helpers import to_analysis_time
-import services.user_service.db.tables as tab
 
 __engine = db_engine()
 session = db_session(__engine)
 Base.metadata.create_all(__engine)  # create tables if not exists
-tab.session = session
+T.session = session
 
 
 def __analysis_time_int(analysis_time):
