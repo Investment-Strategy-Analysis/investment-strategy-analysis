@@ -1,9 +1,10 @@
 from typing import Optional
-
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, ForeignKey, JSON, ARRAY, Float
 from sqlalchemy.orm import declarative_base, relationship
 import services.user_service.common.abstract as A
+
+session = None
 
 
 class BasePydantic:
@@ -104,14 +105,18 @@ class User(Base):
     __tablename__ = "users"
     login = Column("login", String, primary_key=True)
     password = Column("password", String, nullable=False)   # hash
-    settings = relationship("Settings", uselist=False)
+    current_settings = relationship("Settings", uselist=False)
+    settings = Column("current_settings_ids", ARRAY(Integer, dimensions=1))
     user_settings = relationship("UserSettings", uselist=False)
 
     def __repr__(self):
-        return f"User(login={self.login}, settings={self.settings}, user_settings={self.user_settings})"
+        return f"User(login={self.login}, current_settings={self.current_settings}, user_settings={self.user_settings})"
 
     def __str__(self):
         return self.__repr__()
 
     def to_pydantic(self):
-        return A.User(login=self.login, password=self.password, settings=_get_pydantic(self.settings), user_settings=_get_pydantic(self.user_settings))
+        settings = []
+        for id in self.settings:
+            settings.append(_get_pydantic(session.get(Settings, id)))
+        return A.User(login=self.login, password=self.password, current_settings=_get_pydantic(self.current_settings), settings=settings, user_settings=_get_pydantic(self.user_settings))
