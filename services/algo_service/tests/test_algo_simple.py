@@ -1,8 +1,11 @@
+from datetime import datetime
+
 import pytest
 
 from typing import List, Tuple
 from services.algo_service.common.abstract import Restriction, InvestStrategy, Index, Checkbox
 from services.algo_service.algorithm.algorithm_impl import get_solutions as __get_solutions
+import services.algo_service.common.singletons as singles
 
 
 def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[InvestStrategy]]:
@@ -35,6 +38,10 @@ test_data_restriction = [
 
 @pytest.mark.parametrize("restrict", test_data_restriction)
 def test_example(restrict: Restriction):
+    # global LAST_RENEW_TIME
+    # for val in singles.CURRENT_INDEXES.vals():
+    #     val.history = [1, 3, 4, 6]
+    # singles.LAST_RENEW_TIME = datetime.datetime.now()
     print(restrict)
     best, front = get_solutions(restrict)
     print(best)
