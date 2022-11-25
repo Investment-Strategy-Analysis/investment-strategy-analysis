@@ -21,3 +21,12 @@ export function formatFloatValue(percent) {
     }
     return Math.round(percent * 100) / 100;
 }
+
+export function timeToInt(id) {
+    return {
+        "YEAR_1": 365,
+        "YEAR_3": 365 * 3,
+        "YEAR_5": 365 * 5,
+        "YEAR_10": 365 * 10,
+    }[id];
+}

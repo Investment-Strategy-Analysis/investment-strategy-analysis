@@ -1,0 +1,11 @@
+.saveButton {
+    float: right;
+    width: 25px;
+    height: 25px;
+    padding: 3px;
+}
+
+.saveButton i:hover {
+    color: #3498db;
+    cursor: pointer;
+}
