@@ -2,6 +2,7 @@ import styles from './ResultTile.css';
 import Tile from "../Tile/Tile";
 import {createSignal, Match, Switch} from "solid-js";
 import {formatFloat, formatFloatValue} from "../../js/utils";
+import {USER_SERVER} from "../../js/web_constants";
 
 const [results, setResults] = createSignal([]);
 
@@ -14,8 +15,29 @@ function showPoint(point) {
 }
 
 export function ResultTile() {
+    async function saveConfig() {
+        const access_token = Cookies.get('ACCESS_TOKEN');
+        const options = {
+            method: "POST",
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${access_token}`,
+                "Content-Type": "application/json;charset=utf-8"
+            }
+        }
+        await fetch(
+            `${USER_SERVER}/user/settings/add`,
+            options,
+        );
+    }
+
     return (
         <Tile>
+            <h5>The best configuration
+                <div class="saveButton" onClick={() => saveConfig()}>
+                    <i class="bi bi-save"></i>
+                </div>
+            </h5>
             <h5>Distribution
                 <Show
                     when={resultProfit() != null}
@@ -51,6 +73,9 @@ export function ResultTile() {
                     }</For>
                 </Match>
             </Switch>
+            <div class="saveButton" onClick={() => saveConfig()}>
+                <i class="bi bi-save"></i>
+            </div>
         </Tile>
     );
 }

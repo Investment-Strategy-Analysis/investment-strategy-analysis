@@ -17,10 +17,11 @@ import {
     timeSettings,
     setTimeSettings,
     profit,
-    setStrategyOption, setSolutionLoaded
+    setStrategyOption, setSolutionLoaded, strategy, setProfit
 } from "../../js/settings";
 import {loadCheckboxes, loadStrategies, loadTimePeriods} from "../../js/settings_loader";
 import {createSignal, Show} from "solid-js";
+import {timeToInt} from "../../js/utils";
 
 /**
  * Generate settings request body
@@ -40,6 +41,53 @@ function constructRequestBody() {
     body["lower_border"] = {}
 
     return body;
+}
+
+async function saveRestrictions(settings, risk) {
+    let body = {
+        strategy: strategy().id,
+        restrictions: settings,
+        risk: risk
+    }
+
+    const access_token = Cookies.get('ACCESS_TOKEN');
+    const options = {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            'accept': 'application/json',
+            'Authorization': `Bearer ${access_token}`,
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    }
+    await fetch(
+        `${USER_SERVER}/user/current_settings`,
+        options,
+    );
+}
+
+async function loadRestrictions() {
+    const access_token = Cookies.get('ACCESS_TOKEN');
+    const options = {
+        method: "GET",
+        headers: {
+            'accept': 'application/json',
+            'Authorization': `Bearer ${access_token}`,
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    }
+    const response = await fetch(
+        `${USER_SERVER}/user/current_settings`,
+        options,
+    );
+    if (response.ok) {
+        const data = await response.json();
+        setProfit(data.restrictions.target_profit);
+        const checkboxes = data.restrictions.checkboxes;
+        const time = data.restrictions.analysis_time;
+        checkboxSettings().forEach(checkbox => document.getElementById(checkbox.id).checked = checkboxes[checkbox.id])
+        timeSettings().forEach(timeButton => document.getElementById(timeButton.id).checked = timeToInt(timeButton.id) == time);
+    }
 }
 
 /**
@@ -90,20 +138,22 @@ async function getSolution() {
             })
         })
         setChartData(transformData(chartDataset, bestPoint));
+        await saveRestrictions(body, data[0]['risk']);
     } else {
         window.location.replace("/auth/login/");
     }
 }
 
 function Analyzer() {
-
     loadCheckboxes().then(it => setCheckboxSettings(it));
     loadTimePeriods().then(it => {
         const times = it.slice(2, it.length);
         times.forEach(time => time.checked = false);
         times[0].checked = true;
         setTimeSettings(times);
-    })
+    });
+    loadRestrictions().then(r => console.log("Restriction was loaded"));
+
     // loadStrategies().then(it => setStrategyOption(it));
 
     return (

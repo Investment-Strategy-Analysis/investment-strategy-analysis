@@ -1,9 +1,20 @@
+.saveButton {
+    float: right;
+    width: 25px;
+    height: 25px;
+    padding: 3px;
+}
+
+.saveButton i:hover {
+    color: #3498db;
+    cursor: pointer;
+}
+
 .dropdown {
     margin-top: -5px;
     float: right;
     font-size: small;
 }
-
 .dropdown * {
     font-size: small;
 }
