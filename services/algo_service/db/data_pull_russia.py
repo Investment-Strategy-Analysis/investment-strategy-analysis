@@ -1,5 +1,4 @@
 import random
-
 import requests
 from requests.adapters import HTTPAdapter
 import logging
@@ -47,21 +46,21 @@ def daterange(start_date, end_date):
         yield start_date + datetime.timedelta(days=n)
 
 
-def renew_all_data_if_necessary():
+def renew_russian_data_if_necessary():
     logging.info(f'Pulling Russian Data.')
     if False and not CURRENT_INDEXES['IMOEX'].history:
         for index in CURRENT_INDEXES.values():
             load_history(index)
-    logging.info(f'Indes = {CURRENT_INDEXES}')
     dates = pull_date()
     needs_new_data = []
     min_date = None
     max_date = None
     for (_, index) in CURRENT_INDEXES.items():
-        if max_date is None or max_date < index.date_till:
-            max_date = index.date_till
-        if max_date < dates[index.id][1]:
-            max_date = dates[index.id][1]
+        if index.country == 'russia':
+            if max_date is None or max_date < index.date_till:
+                max_date = index.date_till
+            if max_date < dates[index.id][1]:
+                max_date = dates[index.id][1]
     for (_, index) in CURRENT_INDEXES.items():
         if index.country == 'russia':
             if index.date_till < dates[index.id][1]:
@@ -86,20 +85,21 @@ def renew_all_data_if_necessary():
                     index.history.append(price)
                     index.date_till += datetime.timedelta(days=1)
             for (index_id, index) in CURRENT_INDEXES.items():  # prolongs some data that wasn't updated recently.
-                if index.date_till.weekday() == 4:  # Needs to be re updated later TODO
-                    index.date_till += datetime.timedelta(days=2)
-                if index.date_till < date:
-                    index.date_till += datetime.timedelta(days=1)
-                    if len(index.history) > 0:
-                        index.history.append(index.history[-1])
-                    else:
-                        logging.warning(f'Failed call [-1] of history of {index_id} {date}.')
-                        index.date_from = index.date_till = date
+                if index.country == 'russia':
+                    if index.date_till.weekday() == 4:  # Needs to be re updated later TODO
+                        index.date_till += datetime.timedelta(days=2)
+                    if index.date_till < date:
+                        index.date_till += datetime.timedelta(days=1)
+                        if len(index.history) > 0:
+                            index.history.append(index.history[-1])
+                        else:
+                            logging.warning(f'Failed call [-1] of history of {index_id} {date}.')
+                            index.date_from = index.date_till = date
             if random.randint(0, 90) == 0:
                 logging.info(f'Current date {date}. End date {max_date}')
-                #for index_id in data.keys():
-                #    save_history(CURRENT_INDEXES[index_id])
+                for index_id in data.keys():
+                    save_history(CURRENT_INDEXES[index_id])
     logging.info(f'Russian data pulling completed.')
-    #for (_, index) in CURRENT_INDEXES.items():
-    #    save_history(index)
-    logging.info(f'Indes = {CURRENT_INDEXES}')
+    for (_, index) in CURRENT_INDEXES.items():
+        save_history(index)
+    logging.info(f'Index = {CURRENT_INDEXES}')
