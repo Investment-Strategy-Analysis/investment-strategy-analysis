@@ -2,7 +2,8 @@ import datetime
 from typing import List, Tuple
 from services.algo_service.common.abstract import Restriction, InvestStrategy, Index, Checkbox
 from services.algo_service.common.singletons import LAST_RENEW_TIME, CURRENT_INDEXES
-from services.algo_service.db.data_pull_russia import renew_all_data_if_necessary
+from services.algo_service.db.data_pull_foreign import renew_foreign_data_if_necessary
+from services.algo_service.db.data_pull_russia import renew_russian_data_if_necessary
 import numpy as np
 import operator
 import logging
@@ -149,13 +150,14 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
     global LAST_RENEW_TIME
     parse_checkboxes(restriction)
     if LAST_RENEW_TIME + datetime.timedelta(hours=1) < datetime.datetime.now():
-        renew_all_data_if_necessary()
+        renew_russian_data_if_necessary()
+        renew_foreign_data_if_necessary()
         LAST_RENEW_TIME = datetime.datetime.now()
     data, bounds, keys = get_right_input(restriction)
     cons = ({'type': 'eq', 'fun': lambda x: 1 - sum(x)})
     rest = []
     last_distribution = get_x0(bounds)
-    risk_normalization = get_profit_and_risk(data, last_distribution, invest_period=1)[1] * 0.01
+    risk_normalization = max(0.00001, get_profit_and_risk(data, last_distribution, invest_period=1)[1] * 0.01)
     logging.info(f'Risk Normalization = {risk_normalization}')
     for i in np.linspace(restriction.target_profit + 95, restriction.target_profit + 105, 11):
         best_solutions = []
