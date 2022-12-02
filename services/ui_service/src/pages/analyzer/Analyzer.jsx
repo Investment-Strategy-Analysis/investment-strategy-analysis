@@ -4,7 +4,13 @@ import StrategyTile from "../../components/StrategyTile/StrategyTile";
 import SettingsTile from "../../components/SettingsTile/SettingsTile";
 import GraphicTile, {setChartData, transformData} from "../../components/GraphicTile/GraphicTile";
 import {USER_SERVER} from "../../js/web_constants";
-import {ResultTile, setResults} from "../../components/ResultTile/ResultTile";
+import {
+    resultProfit, resultProfitPoints,
+    ResultTile,
+    setResultProfit,
+    setResultProfitPoints,
+    setResults
+} from "../../components/ResultTile/ResultTile";
 import {
     checkboxSettings,
     setCheckboxSettings,
@@ -116,7 +122,21 @@ async function getSolution() {
         const bestPoint = data[1].map((point) => point.profit === bestProfit ? point.risk : null )
 
         setSolutionLoaded(true);
-        setResults(config);
+        setResults(() => config);
+        setResultProfit(() => {
+            return {
+                profit: bestProfit,
+                distribution : bestDistribution
+            }
+        });
+        setResultProfitPoints(() => {
+            return chartDataset.map(it => {
+                return {
+                    profit: it.profit,
+                    distribution: it.distribution
+                }
+            })
+        })
         setChartData(transformData(chartDataset, bestPoint));
         await saveRestrictions(body, data[0]['risk']);
     } else {

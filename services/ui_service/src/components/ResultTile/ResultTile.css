@@ -3,9 +3,29 @@
     width: 25px;
     height: 25px;
     padding: 3px;
+    margin: 0 0 0 auto;
+
 }
 
 .saveButton i:hover {
     color: #3498db;
     cursor: pointer;
+}
+
+.dropdown {
+    margin-top: -1px;
+    float: right;
+    font-size: small;
+}
+.dropdown * {
+    font-size: small;
+}
+
+.dropdown button {
+    border: none;
+}
+
+.dropdown-menu {
+    width: max-content;
+    margin-right: 5px;
 }
