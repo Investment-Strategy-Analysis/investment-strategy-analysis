@@ -54,7 +54,7 @@ def test_example(restrict: Restriction):
 @pytest.mark.parametrize("restrict", test_data_restriction)
 def test_fixed_price(restrict: Restriction):
     global LAST_RENEW_TIME
-    for val in singles.CURRENT_INDEXES.vals():
+    for key, val in singles.CURRENT_INDEXES.items():
         val.history = [2, 2, 2, 2]
     singles.LAST_RENEW_TIME = datetime.datetime.now()
     print(restrict)
