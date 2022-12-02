@@ -1,5 +1,5 @@
 import Tile from "../Tile/Tile";
-import {createSignal, createEffect, Match, Switch} from "solid-js";
+import {createEffect, createSignal, Match, Switch} from "solid-js";
 import styles from './GraphicTile.module.css';
 import Charts from '../Chart/Chart';
 import {formatFloat, formatFloatValue} from "../../js/utils";
@@ -28,7 +28,7 @@ function transformData(dataset, bestPoint) {
                     pointHoverRadius: 10,
                 },
                 {
-                    label: "risk(profit)",
+                    label: "Risk",
                     fill: false,
                     data: dataset.map((d) => formatFloatValue(d.risk)),
                     borderColor: mainColor,

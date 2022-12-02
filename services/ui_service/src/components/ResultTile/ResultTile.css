@@ -1,0 +1,13 @@
+.dropdown {
+    margin-top: -5px;
+    float: right;
+    font-size: small;
+}
+
+.dropdown * {
+    font-size: small;
+}
+
+.dropdown-menu {
+    width: max-content;
+}

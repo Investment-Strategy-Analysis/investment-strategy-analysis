@@ -1,14 +1,41 @@
 import styles from './ResultTile.css';
 import Tile from "../Tile/Tile";
 import {createSignal, Match, Switch} from "solid-js";
-import {formatFloatValue} from "../../js/utils";
+import {formatFloat, formatFloatValue} from "../../js/utils";
 
 const [results, setResults] = createSignal([]);
+
+const [resultProfit, setResultProfit] = createSignal(null)
+const [resultProfitPoints, setResultProfitPoints] = createSignal([])
+
+function showPoint(point) {
+    setResults(() => Object.keys(point.distribution).map((key) => [key, point.distribution[key]]))
+    setResultProfit(() => point);
+}
 
 export function ResultTile() {
     return (
         <Tile>
-            <h5>The best configuration</h5>
+            <h5>Distribution
+                <Show
+                    when={resultProfit() != null}
+                    feedback={() => null}
+                >
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                title="Profit"
+                                aria-expanded="false">
+                            {formatFloat(resultProfit().profit)} %
+                        </button>
+                        <ul class="dropdown-menu">
+                            <For each={resultProfitPoints()}>{(point, _) =>
+                                <li><span class="dropdown-item" onClick={() => showPoint(point)}>Profit: {formatFloat(point.profit)}%</span></li>
+                            }
+                            </For>
+                        </ul>
+                    </div>
+                </Show>
+            </h5>
 
             <Switch fallback={<i>empty now</i>}>
                 <Match when={results().length > 0} keyed>
@@ -28,4 +55,4 @@ export function ResultTile() {
     );
 }
 
-export {setResults}
+export {setResults, setResultProfit, setResultProfitPoints, resultProfitPoints, resultProfit}
