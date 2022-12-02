@@ -106,7 +106,7 @@ class SignUpTests:
     def sign_up_once_again_success_test(self):
         username_input = self.page_objects.get_username_input()
         username_input.clear()
-        username_input.send_keys('Ilyaaa')
+        username_input.send_keys('Ilyaaaaa')
 
         sign_up_button = self.page_objects.get_sign_up_button()
         sign_up_button.click()
