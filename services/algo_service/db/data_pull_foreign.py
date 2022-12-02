@@ -1,4 +1,5 @@
 import requests
+from requests.adapters import HTTPAdapter
 import json
 import datetime
 import logging
@@ -11,6 +12,7 @@ def get_data_or_empty(link):
     from_day = (datetime.date.today() - datetime.timedelta(days=MAX_DAYS * 6.9 / 5)).strftime(DATE_PULL)
     result = requests.get(link.format(from_day, to_day))
     if result.status_code == 200:
+        print(result.text)
         data_dict = json.loads(result.text)
         if 'data' in data_dict:
             return [float(i['last_max'].replace(',', '')) / 2 + float(i['last_min'].replace(',', '')) / 2

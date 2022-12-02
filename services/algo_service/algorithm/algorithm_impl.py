@@ -1,7 +1,7 @@
 import datetime
 from typing import List, Tuple
 from services.algo_service.common.abstract import Restriction, InvestStrategy, Index, Checkbox
-from services.algo_service.common.singletons import LAST_RENEW_TIME, CURRENT_INDEXES
+import services.algo_service.common.singletons as singletons
 from services.algo_service.db.data_pull_foreign import renew_foreign_data_if_necessary
 from services.algo_service.db.data_pull_russia import renew_russian_data_if_necessary
 import numpy as np
@@ -54,7 +54,7 @@ def get_right_input(restriction):
     # Возвращает numpy матрицу, лист пар с ограничениями для каждого актива и
     # лист названий соответствующих активов.
     keys = []
-    for key in CURRENT_INDEXES.keys():
+    for key in singletons.CURRENT_INDEXES.keys():
         if restriction.upper_border[key] > 1e-4:
             keys.append(key)
     data = []
@@ -62,13 +62,13 @@ def get_right_input(restriction):
     for key in keys:
         bounds.append((restriction.lower_border[key],
                        restriction.upper_border[key]))
-        data.append(get_history_extended(CURRENT_INDEXES[key].history, int(restriction.analysis_time) * 5 // 7))
+        data.append(get_history_extended(singletons.CURRENT_INDEXES[key].history, int(restriction.analysis_time) * 5 // 7))
     return get_data_matrix(data), bounds, keys
 
 
 def get_profit_and_risk(data, distribution, invest_period=1):
     # Принимает numpy матрицу, numpy распределение соответсвующее матрице и период ребалансировки портфеля.
-    # Считает какую даходность даст портфель в % и дисперсию производной.
+    # Считает, какую доходность даст портфель в % и дисперсию производной.
     strategy = np.zeros((data.shape[1],))
     current_distribution = np.zeros((data.shape[0],))
     start = data.shape[1]
@@ -136,9 +136,8 @@ def filter_solutions(rest, target_profit):
             front.append(i)
     best = front[0]
     for i in front:
-        if i.profit - target_profit > 99.99 >= best.profit - target_profit:
-            best = i
-        if i.profit - target_profit > 99.99 and i.risk < best.risk:
+        if i.profit - target_profit > best.profit - target_profit - 0.01 and \
+                    (best.profit - target_profit < 0 or i.risk < best.risk):
             best = i
     return best, front
 
@@ -147,17 +146,16 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
     # Принимает на вход ограничения. Преобразует их, если необходимо.
     # Если прошёл хотя бы час с прошлого обновления делает новый запрос по данным.
     # Находит оптимальный ответ и все ответы находящиеся на парето фронте.
-    global LAST_RENEW_TIME
     parse_checkboxes(restriction)
-    if LAST_RENEW_TIME + datetime.timedelta(hours=1) < datetime.datetime.now():
+    if singletons.LAST_RENEW_TIME + datetime.timedelta(hours=1) < datetime.datetime.now():
         renew_russian_data_if_necessary()
         renew_foreign_data_if_necessary()
-        LAST_RENEW_TIME = datetime.datetime.now()
+        singletons.LAST_RENEW_TIME = datetime.datetime.now()
     data, bounds, keys = get_right_input(restriction)
     cons = ({'type': 'eq', 'fun': lambda x: 1 - sum(x)})
     rest = []
     last_distribution = get_x0(bounds)
-    risk_normalization = max(0.00001, get_profit_and_risk(data, last_distribution, invest_period=1)[1] * 0.01)
+    risk_normalization = max(0.0000001, get_profit_and_risk(data, last_distribution, invest_period=1)[1] * 0.01)
     logging.info(f'Risk Normalization = {risk_normalization}')
     for i in np.linspace(restriction.target_profit + 95, restriction.target_profit + 105, 11):
         best_solutions = []
@@ -167,7 +165,7 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
                                    profit=best_solutions[-1][0], risk=best_solutions[-1][1] / risk_normalization))
         last_distribution = best_solutions[-1][2]
         print('target = ', i, ' ans = ', best_solutions[-1][0], best_solutions[-1][1] / risk_normalization)
-    best, front = filter_solutions(rest, restriction.target_profit)
+    best, front = filter_solutions(rest, restriction.target_profit + 100)
     logging.info(f'Algo best = {best}')
     logging.info(f'Algo front = {front}')
     return best, front

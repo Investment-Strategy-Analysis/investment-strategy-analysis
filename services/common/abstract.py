@@ -53,8 +53,8 @@ class AnalysisTime(Enum):
 class Index(Enum):
     RUB = InvestItem(name='Рубль (RUB/RUR)', country='const', id='RUB', history=([1] * MAX_DAYS))
     IMOEX = InvestItem(name='Индекс МосБиржи индекс РТС (IMOEX)', country='russia', id='IMOEX')
-    MOEXBC = InvestItem(name='Индекс Мосбиржи голубые фишки (MOEXBC)', country='russia', id='MOEXBC')
-    MOEXBMI = InvestItem(name='Индекс широкого рынка (MOEXBMI)', country='russia', id='MOEXBMI')
+    #MOEXBC = InvestItem(name='Индекс Мосбиржи голубые фишки (MOEXBC)', country='russia', id='MOEXBC')
+    #MOEXBMI = InvestItem(name='Индекс широкого рынка (MOEXBMI)', country='russia', id='MOEXBMI')
     MCXSM = InvestItem(name='Индекс средней и малой капитализации (MCXSM)', country='russia', id='MCXSM')
     SPX = InvestItem(name='Индекс американских акций S&P 500 (SPX)', country='foreign', id='SPX')
     GDAXI = InvestItem(name='Индекс немецких акций DAX (GDAXI)', country='foreign', id='GDAXI')
