@@ -56,7 +56,7 @@ def test_fixed_price(restrict: Restriction):
     global LAST_RENEW_TIME
     for key, val in singles.CURRENT_INDEXES.items():
         val.history = [2, 2, 2, 2]
-    singles.LAST_RENEW_TIME = datetime.datetime.now()
+    singles.LAST_RENEW_TIME = datetime.now()
     print(restrict)
     best, front = get_solutions(restrict)
     print(best)
