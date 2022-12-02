@@ -45,7 +45,7 @@ export function ResultTile() {
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 title="Profit"
                                 aria-expanded="false">
-                            {formatFloat(resultProfit().profit)} %
+                            {formatFloat(resultProfit().profit)}
                         </button>
                         <ul class="dropdown-menu">
                             <For each={resultProfitPoints()}>{(point, _) =>
