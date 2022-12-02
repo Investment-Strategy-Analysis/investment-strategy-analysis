@@ -2,6 +2,7 @@ import {createSignal, For} from "solid-js";
 import Tile from "../Tile/Tile";
 import styles from './SavedConfig.module.css';
 import {USER_SERVER} from "../../js/web_constants";
+import {formatFloatValue} from "../../js/utils";
 
 const [configurations, setConfigurations] = createSignal([]);
 
@@ -51,7 +52,7 @@ function SavedConfig() {
                 <div class={styles.tileContent}>
                     <div class={styles.description}>Strategy: {c.strategy}</div>
                     <div class={styles.description}>Profit: {c.restrictions.target_profit}</div>
-                    <div class={styles.description}>Risk: {c.risk}</div>
+                    <div class={styles.description}>Risk: {formatFloatValue(c.risk)}</div>
 
                     <div class={styles.openButton}>
                         <button type="button" class="btn btn-info btn-sm" onClick={() => {

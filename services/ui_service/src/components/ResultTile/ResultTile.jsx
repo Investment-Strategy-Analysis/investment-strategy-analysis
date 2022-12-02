@@ -33,16 +33,14 @@ export function ResultTile() {
 
     return (
         <Tile>
-            <h5>The best configuration
-                <div class="saveButton" onClick={() => saveConfig()}>
-                    <i class="bi bi-save"></i>
-                </div>
-            </h5>
             <h5>Distribution
                 <Show
                     when={resultProfit() != null}
                     feedback={() => null}
                 >
+                    <div class="saveButton" onClick={() => saveConfig()}>
+                        <i class="bi bi-save"></i>
+                    </div>
                     <div class="dropdown">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 title="Profit"
@@ -73,9 +71,6 @@ export function ResultTile() {
                     }</For>
                 </Match>
             </Switch>
-            <div class="saveButton" onClick={() => saveConfig()}>
-                <i class="bi bi-save"></i>
-            </div>
         </Tile>
     );
 }
