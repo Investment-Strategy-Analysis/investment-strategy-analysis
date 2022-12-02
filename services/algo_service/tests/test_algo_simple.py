@@ -65,5 +65,5 @@ def test_linear_price(restrict: Restriction):
         val.history = [1, 2, 3, 4]
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
-    assert best.risk == 1.314768175368
+    assert best.risk == 1.314768175368353e-24
     assert best.profit == 200
