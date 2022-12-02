@@ -40,8 +40,23 @@ test_data_restriction = [
 def test_example(restrict: Restriction):
     # global LAST_RENEW_TIME
     # for val in singles.CURRENT_INDEXES.vals():
-    #     val.history = [1, 3, 4, 6]
+    #     val.history = [2, 2, 2, 2]
     # singles.LAST_RENEW_TIME = datetime.datetime.now()
+    print(restrict)
+    best, front = get_solutions(restrict)
+    print(best)
+    print(best_invest_strat)
+    assert best.risk == 44.24218097256038
+    assert best.profit == 112.99998084763949
+    assert best_invest_strat.profit == 112.99998084763949
+
+
+@pytest.mark.parametrize("restrict", test_data_restriction)
+def test_fixed_price(restrict: Restriction):
+    global LAST_RENEW_TIME
+    for val in singles.CURRENT_INDEXES.vals():
+        val.history = [2, 2, 2, 2]
+    singles.LAST_RENEW_TIME = datetime.datetime.now()
     print(restrict)
     best, front = get_solutions(restrict)
     print(best)
