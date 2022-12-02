@@ -55,4 +55,4 @@ def test_fixed_price(restrict: Restriction):
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert best.risk == 0
-    assert best.profit == 0
+    assert best.profit == 100
