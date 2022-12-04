@@ -16,7 +16,7 @@ def get_data_or_empty(link, days):
         data_dict = json.loads(result.text)
         if 'data' in data_dict:
             return [float(i['last_max'].replace(',', '')) / 2 + float(i['last_min'].replace(',', '')) / 2
-                    for i in data_dict['data']]
+                    for i in data_dict['data']][::-1]
         else:
             logging.error(f'Failed to parse, no data: {link.format(from_day, to_day)}. '
                           'Error code = {result.status_code}')
