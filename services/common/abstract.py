@@ -3,6 +3,7 @@ from typing import List, Dict, Optional, Union
 from enum import Enum
 import datetime
 # from services.common.consts import YEAR
+from services.common.consts import MAX_DAYS
 YEAR = 365
 
 
@@ -49,15 +50,16 @@ class AnalysisTime(Enum):
 
 
 class Index(Enum):
+    RUB = InvestItem(name='Рубль (RUB/RUR)', country='const', id='RUB', history=([1] * MAX_DAYS))
     IMOEX = InvestItem(name='Индекс МосБиржи индекс РТС (IMOEX)', country='russia', id='IMOEX')
-    # RGBI = InvestItem(name='Индекс государственных облигаций РФ (RGBI)', country='russia', id='RGBI')
-    MOEXBC = InvestItem(name='Индекс Мосбиржи голубые фишки (MOEXBC)', country='russia', id='MOEXBC')
-    MOEXBMI = InvestItem(name='Индекс широкого рынка (MOEXBMI)', country='russia', id='MOEXBMI')
+    #MOEXBC = InvestItem(name='Индекс Мосбиржи голубые фишки (MOEXBC)', country='russia', id='MOEXBC')
+    #MOEXBMI = InvestItem(name='Индекс широкого рынка (MOEXBMI)', country='russia', id='MOEXBMI')
     MCXSM = InvestItem(name='Индекс средней и малой капитализации (MCXSM)', country='russia', id='MCXSM')
-    # SPX = InvestItem(name='Индекс американских акций S&P 500 (SPX)', country='foreign', id='SPX')
-    # GDAXI = InvestItem(name='Индекс немецких акций DAX (GDAXI)', country='foreign', id='GDAXI')
-    # IXIC = InvestItem(name='Индекс американских IT акций NASDAQ Composite (IXIC)', country='foreign', id='IXIC')
-    # CIH = InvestItem(name='Акции китайских компаний (CIH)', country='foreign', id='CIH')
+    SPX = InvestItem(name='Индекс американских акций S&P 500 (SPX)', country='foreign', id='SPX')
+    GDAXI = InvestItem(name='Индекс немецких акций DAX (GDAXI)', country='foreign', id='GDAXI')
+    IXIC = InvestItem(name='Индекс американских IT акций NASDAQ Composite (IXIC)', country='foreign', id='IXIC')
+    GOLD = InvestItem(name='Золото', country='foreign', id='GOLD')
+    USD = InvestItem(name='Доллар США (USD)', country='foreign', id='USD')
 
 
 class InvestStrategy(BaseModel):

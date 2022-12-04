@@ -11,11 +11,11 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
 
 
 def example_test():
-    best, front = get_solutions(Restriction(target_profit=13,
+    best, front = get_solutions(Restriction(target_profit=5,
                                             checkboxes={checkbox.value.id: False for checkbox in Checkbox},
                                             upper_border={index.value.id: 1 for index in Index},
                                             lower_border={index.value.id: 0 for index in Index},
-                                            analysis_time=100))
+                                            analysis_time=1000))
     print(best)
     print(front)
 

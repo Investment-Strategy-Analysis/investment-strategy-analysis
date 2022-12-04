@@ -3,11 +3,10 @@ pydantic
 uvicorn
 aiohttp
 db-sqlite3
-sqlitedict
-investpy
 xmltodict
 psycopg2-binary
 sqlmodel
 SQLAlchemy
 pytest
-scipy
+requests
+cvxpy
