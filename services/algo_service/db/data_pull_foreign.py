@@ -8,12 +8,11 @@ from services.algo_service.common.singletons import CURRENT_INDEXES
 from services.algo_service.db.data_db_api import save_history, load_history
 
 
-def get_data_or_empty(link):
+def get_data_or_empty(link, days):
     to_day = datetime.date.today().strftime(DATE_PULL)
-    from_day = (datetime.date.today() - datetime.timedelta(days=MAX_DAYS * 6.9 / 5)).strftime(DATE_PULL)
+    from_day = (datetime.date.today() - datetime.timedelta(days=days)).strftime(DATE_PULL)
     result = requests.get(link.format(from_day, to_day))
     if result.status_code == 200:
-        print(result.text)
         data_dict = json.loads(result.text)
         if 'data' in data_dict:
             return [float(i['last_max'].replace(',', '')) / 2 + float(i['last_min'].replace(',', '')) / 2
@@ -28,11 +27,11 @@ def get_data_or_empty(link):
 
 
 def get_and_set_usd():
-    CURRENT_INDEXES['USD'].history = get_data_or_empty(LINKS_PULL_FOREIGN_DATA["USD"])
+    CURRENT_INDEXES['USD'].history = get_data_or_empty(LINKS_PULL_FOREIGN_DATA["USD"], MAX_DAYS * 7 / 5)
 
 
 def get_history_in_rub(id="GOLD"):
-    usd_data = get_data_or_empty(LINKS_PULL_FOREIGN_DATA[id])
+    usd_data = get_data_or_empty(LINKS_PULL_FOREIGN_DATA[id], MAX_DAYS)
     for i in range(len(usd_data)):
         usd_data[-i] *= CURRENT_INDEXES["USD"].history[-i]
     return usd_data
@@ -41,16 +40,16 @@ def get_history_in_rub(id="GOLD"):
 def renew_foreign_data_if_necessary():
     logging.info(f'Pulling Foreign Data.')
     print(f'Pulling Foreign Data.')
-    if False and not CURRENT_INDEXES['USD'].history:
+    if not CURRENT_INDEXES['USD'].history:
         for index in CURRENT_INDEXES.values():
             load_history(index)
-    logging.info(f'Index = {CURRENT_INDEXES}')
+    #logging.info(f'Index = {CURRENT_INDEXES}')
     get_and_set_usd()
     for (_, index) in CURRENT_INDEXES.items():
         if index.country == 'foreign' and index.id != "USD":
             index.history = get_history_in_rub(index.id)
-    logging.info(f'Foreign data pulling completed.')
     for (_, index) in CURRENT_INDEXES.items():
         save_history(index)
-    logging.info(f'Index = {CURRENT_INDEXES}')
+    #logging.info(f'Index = {CURRENT_INDEXES}')
+    logging.info(f'Foreign data pulling completed.')
 

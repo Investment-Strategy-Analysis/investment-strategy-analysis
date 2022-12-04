@@ -15,7 +15,7 @@ def example_test():
                                             checkboxes={checkbox.value.id: False for checkbox in Checkbox},
                                             upper_border={index.value.id: 1 for index in Index},
                                             lower_border={index.value.id: 0 for index in Index},
-                                            analysis_time=100))
+                                            analysis_time=1000))
     print(best)
     print(front)
 
