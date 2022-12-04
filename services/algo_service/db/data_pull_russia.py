@@ -72,7 +72,7 @@ def renew_russian_data_if_necessary():
                 else:
                     if min_date is None or min_date > index.date_till + datetime.timedelta(days=1):
                         min_date = index.date_till + datetime.timedelta(days=1)
-    min_date = datetime.date(year=2021, month=8, day=4)
+    min_date = datetime.date(year=2020, month=9, day=4)
     max_date = datetime.date(year=2021, month=9, day=4)
     for date in daterange(min_date, max_date):
         if date.weekday() <= 4:

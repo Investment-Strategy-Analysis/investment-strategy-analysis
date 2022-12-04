@@ -81,7 +81,7 @@ def get_right_input(restriction):
     return get_data_matrix(data), lower, upper, keys
 
 
-def find_max(D, lower, upper):
+def find_max(D, lower, upper, years_count):
     # Ищет максимально возможный доход, не обращая внимания на риск.
     d = cp.Variable((D.shape[0],))
     D = D.T
@@ -90,12 +90,12 @@ def find_max(D, lower, upper):
         [d >= lower, d <= upper, cp.norm(d, 1) <= 1.0]
     )
     prob.solve()
-    return d.value, np.prod(D @ d.value), np.var(D @ d.value)
+    return d.value, np.prod(D @ d.value)**(1 / years_count), np.var(D @ d.value)
 
 
-def find_best(D, lower, upper, target_profit, x0):
+def find_best(D, lower, upper, target_profit, x0, years_count):
     # Ищет наименьший риск при доходе больше таргета.
-    target_profit **= 1 / D.shape[1]
+    target_profit **= years_count / D.shape[1]
     d = cp.Variable((D.shape[0],))
     if x0 is not None:
         d.value = x0
@@ -107,7 +107,7 @@ def find_best(D, lower, upper, target_profit, x0):
         [d >= lower, d <= upper, cp.norm(d, 1) <= 1.0, target_profit <= cp.geo_mean(D @ d)]
     )
     prob.solve()
-    return d.value, np.prod(D @ d.value), np.var(D @ d.value)
+    return d.value, np.prod(D @ d.value)**(1 / years_count), np.var(D @ d.value)
 
 
 def get_dict(distribution, keys):
@@ -123,18 +123,17 @@ def filter_solutions(rest, target_profit):
     front = []
     for i in rest:
         is_unique = True
-        for j in front:
-            if abs(j.profit - i.profit) < 0.001:
-                if i.profit < j.profit:
-                    j = i
+        for j in range(len(front)):
+            if abs(front[j].profit - i.profit) < 0.001:
+                if i.profit < front[j].profit:
+                    front[j] = i
                 is_unique = False
                 break
         if is_unique:
             front.append(i)
-    best = front[0]
+    best = front[-1]
     for i in front:
-        if i.profit - target_profit > best.profit - target_profit - 0.01 and \
-                    (best.profit - target_profit < 0 or i.risk < best.risk):
+        if abs(i.profit - target_profit) < abs(best.profit - target_profit):
             best = i
     return best, front
 
@@ -148,19 +147,20 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
         renew_russian_data_if_necessary()
         renew_foreign_data_if_necessary()
         singletons.LAST_RENEW_TIME = datetime.datetime.now()
+    years_count = int(restriction.analysis_time) / 365
     data, lower, upper, keys = get_right_input(restriction)
-    dist, profit, risk = find_max(data, lower, upper)
+    dist, profit, risk = find_max(data, lower, upper, years_count)
     last_distribution = dist
     risk_norm = risk
     print('target = max', ' ans = ', profit, ' risk_norm = ', risk)
     solutions = [InvestStrategy(id="Custom", distribution=get_dict(dist, keys), profit=profit * 100, risk=100)]
     for i in np.flip(np.linspace(1, max(1.0, int(profit * 100) / 100), 1 + int((profit - 1) * 100))):
-        dist, profit, risk = find_best(data, lower, upper, i, last_distribution)
+        dist, profit, risk = find_best(data, lower, upper, i, last_distribution, years_count)
         solutions.append(InvestStrategy(id="Custom", distribution=get_dict(dist, keys),
                                         profit=profit * 100, risk=risk / risk_norm * 100))
         last_distribution = dist
         print('target = ', i, ' ans = ', profit, risk / risk_norm)
-    best, front = filter_solutions(solutions, restriction.target_profit / 100 + 1)
+    best, front = filter_solutions(solutions, restriction.target_profit + 100)
     logging.info(f'Algo best = {best}')
     logging.info(f'Algo front = {front}')
     return best, front
