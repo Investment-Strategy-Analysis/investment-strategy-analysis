@@ -5,6 +5,7 @@ LINK_PULL_DATA = 'https://iss.moex.com/iss/history/engines/stock/markets/index/s
 LINK_PULL_DATES = 'https://iss.moex.com/iss/statistics/engines/stock/markets/index/analytics'
 DATE_PULL = "%Y-%m-%d"
 DATEFMT = "%Y-%m-%dT%H:%M:%S"
+RESORT_COUNT = 10
 
 
 LINKS_PULL_FOREIGN_DATA = {

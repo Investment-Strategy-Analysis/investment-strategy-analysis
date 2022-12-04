@@ -48,7 +48,7 @@ def daterange(start_date, end_date):
 
 def renew_russian_data_if_necessary():
     logging.info(f'Pulling Russian Data.')
-    if False and not CURRENT_INDEXES['IMOEX'].history:
+    if not CURRENT_INDEXES['IMOEX'].history:
         for index in CURRENT_INDEXES.values():
             load_history(index)
     dates = pull_date()
@@ -99,7 +99,7 @@ def renew_russian_data_if_necessary():
                 logging.info(f'Current date {date}. End date {max_date}')
                 for index_id in data.keys():
                     save_history(CURRENT_INDEXES[index_id])
-    logging.info(f'Russian data pulling completed.')
     for (_, index) in CURRENT_INDEXES.items():
         save_history(index)
-    logging.info(f'Index = {CURRENT_INDEXES}')
+    #logging.info(f'Index = {CURRENT_INDEXES}')
+    logging.info(f'Russian data pulling completed.')
