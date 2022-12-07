@@ -5,6 +5,7 @@ from starlette.middleware.cors import CORSMiddleware
 from services.algo_service.common.abstract import Restriction
 from services.algo_service.common.consts import DATEFMT
 from services.algo_service.algorithm.algorithm_api import get_solutions
+from services.common.abstract import Settings
 
 logging.basicConfig(format='%(asctime)s.%(msecs)03dZ %(name)s %(levelname)s %(message)s',
                     datefmt=DATEFMT,
@@ -35,5 +36,5 @@ async def ping() -> str:
 
 
 @app.post('/solutions', summary="Get solutions")
-async def post_solutions(restriction: Restriction):
-    return get_solutions(restriction)
+async def post_solutions(settings: Settings):
+    return get_solutions(settings)

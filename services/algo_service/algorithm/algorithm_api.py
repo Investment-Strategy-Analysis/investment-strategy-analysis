@@ -1,13 +1,13 @@
 from typing import List, Tuple
-from services.algo_service.common.abstract import Restriction, InvestStrategy, Index, Checkbox
+from services.algo_service.common.abstract import Restriction, Settings, InvestStrategy, Index, Checkbox
 from services.algo_service.algorithm.algorithm_impl import get_solutions as __get_solutions
 
 
 # returns the best solution and all found
 
 
-def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[InvestStrategy]]:
-    return __get_solutions(restriction)
+def get_solutions(settings: Settings) -> Tuple[InvestStrategy, List[InvestStrategy]]:
+    return __get_solutions(settings)
 
 
 def example_test():

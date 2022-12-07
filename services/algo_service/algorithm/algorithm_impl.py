@@ -1,12 +1,13 @@
 import datetime
 from typing import List, Tuple
-from services.algo_service.common.abstract import Restriction, InvestStrategy, Index, Checkbox
+from services.algo_service.common.abstract import Restriction, InvestStrategy, Index, Checkbox, Settings
 from services.algo_service.common.singletons import LAST_RENEW_TIME, CURRENT_INDEXES
 from services.algo_service.db.data_pull_russia import renew_all_data_if_necessary
 import numpy as np
 import operator
 import logging
 from scipy.optimize import minimize
+from services.common.singletons import STRATEGIES
 
 
 def parse_checkboxes(restriction: Restriction):
@@ -54,13 +55,13 @@ def get_right_input(restriction):
     # лист названий соответствующих активов.
     keys = []
     for key in CURRENT_INDEXES.keys():
-        if restriction.upper_border[key] > 1e-4:
+        if restriction.upper_border.get(key, 0) > 1e-4:
             keys.append(key)
     data = []
     bounds = []
     for key in keys:
-        bounds.append((restriction.lower_border[key],
-                       restriction.upper_border[key]))
+        bounds.append((restriction.lower_border.get(key, 0),
+                       restriction.upper_border.get(key, 1)))
         data.append(get_history_extended(CURRENT_INDEXES[key].history, int(restriction.analysis_time) * 5 // 7))
     return get_data_matrix(data), bounds, keys
 
@@ -142,10 +143,11 @@ def filter_solutions(rest, target_profit):
     return best, front
 
 
-def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[InvestStrategy]]:
+def get_solutions(settings: Settings) -> Tuple[InvestStrategy, List[InvestStrategy]]:
     # Принимает на вход ограничения. Преобразует их, если необходимо.
     # Если прошёл хотя бы час с прошлого обновления делает новый запрос по данным.
     # Находит оптимальный ответ и все ответы находящиеся на парето фронте.
+    restriction = settings.restrictions
     global LAST_RENEW_TIME
     parse_checkboxes(restriction)
     if LAST_RENEW_TIME + datetime.timedelta(hours=1) < datetime.datetime.now():
@@ -157,6 +159,12 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
     last_distribution = get_x0(bounds)
     risk_normalization = get_profit_and_risk(data, last_distribution, invest_period=1)[1] * 0.01
     logging.info(f'Risk Normalization = {risk_normalization}')
+
+    # TODO
+    if settings.strategy in STRATEGIES:
+        strategy = STRATEGIES[settings.strategy]
+        strategy.risk = settings.risk
+    
     for i in np.linspace(restriction.target_profit + 95, restriction.target_profit + 105, 11):
         best_solutions = []
         _ = minimize(fun=loss_func_creator(best_solutions, data, i, invest_period=1),

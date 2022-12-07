@@ -10,7 +10,6 @@ from services.user_service.api.authorization.deps import get_current_user, refre
 from services.user_service.common.helpers import post
 from services.user_service.common.endpoints import *
 from deprecated import deprecated
-from services.common.helpers import to_analysis_time
 from services.common.singletons import STRATEGIES
 
 logging.basicConfig(format='%(asctime)s.%(msecs)03dZ %(name)s %(levelname)s %(message)s',
@@ -39,7 +38,7 @@ app.add_middleware(
 async def get_operations(user: User = Depends(get_current_user)) -> dict[str, dict[str, str]]:
     logging.info(f"{user.login} get operations")
     operations = [ping, get_user, get_token_refresh, get_settings, get_current_settings, get_user_settings, post_tokens, 
-                  post_user, post_current_settings, post_settings, post_settings_add, post_user_parameters, post_user_email, 
+                  post_user, post_settings, post_settings_add, post_user_parameters, post_user_email, 
                   post_user_password, post_user_photo, delete_user, get_analysis_times, get_checkboxes, get_strategies, post_solutions]
     return {"Operations": dict(map(lambda x: (x.__name__, x.__doc__), operations))}
 
@@ -85,6 +84,7 @@ async def get_user_settings(user: User = Depends(get_current_user)) -> UserSetti
 
 @app.post('/login', summary="Create access and refresh tokens for user")
 async def post_tokens(data: OAuth2PasswordRequestForm = Depends()) -> Tokens:
+    """just login OAuth2"""
     return await bl.post_tokens(data)
 
 
@@ -96,7 +96,7 @@ async def post_user(user: User):
     return OK
 
 
-@app.post("/user/current_settings", summary="Update current settings for current user")
+# @app.post("/user/current_settings", summary="Update current settings for current user")
 async def post_current_settings(settings: Settings, user: User = Depends(get_current_user)):
     """update current settings for current user"""
     logging.info("update user current_settings")
@@ -162,25 +162,35 @@ async def delete_user(user: User = Depends(get_current_user)):
 
 
 ### algorithm
-@app.get('/settings/analysis_times', summary="show possible analysis times")
+@deprecated(reason="use numbers in analysis_times field")
+@app.get('/settings/analysis_times', summary="show possible analysis times (deprecated)")
 async def get_analysis_times() -> AnyList:  # data=[AnalysisTimeInfo]
-    return AnyList(data=[time.value for time in AnalysisTime])
+    """get possible analysis times"""
+    return AnyList(data=[])
 
 
 @app.get('/settings/checkboxes', summary="show possible checkboxes")
 async def get_checkboxes() -> AnyList:      # data=[CheckboxInfo]
+    """get possible checkboxes"""
     return AnyList(data=[checkbox.value for checkbox in Checkbox])
 
 
 @app.get('/settings/strategies', summary="show possible strategies")
 async def get_strategies() -> AnyList:      # data=[InvestStrategy]
+    """get possible strategies"""
     return AnyList(data=list(STRATEGIES.values()))
 
 
 # connectors (also without auth later)
 @app.post('/solutions', summary="Get solutions")
-async def post_solutions(restriction: Restriction, user: User = Depends(get_current_user)) -> Tuple[InvestStrategy, List[InvestStrategy]]:
+async def post_solutions(settings: Settings, user: User = Depends(get_current_user)) -> Tuple[InvestStrategy, List[InvestStrategy]]:
+    """get solutions with settings"""
     logging.info(f"solutions, {user.login}")
-    if isinstance(restriction.analysis_time, str):
-        restriction.analysis_time = to_analysis_time(restriction.analysis_time).value.days
-    return await post(SOLUTIONS, restriction.json())
+    await post_current_settings(settings, user)
+    
+    # TODO (do it optimal)
+    all_settings = await get_settings(user)
+    all_settings.append(settings)
+    await post_settings(all_settings, user)
+    
+    return await post(SOLUTIONS, settings.json())

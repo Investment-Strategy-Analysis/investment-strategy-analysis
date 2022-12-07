@@ -14,14 +14,6 @@ class Photo(BaseModel):
     photo: bytes
 
 
-class Settings(BaseModel):
-    strategy: str = "default"
-    # checkboxes - We need to do function that gives us Restriction.upper_border and Restriction.lower_border from this
-    restrictions: Restriction = Restriction()
-    risk: float = 0
-    # other
-
-
 class LastAnswer(BaseModel):
     result: Optional[List[float]] = None
     settings: Optional[Settings] = None

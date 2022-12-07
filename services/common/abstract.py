@@ -38,16 +38,6 @@ class Checkbox(Enum):
     HIGH_DIVERSIFICATION = CheckboxInfo(name="High diversification", id="HIGH_DIVERSIFICATION")
 
 
-class AnalysisTime(Enum):
-    DAY_1 = AnalysisTimeInfo(name="1 day", id="DAY_1", days=1)
-    DAY_100 = AnalysisTimeInfo(name="100 days", id="DAY_100", days=100)
-    YEAR_1 = AnalysisTimeInfo(name="1 year", id="YEAR_1", days=YEAR)
-    YEAR_3 = AnalysisTimeInfo(name="3 years", id="YEAR_3", days=YEAR * 3)
-    YEAR_5 = AnalysisTimeInfo(name="5 years", id="YEAR_5", days=YEAR * 5)
-    YEAR_10 = AnalysisTimeInfo(name="10 years", id="YEAR_10", days=YEAR * 10)
-    # add ...
-
-
 class Index(Enum):
     IMOEX = InvestItem(name='Индекс МосБиржи индекс РТС (IMOEX)', country='russia', id='IMOEX')
     # RGBI = InvestItem(name='Индекс государственных облигаций РФ (RGBI)', country='russia', id='RGBI')
@@ -73,4 +63,12 @@ class Restriction(BaseModel):
     checkboxes: Dict[str, bool] = {checkbox.value.id: False for checkbox in Checkbox}   # key - Checkbox.name
     upper_border: Optional[Dict[str, float]] = None     # key - Index.name
     lower_border: Optional[Dict[str, float]] = None     # key - Index.name
-    analysis_time: Union[str, int] = AnalysisTime.YEAR_1.value.id
+    analysis_time: int = 365
+
+
+class Settings(BaseModel):
+    strategy: str = "default"
+    # checkboxes - We need to do function that gives us Restriction.upper_border and Restriction.lower_border from this
+    restrictions: Restriction = Restriction()
+    risk: float = 0
+    # other

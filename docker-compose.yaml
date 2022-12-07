@@ -49,7 +49,7 @@ services:
     environment:
       POSTGRES_DB: "user_db"
       POSTGRES_USER: "hisa-user"
-      POSTGRES_PASSWORD: "LAhOGLC/vHwxXK4RCFD7Qn54+ek="
+      POSTGRES_PASSWORD: "LAhOGLC/vHwxXK4RCFD7Qn54+ek="  # FIXME
     networks:
       - backend
     ports:
@@ -61,7 +61,7 @@ services:
     environment:
       POSTGRES_DB: "algo_db"
       POSTGRES_USER: "hisa-user"
-      POSTGRES_PASSWORD: "66I50dYw7EOM4+FKPRxazHTKLS4="
+      POSTGRES_PASSWORD: "66I50dYw7EOM4+FKPRxazHTKLS4="  # FIXME
     networks:
       - backend
     ports:

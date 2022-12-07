@@ -5,19 +5,11 @@ from services.user_service.common.helpers import db_session, db_engine
 from services.user_service.db.tables import Base
 from services.user_service.api.authorization.utils import get_hashed_password
 import services.user_service.db.tables as T
-from services.common.helpers import to_analysis_time
 
 __engine = db_engine()
 session = db_session(__engine)
 Base.metadata.create_all(__engine)  # create tables if not exists
 T.session = session
-
-
-def __analysis_time_int(analysis_time):
-    if isinstance(analysis_time, str):
-        return to_analysis_time(analysis_time).value.days
-    else:
-        return analysis_time
 
 
 def get_user_by_login(login: str) -> Optional[User]:
@@ -44,7 +36,7 @@ def save_user(user: User):
         checkboxes=user.current_settings.restrictions.checkboxes,
         upper_border=user.current_settings.restrictions.upper_border,
         lower_border=user.current_settings.restrictions.lower_border,
-        analysis_time=__analysis_time_int(user.current_settings.restrictions.analysis_time))
+        analysis_time=user.current_settings.restrictions.analysis_time)
     session.add(restrictions)
     current_settings = T.Settings(
         strategy=user.current_settings.strategy,
@@ -69,7 +61,7 @@ def save_from_current_settings(login: str):
         checkboxes=user.current_settings.restrictions.checkboxes,
         upper_border=user.current_settings.restrictions.upper_border,
         lower_border=user.current_settings.restrictions.lower_border,
-        analysis_time=__analysis_time_int(user.current_settings.restrictions.analysis_time))
+        analysis_time=user.current_settings.restrictions.analysis_time)
     session.add(restrictions)
     saved_current_settings = T.Settings(
         strategy=user.current_settings.strategy,
@@ -94,7 +86,7 @@ def reset_settings(login: str, settings: List[Settings]):
             checkboxes=settings_i.restrictions.checkboxes,
             upper_border=settings_i.restrictions.upper_border,
             lower_border=settings_i.restrictions.lower_border,
-            analysis_time=__analysis_time_int(settings_i.restrictions.analysis_time))
+            analysis_time=settings_i.restrictions.analysis_time)
         session.add(restrictions)
         saved_settings_i = T.Settings(
             strategy=settings_i.strategy,
@@ -115,7 +107,7 @@ def update_current_settings(login: str, settings: Settings):
     user.current_settings.restrictions.checkboxes = settings.restrictions.checkboxes
     user.current_settings.restrictions.upper_border = settings.restrictions.upper_border
     user.current_settings.restrictions.lower_border = settings.restrictions.lower_border
-    user.current_settings.restrictions.analysis_time = __analysis_time_int(settings.restrictions.analysis_time)
+    user.current_settings.restrictions.analysis_time = settings.restrictions.analysis_time
     user.current_settings.strategy = settings.strategy
     user.current_settings.risk = settings.risk
     session.add(user)

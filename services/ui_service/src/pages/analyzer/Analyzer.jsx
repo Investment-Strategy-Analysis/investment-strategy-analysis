@@ -36,11 +36,16 @@ function constructRequestBody() {
 
     body["target_profit"] = +(profit())
     body["checkboxes"] = params;
-    body["analysis_time"] = time_period;
+    body["analysis_time"] = 100 // time_period; // FIXME
     body["upper_border"] = {}
     body["lower_border"] = {}
 
-    return body;
+    // TODO
+    let superbody = {};
+    superbody["strategy"] = "default"
+    superbody["restrictions"] = body
+    superbody["risk"] = 0
+    return superbody;
 }
 
 async function saveRestrictions(settings, risk) {
