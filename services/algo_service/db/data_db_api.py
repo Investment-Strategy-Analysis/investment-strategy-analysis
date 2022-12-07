@@ -8,4 +8,7 @@ def save_history(item: InvestItem):
 
 
 def load_history(item: InvestItem) -> InvestItem:
-    return __load_history(item.id)
+    load_item = __load_history(item.id)
+    if load_item is None:
+        return item
+    return load_item

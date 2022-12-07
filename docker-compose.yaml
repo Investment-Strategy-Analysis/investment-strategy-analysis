@@ -30,6 +30,11 @@ services:
       - "8001:8000"
     depends_on:
       - algo-db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DB}:5432/${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   ui-service:
     container_name: ui_service
@@ -42,30 +47,41 @@ services:
       - "5001:5001"
     depends_on:
       - user-service
+    healthcheck:
+      test: ["CMD", "curl", "-f", "postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DB}:5432/${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   
   user-db:
     container_name: user_db
     image: postgres:13.3
-    environment:
-      POSTGRES_DB: "user_db"
-      POSTGRES_USER: "hisa-user"
-      POSTGRES_PASSWORD: "LAhOGLC/vHwxXK4RCFD7Qn54+ek="
+    env_file:
+      - user-db.env
     networks:
       - backend
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER}'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   
   algo-db:
     container_name: algo_db
     image: postgres:13.3
-    environment:
-      POSTGRES_DB: "algo_db"
-      POSTGRES_USER: "hisa-user"
-      POSTGRES_PASSWORD: "66I50dYw7EOM4+FKPRxazHTKLS4="
+    env_file:
+      - algo-db.env
     networks:
       - backend
     ports:
       - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER}'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   backend:

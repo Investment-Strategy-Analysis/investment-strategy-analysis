@@ -41,8 +41,8 @@ def renew_foreign_data_if_necessary():
     logging.info(f'Pulling Foreign Data.')
     print(f'Pulling Foreign Data.')
     if not CURRENT_INDEXES['USD'].history:
-        for index in CURRENT_INDEXES.values():
-            load_history(index)
+        for key, index in CURRENT_INDEXES.items():
+            CURRENT_INDEXES[key] = load_history(index)
     #logging.info(f'Index = {CURRENT_INDEXES}')
     get_and_set_usd()
     for (_, index) in CURRENT_INDEXES.items():

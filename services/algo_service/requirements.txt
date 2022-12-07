@@ -9,4 +9,5 @@ sqlmodel
 SQLAlchemy
 pytest
 requests
+numpy
 cvxpy

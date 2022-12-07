@@ -12,9 +12,10 @@ async def post(path: str, data: str):
 
 
 def db_engine():
-    username = os.environ.get("DB_USER")
-    password = os.environ.get("USER_DB_PASSWORD")
-    engine = create_engine(f"postgresql+psycopg2://{username}:{password}@user-db:5432/user_db", echo=True)
+    username = os.environ.get("POSTGRES_USER")
+    password = os.environ.get("POSTGRES_PASSWORD")
+    db = os.environ.get("POSTGRES_DB")
+    engine = create_engine(f"postgresql+psycopg2://{username}:{password}@{db}:5432/{db}", echo=True)
     return engine
 
 

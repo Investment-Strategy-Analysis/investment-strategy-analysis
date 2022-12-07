@@ -37,6 +37,9 @@ def parse_checkboxes(restriction: Restriction):
 def get_data_matrix(data: list):
     # Принимает на вход список списков, который превращает в np.array с 1 до первой информации о активе
     # Так же схлопывает все дни в блоки между обновлениями.
+    if len(data) == 0:
+        return np.array([], dtype=np.float)
+    
     max_len = max(map(len, data))
     shape_of_reshape = max_len // RESORT_COUNT
     for i in range(len(data)):
@@ -64,7 +67,7 @@ def get_right_input(restriction):
     # два numpy массива ограничений снизу, сверху и лист названий соответствующих активов.
     keys = []
     for key in singletons.CURRENT_INDEXES.keys():
-        if restriction.upper_border[key] > 1e-4:
+        if restriction.upper_border.get(key, 0) > 1e-4:
             keys.append(key)
     data = []
     lower = np.zeros((len(keys),))

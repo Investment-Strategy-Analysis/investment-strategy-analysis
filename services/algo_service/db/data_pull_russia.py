@@ -46,8 +46,8 @@ def daterange(start_date, end_date):
 def renew_russian_data_if_necessary():
     logging.info(f'Pulling Russian Data.')
     if not CURRENT_INDEXES['USD'].history:
-        for index in CURRENT_INDEXES.values():
-            load_history(index)
+        for key, index in CURRENT_INDEXES.items():
+            CURRENT_INDEXES[key] = load_history(index)
     dates = pull_date()
     needs_new_data = []
     min_date = None

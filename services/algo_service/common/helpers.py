@@ -4,9 +4,10 @@ from sqlalchemy.orm import sessionmaker
 
 
 def db_engine():
-    username = os.environ.get("DB_USER")
-    password = os.environ.get("ALGO_DB_PASSWORD")
-    engine = create_engine(f"postgresql+psycopg2://{username}:{password}@algo-db:5432/algo_db", echo=True)
+    username = os.environ.get("POSTGRES_USER")
+    password = os.environ.get("POSTGRES_PASSWORD")
+    db = os.environ.get("POSTGRES_DB")
+    engine = create_engine(f"postgresql+psycopg2://{username}:{password}@{db}:5432/{db}", echo=True)
     return engine
 
 
