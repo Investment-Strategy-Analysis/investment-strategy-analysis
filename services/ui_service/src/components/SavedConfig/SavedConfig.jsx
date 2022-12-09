@@ -56,8 +56,10 @@ function SavedConfig() {
 
                     <div class={styles.openButton}>
                         <button type="button" class="btn btn-info btn-sm" onClick={() => {
-                            selectConfiguration(c).then(r => console.log("OK"));
-                            window.location.replace(`/analyzer/`);
+                            selectConfiguration(c).then(r => {
+                                console.log("OK");
+                                window.location.replace(`/analyzer/`);
+                            });
                         }
                         }>Open
                         </button>

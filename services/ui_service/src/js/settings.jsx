@@ -2,7 +2,12 @@ import {createSignal} from "solid-js";
 
 const [checkboxSettings, setCheckboxSettings] = createSignal([]);
 
-const [timeSettings, setTimeSettings] = createSignal([]);
+const [timeSettings, setTimeSettings] = createSignal([
+    {name: "1 year", id: "YEAR_1", days: 365, checked: true},
+    {name: "3 years", id: "YEAR_3", days: 1095, checked: false},
+    {name: "5 years", id: "YEAR_5", days: 1825, checked: false},
+    {name: "10 years", id: "YEAR_10", days: 3650, checked: false},
+]);
 
 const [strategyOption, setStrategyOption] = createSignal([
     {name: "Custom", description: "You can create new strategy!", id: "custom", checkboxes: [], time_period: "YEAR_1"},

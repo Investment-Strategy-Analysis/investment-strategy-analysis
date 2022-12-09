@@ -37,8 +37,8 @@ app.add_middleware(
 @app.get("/", summary="Show all operations and their descriptions")
 async def get_operations(user: User = Depends(get_current_user)) -> dict[str, dict[str, str]]:
     logging.info(f"{user.login} get operations")
-    operations = [ping, get_user, get_token_refresh, get_settings, get_current_settings, get_user_settings, post_tokens, 
-                  post_user, post_settings, post_settings_add, post_user_parameters, post_user_email, 
+    operations = [ping, get_user, get_token_refresh, get_settings, get_current_settings, get_user_settings, post_tokens,
+                  post_user, post_current_settings, post_settings, post_settings_add, post_user_parameters, post_user_email,
                   post_user_password, post_user_photo, delete_user, get_analysis_times, get_checkboxes, get_strategies, post_solutions]
     return {"Operations": dict(map(lambda x: (x.__name__, x.__doc__), operations))}
 
@@ -96,7 +96,7 @@ async def post_user(user: User):
     return OK
 
 
-# @app.post("/user/current_settings", summary="Update current settings for current user")
+@app.post("/user/current_settings", summary="Update current settings for current user")
 async def post_current_settings(settings: Settings, user: User = Depends(get_current_user)):
     """update current settings for current user"""
     logging.info("update user current_settings")
@@ -186,5 +186,5 @@ async def get_strategies() -> AnyList:      # data=[InvestStrategy]
 async def post_solutions(restriction: Restriction, user: User = Depends(get_current_user)) -> Tuple[InvestStrategy, List[InvestStrategy]]:
     logging.info(f"solutions, {user.login}")
     settings = Settings(restrictions=restriction)
-    await post_current_settings(settings, user)
+    # await post_current_settings(settings, user)
     return await post(SOLUTIONS, restriction.json())

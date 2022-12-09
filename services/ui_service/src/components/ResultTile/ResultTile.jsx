@@ -49,7 +49,7 @@ export function ResultTile() {
                         </button>
                         <ul class="dropdown-menu">
                             <For each={resultProfitPoints()}>{(point, _) =>
-                                <li><span class="dropdown-item" onClick={() => showPoint(point)}>Profit: {formatFloat(point.profit)}%</span></li>
+                                <li><span class="dropdown-item" onClick={() => showPoint(point)}>Profit: {formatFloat(point.profit)}</span></li>
                             }
                             </For>
                         </ul>
