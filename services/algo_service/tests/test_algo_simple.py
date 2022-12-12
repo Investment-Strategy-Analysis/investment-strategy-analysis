@@ -67,6 +67,16 @@ def test_big_fixed_price(restrict: Restriction):
     assert best.profit == 100
 
 
+
+@pytest.mark.parametrize("restrict", test_data_restriction)
+def test_hundred_fixed_price(restrict: Restriction):
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [2] * 100
+    best, front = get_solutions(restrict)
+    assert best.risk == 0
+    assert best.profit == 100
+
+
 @pytest.mark.parametrize("restrict", test_data_restriction)
 def test_expon_up_price(restrict: Restriction):
     global LAST_RENEW_TIME
