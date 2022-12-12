@@ -66,7 +66,7 @@ def equals(a, b):
 def test_fixed_price(restrict: Restriction):
     for key, val in singles.CURRENT_INDEXES.items():
         val.history = [2] * 10
-    singles.CURRENT_INDEXES['RUB'] = [1] * 10
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 10
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0)
@@ -77,7 +77,7 @@ def test_fixed_price(restrict: Restriction):
 def test_big_fixed_price(restrict: Restriction):
     for key, val in singles.CURRENT_INDEXES.items():
         val.history = [2] * 1000
-    singles.CURRENT_INDEXES['RUB'] = [1] * 1000
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 1000
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0)
@@ -88,6 +88,7 @@ def test_big_fixed_price(restrict: Restriction):
 def test_hundred_fixed_price(restrict: Restriction):
     for key, val in singles.CURRENT_INDEXES.items():
         val.history = [2] * 100
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0)
     assert equals(best.profit, 100)
@@ -97,7 +98,7 @@ def test_hundred_fixed_price(restrict: Restriction):
 def test_expon_up_price(restrict: Restriction):
     for key, val in singles.CURRENT_INDEXES.items():
         val.history = [1.0001**i for i in range(11)]
-    singles.CURRENT_INDEXES['RUB'] = [1] * 100
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0)
@@ -108,7 +109,7 @@ def test_expon_up_price(restrict: Restriction):
 def test_expon_down_price(restrict: Restriction):
     for key, val in singles.CURRENT_INDEXES.items():
         val.history = [1.0001**i for i in range(11)][::-1]
-    singles.CURRENT_INDEXES['RUB'] = [1] * 100
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0)
