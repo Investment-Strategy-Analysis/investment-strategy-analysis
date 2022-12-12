@@ -154,7 +154,7 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
     data, lower, upper, keys = get_right_input(restriction)
     dist, profit, risk = find_max(data, lower, upper, years_count)
     last_distribution = dist
-    risk_norm = risk
+    risk_norm = max(0.00001, float(risk))
     print('target = max', ' ans = ', profit, ' risk_norm = ', risk)
     solutions = [InvestStrategy(id="Custom", distribution=get_dict(dist, keys), profit=profit * 100, risk=100)]
     for i in np.flip(np.linspace(1, max(1.0, int(profit * 100) / 100), 1 + int((profit - 1) * 100))):
