@@ -58,7 +58,7 @@ test_data_small_restriction = [
 
 
 def equals(a, b):
-    eps = 0.00001
+    eps = 0.01
     return abs(a - b) < eps
 
 
