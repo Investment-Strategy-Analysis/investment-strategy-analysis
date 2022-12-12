@@ -1,8 +1,11 @@
+from datetime import datetime
+
 import pytest
 
 from typing import List, Tuple
 from services.algo_service.common.abstract import Restriction, InvestStrategy, Index, Checkbox
 from services.algo_service.algorithm.algorithm_impl import get_solutions as __get_solutions
+import services.algo_service.common.singletons as singles
 
 
 def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[InvestStrategy]]:
@@ -33,12 +36,56 @@ test_data_restriction = [
 ]
 
 
+# @pytest.mark.parametrize("restrict", test_data_restriction)
+# def test_example(restrict: Restriction):
+#     print(restrict)
+#     best, front = get_solutions(restrict)
+#     print(best)
+#     print(best_invest_strat)
+#     assert best.risk == 44.24218097256038
+#     assert best.profit == 112.99998084763949
+#     assert best_invest_strat.profit == 112.99998084763949
+
+
 @pytest.mark.parametrize("restrict", test_data_restriction)
-def test_example(restrict: Restriction):
-    print(restrict)
+def test_fixed_price(restrict: Restriction):
+    global LAST_RENEW_TIME
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [2, 2, 2, 2]
+    singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
-    print(best)
-    print(best_invest_strat)
-    assert best.risk == 44.24218097256038
-    assert best.profit == 112.99998084763949
-    assert best_invest_strat.profit == 112.99998084763949
+    assert best.risk == 0
+    assert best.profit == 100
+
+
+@pytest.mark.parametrize("restrict", test_data_restriction)
+def test_expon_up_price(restrict: Restriction):
+    global LAST_RENEW_TIME
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [1, 2, 4, 8]
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert best.risk == 0
+    assert best.profit == 200
+
+
+@pytest.mark.parametrize("restrict", test_data_restriction)
+def test_expon_down_price(restrict: Restriction):
+    global LAST_RENEW_TIME
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [8, 4, 2, 1]
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert best.risk == 0
+    assert best.profit == 100
+
+
+@pytest.mark.parametrize("restrict", test_data_restriction)
+def test_wave_price(restrict: Restriction):
+    global LAST_RENEW_TIME
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [1, 2, 1, 2, 1]
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert best.risk == 0
+    assert best.profit == 100
