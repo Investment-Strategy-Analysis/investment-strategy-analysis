@@ -65,7 +65,7 @@ def equals(a, b):
 @pytest.mark.parametrize("restrict", test_data_small_restriction)
 def test_fixed_price(restrict: Restriction):
     for key, val in singles.CURRENT_INDEXES.items():
-        val.history = [2, 2, 2, 2, 2]
+        val.history = [2] * 10
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0.055484)
@@ -94,7 +94,7 @@ def test_hundred_fixed_price(restrict: Restriction):
 @pytest.mark.parametrize("restrict", test_data_small_restriction)
 def test_expon_up_price(restrict: Restriction):
     for key, val in singles.CURRENT_INDEXES.items():
-        val.history = [1, 2, 4, 8, 16]
+        val.history = [2**i for i in range(10)]
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0)
@@ -104,7 +104,7 @@ def test_expon_up_price(restrict: Restriction):
 @pytest.mark.parametrize("restrict", test_data_small_restriction)
 def test_expon_down_price(restrict: Restriction):
     for key, val in singles.CURRENT_INDEXES.items():
-        val.history = [16, 8, 4, 2, 1]
+        val.history = [2**i for i in range(10)][::-1]
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0)
