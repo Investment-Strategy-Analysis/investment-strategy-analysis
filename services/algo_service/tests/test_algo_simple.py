@@ -93,22 +93,22 @@ def test_hundred_fixed_price(restrict: Restriction):
 def test_expon_up_price(restrict: Restriction):
     global LAST_RENEW_TIME
     for key, val in singles.CURRENT_INDEXES.items():
-        val.history = [1, 2, 4, 8, 16]
+        val.history = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0)
-    assert equals(best.profit, 200)
+    assert equals(best.profit, 32 * 100)
 
 
 @pytest.mark.parametrize("restrict", test_data_small_restriction)
 def test_expon_down_price(restrict: Restriction):
     global LAST_RENEW_TIME
     for key, val in singles.CURRENT_INDEXES.items():
-        val.history = [16, 8, 4, 2, 1]
+        val.history = [1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1]
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0)
-    assert equals(best.profit, 100)
+    assert equals(best.profit, 100 / 32)
 
 
 # @pytest.mark.parametrize("restrict", test_data_restriction)
