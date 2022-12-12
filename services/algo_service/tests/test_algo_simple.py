@@ -60,10 +60,8 @@ def test_fixed_price(restrict: Restriction):
 
 @pytest.mark.parametrize("restrict", test_data_restriction)
 def test_big_fixed_price(restrict: Restriction):
-    global LAST_RENEW_TIME
     for key, val in singles.CURRENT_INDEXES.items():
         val.history = [2] * 1000
-    singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert best.risk == 0
     assert best.profit == 100
