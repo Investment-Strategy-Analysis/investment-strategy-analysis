@@ -101,8 +101,8 @@ def test_expon_up_price(restrict: Restriction):
     singles.CURRENT_INDEXES['RUB'].history = [1] * 100
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
-    assert equals(best.risk, 0)
-    assert equals(best.profit, 200)
+    assert equals(best.risk, 100)
+    assert equals(best.profit, 106.79024)
 
 
 @pytest.mark.parametrize("restrict", test_data_small_restriction)
@@ -112,7 +112,7 @@ def test_expon_down_price(restrict: Restriction):
     singles.CURRENT_INDEXES['RUB'].history = [1] * 100
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
-    assert equals(best.risk, 0)
+    assert equals(best.risk, 100)
     assert equals(best.profit, 100)
 
 
