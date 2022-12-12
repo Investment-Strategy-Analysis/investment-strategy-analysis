@@ -36,15 +36,15 @@ test_data_restriction = [
 ]
 
 
-# @pytest.mark.parametrize("restrict", test_data_restriction)
-# def test_example(restrict: Restriction):
-#     print(restrict)
-#     best, front = get_solutions(restrict)
-#     print(best)
-#     print(best_invest_strat)
-#     assert best.risk == 44.24218097256038
-#     assert best.profit == 112.99998084763949
-#     assert best_invest_strat.profit == 112.99998084763949
+@pytest.mark.parametrize("restrict", test_data_restriction)
+def test_example(restrict: Restriction):
+    print(restrict)
+    best, front = get_solutions(restrict)
+    print(best)
+    print(best_invest_strat)
+    assert best.risk == 44.24218097256038
+    assert best.profit == 112.99998084763949
+    assert best_invest_strat.profit == 112.99998084763949
 
 
 @pytest.mark.parametrize("restrict", test_data_restriction)
