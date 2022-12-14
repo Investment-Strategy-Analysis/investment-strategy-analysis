@@ -46,6 +46,15 @@ test_data_small_restriction = [
 ]
 
 
+test_data_restriction_2 = [
+    Restriction(target_profit=12,
+                checkboxes={checkbox.value.id: False for checkbox in Checkbox},
+                upper_border={index.value.id: 1 for index in Index},
+                lower_border={index.value.id: 0 for index in Index},
+                analysis_time=10),
+
+]
+
 # @pytest.mark.parametrize("restrict", test_data_big_restriction)
 # def test_example(restrict: Restriction):
 #     print(restrict)
@@ -71,6 +80,99 @@ def test_fixed_price(restrict: Restriction):
     best, front = get_solutions(restrict)
     assert equals(best.risk, 0)
     assert equals(best.profit, 100)
+
+
+@pytest.mark.parametrize("restrict", test_data_big_restriction)
+def test_big_fixed_price(restrict: Restriction):
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [2] * 1000
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 1000
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert equals(best.risk, 0)
+    assert equals(best.profit, 100)
+
+
+@pytest.mark.parametrize("restrict", test_data_big_restriction)
+def test_hundred_fixed_price(restrict: Restriction):
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [2] * 100
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
+    best, front = get_solutions(restrict)
+    assert equals(best.risk, 0)
+    assert equals(best.profit, 100)
+
+
+@pytest.mark.parametrize("restrict", test_data_small_restriction)
+def test_expon_up_price(restrict: Restriction):
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [1.0001**i for i in range(11)]
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert equals(best.risk, 100)
+    assert equals(best.profit, 106.79024)
+
+
+@pytest.mark.parametrize("restrict", test_data_small_restriction)
+def test_expon_down_price(restrict: Restriction):
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [1.0001**i for i in range(11)][::-1]
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert equals(best.risk, 100)
+    assert equals(best.profit, 100)
+
+
+@pytest.mark.parametrize("restrict", test_data_small_restriction)
+def test_diff_expon_up_price(restrict: Restriction):
+    step = 1
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [step**i for i in range(11)]
+        step += 0.00001
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert equals(best.risk, 100)
+    assert equals(best.profit, 104.70622)
+
+
+@pytest.mark.parametrize("restrict", test_data_restriction_2)
+def test_wave_up_price(restrict: Restriction):
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [(1 + (i // 2) * 0.00001)**i for i in range(11)]
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert equals(best.risk, 100)
+    assert equals(best.profit, 101.84168)
+
+
+@pytest.mark.parametrize("restrict", test_data_restriction_2)
+def test_diff_wave_up_price(restrict: Restriction):
+    step = 1
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [(step + (i // 2) * 0.00001)**i for i in range(11)]
+        step += 0.00001
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert equals(best.risk, 100)
+    assert equals(best.profit, 104.21047)
+
+
+@pytest.mark.parametrize("restrict", test_data_small_restriction)
+def test_diff_history_length_price(restrict: Restriction):
+    length = 10
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [1.00001**i for i in range(length + 1)]
+        length += 1
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert equals(best.risk, 100)
+    assert equals(best.profit, 100.65913)
 
 
 @pytest.mark.parametrize("restrict", test_data_big_restriction)
