@@ -28,3 +28,27 @@ def test_ping():
     r = requests.get(url=url)
     assert r.ok
     assert r.content == b'"pong"'
+
+
+def test_checkboxes():
+    url = f"{SERVER_URL}/settings/checkboxes"
+    r = requests.get(url=url)
+
+    assert r.ok
+    content = r.json()
+
+    assert len(content['data']) == 5
+    assert content['data'][0]['id'] == "ONLY_RUSSIAN"
+
+
+def test_strategies():
+    url = f"{SERVER_URL}/settings/strategies"
+    r = requests.get(url=url)
+
+    assert r.ok
+    content = r.json()
+
+    assert len(content['data']) == 5
+    assert content['data'][0]['id'] == "strategy_1"
+    assert content['data'][0]['profit'] == 25
+    assert content['data'][0]['risk'] == 10
