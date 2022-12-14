@@ -2,7 +2,7 @@ import time
 
 from selenium.webdriver.common.by import By
 
-import page_checkers
+from test.test_ui import page_checkers
 
 
 class PageObjects:

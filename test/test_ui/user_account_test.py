@@ -2,9 +2,9 @@ import time
 
 from selenium.webdriver.common.by import By
 
-import login_test
-import page_checkers
-import signup_test
+from test.test_ui import login_test
+from test.test_ui import page_checkers
+from test.test_ui import signup_test
 
 
 class PageObjects:
