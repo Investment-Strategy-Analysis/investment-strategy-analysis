@@ -35,7 +35,7 @@ class HelpTests:
            заголовок, названия кнопок, полей и т.д."""
 
         self.driver.get('http://localhost:5001/help')
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.help_page_check(self.driver)
 
@@ -43,51 +43,51 @@ class HelpTests:
         """Проверяем, что работает ссылка на титульную страницу"""
         title_page_link = self.page_objects.get_title_page_link()
         title_page_link.click()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.title_page_check(self.driver)
 
     def sign_up_page_link_test(self):
         """Проверяем, что работает ссылка на страницу с регистрацией"""
         self.driver.get('http://localhost:5001/help')
-        time.sleep(10)
+        time.sleep(5)
 
         sign_up_page_link = self.page_objects.get_sign_up_page_link()
         sign_up_page_link.click()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.sign_up_page_check(self.driver)
 
     def log_in_page_link_test(self):
         """Проверяем, что работает ссылка на страницу со входом"""
         self.driver.get('http://localhost:5001/help')
-        time.sleep(10)
+        time.sleep(5)
 
         log_in_page_link = self.page_objects.get_log_in_page_link()
         log_in_page_link.click()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.log_in_page_check(self.driver)
 
     def analyzer_link_test(self):
         """При нажатии на кнопку 'Analyzer' попадаем на главную страницу выбора стратегии"""
         self.driver.get('http://localhost:5001/help')
-        time.sleep(10)
+        time.sleep(5)
 
         analyzer_link = self.page_objects.get_analyzer_link()
         analyzer_link.click()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.main_page_check(self.driver)
 
     def logo_click_test(self):
         """При нажатии на логотип попадаем на титульную страницу"""
         self.driver.get('http://localhost:5001/help')
-        time.sleep(10)
+        time.sleep(5)
 
         title_link = self.page_objects.get_title_link()
         title_link.click()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.title_page_check(self.driver)
 

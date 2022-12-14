@@ -59,7 +59,7 @@ class AnalyzerTests:
            заголовок, названия кнопок, полей и т.д."""
 
         self.driver.get('http://localhost:5001/analyzer/')
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.main_page_check(self.driver)
 
@@ -146,7 +146,7 @@ class AnalyzerTests:
         self.driver.get('http://localhost:5001/analyzer/')
         optimal_config_button = self.page_objects.get_optimal_config_button()
         optimal_config_button.click()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.log_in_page_check(self.driver)
         login_page_objects = login.PageObjects(self.driver)
@@ -156,7 +156,7 @@ class AnalyzerTests:
         password_input.send_keys('aaa')
         log_in_button = login_page_objects.get_log_in_button()
         log_in_button.click()
-        time.sleep(10)
+        time.sleep(5)
 
         optimal_config_button = self.page_objects.get_optimal_config_button()
         optimal_config_button.click()
@@ -167,22 +167,22 @@ class AnalyzerTests:
     def help_link_test(self):
         """При нажатии на кнопку 'Help' попадаем на страницу Help"""
         self.driver.get('http://localhost:5001/analyzer/')
-        time.sleep(10)
+        time.sleep(5)
 
         help_link = self.page_objects.get_help_link()
         help_link.click()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.help_page_check(self.driver)
 
     def logo_click_test(self):
         """При нажатии на логотип попадаем на титульную страницу"""
         self.driver.get('http://localhost:5001/analyzer/')
-        time.sleep(10)
+        time.sleep(5)
 
         title_link = self.page_objects.get_title_link()
         title_link.click()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.title_page_check(self.driver)
 

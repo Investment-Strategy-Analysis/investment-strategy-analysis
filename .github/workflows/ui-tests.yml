@@ -34,18 +34,19 @@ jobs:
       with:
         python-version: 3.9
 
+    - name: Install software
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y firefox google-chrome
+
     - name: Run Docker
       run: |
         docker compose up -d
 
-    - name: Install software
-      run: |
-        sudo apt-get install -y firefox
-
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install pytest requests selenium webdriver-manager 
+        python -m pip install requests webdriver-manager selenium 
 
     - name: Run firefox UI tests
       run: |
