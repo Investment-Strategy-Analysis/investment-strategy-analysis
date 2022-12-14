@@ -139,7 +139,7 @@ def test_diff_expon_up_price(restrict: Restriction):
     assert equals(best.profit, 104.70622)
 
 
-@pytest.mark.parametrize("restrict", test_data_restriction_2)
+@pytest.mark.parametrize("restrict", test_data_small_restriction)
 def test_diff_wave_up_price(restrict: Restriction):
     step = 1
     for key, val in singles.CURRENT_INDEXES.items():
