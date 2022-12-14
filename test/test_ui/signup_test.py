@@ -20,6 +20,9 @@ class PageObjects:
     def get_username_input(self):
         return self.driver.find_element(by=By.ID, value='username_field')
 
+    def get_email_input(self):
+        return self.driver.find_element(by=By.ID, value='email_field')
+
     def get_password_input(self):
         return self.driver.find_element(by=By.ID, value='password_field')
 
@@ -106,7 +109,7 @@ class SignUpTests:
     def sign_up_once_again_success_test(self):
         username_input = self.page_objects.get_username_input()
         username_input.clear()
-        username_input.send_keys('Ilyaaaaa')
+        username_input.send_keys('Kostya')
 
         sign_up_button = self.page_objects.get_sign_up_button()
         sign_up_button.click()

@@ -1,4 +1,6 @@
 def sign_up_page_check(driver):
+    assert 'Username' in driver.page_source
+    assert 'Email' in driver.page_source
     assert 'Password' in driver.page_source
     assert 'Password again' in driver.page_source
     assert 'Sign up' in driver.page_source
@@ -22,8 +24,17 @@ def main_page_check(driver):
     assert 'Profit' in driver.page_source
     assert 'Time period' in driver.page_source
     assert 'Find optimal configuration' in driver.page_source
-    assert 'The best configuration' in driver.page_source
     assert 'vs' in driver.page_source
+    assert 'Analyzer' in driver.page_source
+    assert 'Help' in driver.page_source
+
+
+def user_account_check(driver):
+    assert 'Username' in driver.page_source
+    assert 'Email' in driver.page_source
+    assert 'Your configurations' in driver.page_source
+    assert 'Analyzer' in driver.page_source
+    assert 'Help' in driver.page_source
 
 
 def help_page_check(driver):
