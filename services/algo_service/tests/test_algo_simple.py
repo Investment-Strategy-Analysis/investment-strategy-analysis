@@ -149,4 +149,4 @@ def test_diff_wave_up_price(restrict: Restriction):
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 100)
-    assert equals(best.profit, 102.32605)
+    assert equals(best.profit, 104.21047)
