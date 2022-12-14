@@ -47,7 +47,7 @@ test_data_small_restriction = [
 
 
 test_data_restriction_2 = [
-    Restriction(target_profit=13,
+    Restriction(target_profit=12,
                 checkboxes={checkbox.value.id: False for checkbox in Checkbox},
                 upper_border={index.value.id: 1 for index in Index},
                 lower_border={index.value.id: 0 for index in Index},
