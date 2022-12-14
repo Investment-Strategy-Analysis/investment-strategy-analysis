@@ -47,7 +47,7 @@ test_data_small_restriction = [
 
 
 test_data_restriction_2 = [
-    Restriction(target_profit=10,
+    Restriction(target_profit=13,
                 checkboxes={checkbox.value.id: False for checkbox in Checkbox},
                 upper_border={index.value.id: 1 for index in Index},
                 lower_border={index.value.id: 0 for index in Index},
@@ -139,7 +139,7 @@ def test_diff_expon_up_price(restrict: Restriction):
     assert equals(best.profit, 104.70622)
 
 
-@pytest.mark.parametrize("restrict", test_data_small_restriction)
+@pytest.mark.parametrize("restrict", test_data_restriction_2)
 def test_diff_wave_up_price(restrict: Restriction):
     step = 1
     for key, val in singles.CURRENT_INDEXES.items():
