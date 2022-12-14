@@ -140,15 +140,13 @@ def test_diff_expon_up_price(restrict: Restriction):
 
 
 @pytest.mark.parametrize("restrict", test_data_restriction_2)
-def test_diff_expon_up_price_2(restrict: Restriction):
+def test_diff_wave_up_price(restrict: Restriction):
     step = 1
     for key, val in singles.CURRENT_INDEXES.items():
-        val.history = [step**i for i in range(11)]
+        val.history = [(step + (i // 2) * 0.00001)**i for i in range(11)]
         step += 0.00001
     singles.CURRENT_INDEXES['RUB'].history = [1] * 100
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 100)
     assert equals(best.profit, 102.32605)
-
-
