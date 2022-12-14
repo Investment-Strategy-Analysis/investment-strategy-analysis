@@ -160,7 +160,7 @@ def test_diff_wave_up_price(restrict: Restriction):
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 100)
-    assert equals(best.profit, 104.21047)
+    assert equals(best.profit, 101.84168)
 
 
 @pytest.mark.parametrize("restrict", test_data_small_restriction)
@@ -173,4 +173,4 @@ def test_diff_history_length_price(restrict: Restriction):
     singles.LAST_RENEW_TIME = datetime.now()
     best, front = get_solutions(restrict)
     assert equals(best.risk, 100)
-    assert equals(best.profit, 104.21047)
+    assert equals(best.profit, 100.65913)
