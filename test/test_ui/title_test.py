@@ -15,13 +15,16 @@ class PageObjects:
         return self.driver.find_element(by=By.LINK_TEXT, value='Help')
 
     def get_sign_up_button(self):
-        return self.driver.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[3]/div/button')
+        return self.driver.find_elements(By.CLASS_NAME, "btn-link")[1]
+        # return self.driver.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[3]/div/button')
 
     def get_log_in_button(self):
-        return self.driver.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[4]/div/button')
+        return self.driver.find_elements(By.CLASS_NAME, "btn-link")[2]
+        # return self.driver.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[4]/div/button')
 
     def get_try_now_button(self):
-        return self.driver.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[2]/div/button')
+        return self.driver.find_elements(By.CLASS_NAME, "btn-link")[0]
+        # return self.driver.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[2]/div/button')
 
 
 class TitleTests:

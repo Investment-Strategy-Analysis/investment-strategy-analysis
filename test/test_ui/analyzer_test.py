@@ -45,7 +45,8 @@ class PageObjects:
         return self.driver.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[2]/div/div/div')
 
     def get_optimal_config_button(self):
-        return self.driver.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[1]/button')
+        return self.driver.find_element(By.CLASS_NAME, "run-button")
+        # return self.driver.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[1]/button')
 
 
 class AnalyzerTests:

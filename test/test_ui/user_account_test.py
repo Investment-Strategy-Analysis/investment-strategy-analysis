@@ -107,11 +107,9 @@ class UserAccountTests:
         self.driver.get('http://localhost:5001/auth/signup')
         time.sleep(5)
 
-        name, password = 'z', 'z'
+        name, password = 'name', 'a'
 
         self.sign_up(name, password)
-
-        self.click_user_icon()
         time.sleep(5)
 
         page_checkers.log_in_page_check(self.driver)
@@ -124,8 +122,8 @@ class UserAccountTests:
         time.sleep(5)
 
         page_checkers.user_account_check(self.driver)
-        assert 'z' in self.driver.page_source
-        assert 'z@gmail.com' in self.driver.page_source
+        assert 'name' in self.driver.page_source
+        assert 'name@gmail.com' in self.driver.page_source
 
     def analyzer_link_test(self):
         """При нажатии на кнопку 'Analyzer' попадаем на главную страницу выбора стратегии"""

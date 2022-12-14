@@ -55,9 +55,17 @@ class UiTest(unittest.TestCase):
         self.service = ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
         self.driver = webdriver.Chrome
 
-        self.driver_options.add_argument("--headless")
-        self.driver_options.add_argument("--no-sandbox")
-        self.driver_options.add_argument("--disable-dev-shm-usage")
+        arguments = [
+            "--headless",
+            "--no-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-gpu",
+            "--window-size=1920,1200",
+            "--ignore-certificate-errors",
+            "--disable-extensions",
+        ]
+        for arg in arguments:
+            self.driver_options.add_argument(arg)
 
     def test_analyzer(self):
         logging.info("Analyzer page test")
