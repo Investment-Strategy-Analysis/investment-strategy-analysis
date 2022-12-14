@@ -15,7 +15,6 @@ import {
     checkboxSettings,
     setCheckboxSettings,
     timeSettings,
-    setTimeSettings,
     profit,
     setStrategyOption, setSolutionLoaded, strategy, setProfit
 } from "../../js/settings";
@@ -31,7 +30,7 @@ function constructRequestBody() {
     let body = {};
     let params = {};
 
-    let time_period = timeSettings().filter(element => document.getElementById(element.id).checked)[0].id.toUpperCase();
+    let time_period = timeSettings().filter(element => document.getElementById(element.id).checked)[0].days;
     checkboxSettings().forEach(element => params[element.id.toUpperCase()] = document.getElementById(element.id).checked);
 
     body["target_profit"] = +(profit())
@@ -146,12 +145,12 @@ async function getSolution() {
 
 function Analyzer() {
     loadCheckboxes().then(it => setCheckboxSettings(it));
-    loadTimePeriods().then(it => {
-        const times = it.slice(2, it.length);
-        times.forEach(time => time.checked = false);
-        times[0].checked = true;
-        setTimeSettings(times);
-    });
+    // loadTimePeriods().then(it => {
+    //     const times = it.slice(2, it.length);
+    //     times.forEach(time => time.checked = false);
+    //     times[0].checked = true;
+    //     setTimeSettings(times);
+    // });
     loadRestrictions().then(r => console.log("Restriction was loaded"));
 
     // loadStrategies().then(it => setStrategyOption(it));

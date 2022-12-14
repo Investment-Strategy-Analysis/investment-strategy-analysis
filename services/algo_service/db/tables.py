@@ -23,16 +23,17 @@ def _get_pydantic(base_obj: Optional[BasePydantic]) -> Optional[BaseModel]:
 class InvestItem(Base):
     __tablename__ = "invest_items"
     id = Column(String, primary_key=True)
+    name = Column(String)
+    country = Column(String)
     date_from = Column("date_from", Date, nullable=False, default=datetime.date(1000, 1, 1))
     date_till = Column("date_till", Date, nullable=False, default=datetime.date(1000, 1, 1))
     history = Column("history", ARRAY(Float, dimensions=1), nullable=False, default=[])
 
     def __repr__(self):
-        return f"InvestItem(id={self.id}, date_from={self.date_from}, date_till={self.date_till}, " \
-               f"history={self.history})"
+        return f"InvestItem(id={self.id}, name={self.name}, country={self.country}, date_from={self.date_from}, date_till={self.date_till}, history={self.history})"
 
     def __str__(self):
         return self.__repr__()
 
     def to_pydantic(self):
-        return A.InvestItem(date_from=self.date_from, date_till=self.date_till, history=self.history)
+        return A.InvestItem(id=self.id, name=self.name, country=self.country, date_from=self.date_from, date_till=self.date_till, history=self.history)

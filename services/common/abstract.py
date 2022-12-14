@@ -1,8 +1,9 @@
 from pydantic import BaseModel
-from typing import List, Dict, Optional, Union
+from typing import List, Dict, Optional
 from enum import Enum
 import datetime
 # from services.common.consts import YEAR
+from services.common.consts import MAX_DAYS
 YEAR = 365
 
 
@@ -11,9 +12,9 @@ class AnyList(BaseModel):   # only for internal
 
 
 class InvestItem(BaseModel):
-    name: str = ""
-    country: str = ""
-    id: Optional[str] = None
+    name: Optional[str] = None
+    country: Optional[str] = None
+    id: str
     date_from: datetime.date = datetime.date(1000, 1, 1)
     date_till: datetime.date = datetime.date(1000, 1, 1)
     history: List[float] = []
@@ -24,12 +25,6 @@ class CheckboxInfo(BaseModel):
     name: str
 
 
-class AnalysisTimeInfo(BaseModel):
-    id: str
-    name: str
-    days: int
-
-
 class Checkbox(Enum):
     ONLY_RUSSIAN = CheckboxInfo(name="Only Russian assets", id="ONLY_RUSSIAN")
     WITHOUT_ASSETS = CheckboxInfo(name="Without assets", id="WITHOUT_ASSETS")
@@ -38,26 +33,17 @@ class Checkbox(Enum):
     HIGH_DIVERSIFICATION = CheckboxInfo(name="High diversification", id="HIGH_DIVERSIFICATION")
 
 
-class AnalysisTime(Enum):
-    DAY_1 = AnalysisTimeInfo(name="1 day", id="DAY_1", days=1)
-    DAY_100 = AnalysisTimeInfo(name="100 days", id="DAY_100", days=100)
-    YEAR_1 = AnalysisTimeInfo(name="1 year", id="YEAR_1", days=YEAR)
-    YEAR_3 = AnalysisTimeInfo(name="3 years", id="YEAR_3", days=YEAR * 3)
-    YEAR_5 = AnalysisTimeInfo(name="5 years", id="YEAR_5", days=YEAR * 5)
-    YEAR_10 = AnalysisTimeInfo(name="10 years", id="YEAR_10", days=YEAR * 10)
-    # add ...
-
-
 class Index(Enum):
+    RUB = InvestItem(name='Рубль (RUB/RUR)', country='const', id='RUB', history=([1] * MAX_DAYS))
     IMOEX = InvestItem(name='Индекс МосБиржи индекс РТС (IMOEX)', country='russia', id='IMOEX')
-    # RGBI = InvestItem(name='Индекс государственных облигаций РФ (RGBI)', country='russia', id='RGBI')
-    MOEXBC = InvestItem(name='Индекс Мосбиржи голубые фишки (MOEXBC)', country='russia', id='MOEXBC')
-    MOEXBMI = InvestItem(name='Индекс широкого рынка (MOEXBMI)', country='russia', id='MOEXBMI')
+    #MOEXBC = InvestItem(name='Индекс Мосбиржи голубые фишки (MOEXBC)', country='russia', id='MOEXBC')
+    #MOEXBMI = InvestItem(name='Индекс широкого рынка (MOEXBMI)', country='russia', id='MOEXBMI')
     MCXSM = InvestItem(name='Индекс средней и малой капитализации (MCXSM)', country='russia', id='MCXSM')
-    # SPX = InvestItem(name='Индекс американских акций S&P 500 (SPX)', country='foreign', id='SPX')
-    # GDAXI = InvestItem(name='Индекс немецких акций DAX (GDAXI)', country='foreign', id='GDAXI')
-    # IXIC = InvestItem(name='Индекс американских IT акций NASDAQ Composite (IXIC)', country='foreign', id='IXIC')
-    # CIH = InvestItem(name='Акции китайских компаний (CIH)', country='foreign', id='CIH')
+    SPX = InvestItem(name='Индекс американских акций S&P 500 (SPX)', country='foreign', id='SPX')
+    GDAXI = InvestItem(name='Индекс немецких акций DAX (GDAXI)', country='foreign', id='GDAXI')
+    IXIC = InvestItem(name='Индекс американских IT акций NASDAQ Composite (IXIC)', country='foreign', id='IXIC')
+    GOLD = InvestItem(name='Золото', country='foreign', id='GOLD')
+    USD = InvestItem(name='Доллар США (USD)', country='foreign', id='USD')
 
 
 class InvestStrategy(BaseModel):
@@ -73,4 +59,4 @@ class Restriction(BaseModel):
     checkboxes: Dict[str, bool] = {checkbox.value.id: False for checkbox in Checkbox}   # key - Checkbox.name
     upper_border: Optional[Dict[str, float]] = None     # key - Index.name
     lower_border: Optional[Dict[str, float]] = None     # key - Index.name
-    analysis_time: Union[str, int] = AnalysisTime.YEAR_1.value.id
+    analysis_time: int = YEAR

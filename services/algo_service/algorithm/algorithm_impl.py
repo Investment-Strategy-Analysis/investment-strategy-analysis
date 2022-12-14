@@ -1,12 +1,14 @@
 import datetime
 from typing import List, Tuple
 from services.algo_service.common.abstract import Restriction, InvestStrategy, Index, Checkbox
-from services.algo_service.common.singletons import LAST_RENEW_TIME, CURRENT_INDEXES
-from services.algo_service.db.data_pull_russia import renew_all_data_if_necessary
+import services.algo_service.common.singletons as singletons
+from services.algo_service.common.consts import RESORT_COUNT
+from services.algo_service.db.data_pull_foreign import renew_foreign_data_if_necessary
+from services.algo_service.db.data_pull_russia import renew_russian_data_if_necessary
 import numpy as np
 import operator
 import logging
-from scipy.optimize import minimize
+import cvxpy as cp
 
 
 def parse_checkboxes(restriction: Restriction):
@@ -16,31 +18,42 @@ def parse_checkboxes(restriction: Restriction):
     if restriction.upper_border is None or restriction.upper_border == {}:
         restriction.upper_border = {index.value.id: 1 for index in Index}
         restriction.lower_border = {index.value.id: 0 for index in Index}
+        to_zero = []
         if restriction.checkboxes[Checkbox.ONLY_RUSSIAN.value.id]:
-            pass
+            to_zero += ["SPX", "GDAXI", "IXIC", "USD"]
         if restriction.checkboxes[Checkbox.WITHOUT_ASSETS.value.id]:
-            pass
+            to_zero += ["SPX", "GDAXI", "IXIC", "IMOEX"]
         if restriction.checkboxes[Checkbox.WITHOUT_BONDS.value.id]:
-            pass
+            to_zero += ["MCXSM"]
         if restriction.checkboxes[Checkbox.WITHOUT_GOLD.value.id]:
-            pass
+            to_zero += ["GOLD"]
         if restriction.checkboxes[Checkbox.HIGH_DIVERSIFICATION.value.id]:
-            restriction.upper_border = {k: min(0.4, v) for (k, v) in restriction.upper_border.items()}
+            restriction.upper_border = {k: min(0.3, v) for (k, v) in restriction.upper_border.items()}
+        for i in to_zero:
+            restriction.upper_border[i] = 0
     logging.info(f'Parsed checkboxes. Restriction = {restriction}')
 
 
 def get_data_matrix(data: list):
-    # Принимает на вход список списков, который превращает в np.array с None до первой информации о активе
-    # 1 в первый день и тем, во сколько раз оно изменялось на следующий день.
+    # Принимает на вход список списков, который превращает в np.array с 1 до первой информации о активе
+    # Так же схлопывает все дни в блоки между обновлениями.
+    if len(data) == 0:
+        return np.array([], dtype=np.float)
+    
     max_len = max(map(len, data))
-    return np.array([
-        [None] * (max_len - len(x)) + [1] + list(map(operator.truediv, x[1:], x[:-1]))
-        for x in data], dtype=np.float)
+    shape_of_reshape = max_len // RESORT_COUNT
+    for i in range(len(data)):
+        data[i] = np.reshape(
+            [1] * (max_len - len(data[i]) + 1) + list(map(operator.truediv, data[i][1:], data[i][:-1])),
+            (-1, shape_of_reshape)
+        ).prod(axis=-1)
+    return np.array(data, dtype=np.float)
 
 
-def get_history_extended(history, analysis_time):
-    # Принимает список истории и время, которое мы хотим отрезать.
+def get_history_extended(history, analysis_time: int):
+    # Принимает список истории и время, которое мы хотим отрезать. Добавляет пару дней для делимости на RESORT_COUNT.
     # Если список короче времени, возвращаем что есть.
+    analysis_time = (analysis_time + RESORT_COUNT - 1) // RESORT_COUNT * RESORT_COUNT
     if analysis_time <= len(history):
         return history[-analysis_time:]
     else:
@@ -50,66 +63,54 @@ def get_history_extended(history, analysis_time):
 def get_right_input(restriction):
     # Принимает ограничения и возвращает их в другой форме.
     # Убирает все активы, которые не входят в ответ изначально.
-    # Возвращает numpy матрицу, лист пар с ограничениями для каждого актива и
-    # лист названий соответствующих активов.
+    # Возвращает numpy матрицу усечённую по неиспользуемым активам и RESORT_COUNT длинной
+    # два numpy массива ограничений снизу, сверху и лист названий соответствующих активов.
     keys = []
-    for key in CURRENT_INDEXES.keys():
-        if restriction.upper_border[key] > 1e-4:
+    for key in singletons.CURRENT_INDEXES.keys():
+        if restriction.upper_border.get(key, 0) > 1e-4:
             keys.append(key)
     data = []
-    bounds = []
-    for key in keys:
-        bounds.append((restriction.lower_border[key],
-                       restriction.upper_border[key]))
-        data.append(get_history_extended(CURRENT_INDEXES[key].history, int(restriction.analysis_time) * 5 // 7))
-    return get_data_matrix(data), bounds, keys
+    lower = np.zeros((len(keys),))
+    upper = np.ones((len(keys),))
+    for i in range(len(keys)):
+        lower[i] = restriction.lower_border[keys[i]]
+        upper[i] = restriction.upper_border[keys[i]]
+        data.append(
+            get_history_extended(
+                singletons.CURRENT_INDEXES[keys[i]].history,
+                int(restriction.analysis_time) * 5 // 7
+            )
+        )
+    return get_data_matrix(data), lower, upper, keys
 
 
-def get_profit_and_risk(data, distribution, invest_period=1):
-    # Принимает numpy матрицу, numpy распределение соответсвующее матрице и период ребалансировки портфеля.
-    # Считает, какую доходность даст портфель в % и дисперсию производной.
-    strategy = np.zeros((data.shape[1],))
-    current_distribution = np.zeros((data.shape[0],))
-    start = data.shape[1]
-    for i in range(distribution.shape[0]):
-        if distribution[i] > 0.001:
-            start = min(start, np.nonzero(np.logical_not(np.isnan(data[i, :])))[0][0])
-    strategy[start] = 1
-    for i in range(start + 1, data.shape[1]):
-        data_none = np.logical_not(np.isnan(data[:, i]))
-        if i % invest_period == 0:
-            current_distribution[data_none] = distribution[data_none]
-            current_distribution /= np.sum(current_distribution) / strategy[i - 1]
-        current_distribution[data_none] = current_distribution[data_none] * data[data_none, i]
-        strategy[i] = current_distribution.sum()
-    return (strategy[-1] / strategy[start]) ** (261 / (data.shape[1] - start)) * 100, (strategy[1:] - strategy[:-1]).var()
+def find_max(D, lower, upper, years_count):
+    # Ищет максимально возможный доход, не обращая внимания на риск.
+    d = cp.Variable((D.shape[0],))
+    D = D.T
+    prob = cp.Problem(
+        cp.Maximize(cp.geo_mean(D @ d)),
+        [d >= lower, d <= upper, cp.norm(d, 1) <= 1.0]
+    )
+    prob.solve()
+    return d.value, np.prod(D @ d.value)**(1 / years_count), np.var(D @ d.value)
 
 
-def loss_func_creator(all_solutions, data: np, target_profit=1.1, invest_period=1):
-    def loss_func(distribution):
-        # Это функция возвращающая функцию для того, чтоб сделать частичное заполнение полей.
-        # На вход принимает лист в который будет класть все рассмотренные решения, матрицу графиков акций,
-        # целевой показатель доходности и период ребалансировки, а так же само распределение (лист флотов).
-        profit, risk = get_profit_and_risk(data, np.array(distribution), invest_period)
-        all_solutions.append([profit, risk, distribution])
-        loss = (profit - target_profit)**4 + abs(profit - target_profit)**0.5 + risk  # TODO not ideal
-        return loss
-    return loss_func
-
-
-def get_x0(bounds):
-    # Принимает лист пар ограничений для каждого актива, возвращает какое-то разумное распределение.
-    # По сути мне даже неважно какое именно.
-    answer = [0] * len(bounds)
-    for i in range(len(bounds)):
-        answer[i] = bounds[i][0]
-    for i in range(len(bounds)):
-        needs = 1 - sum(answer)
-        if needs > bounds[i][1] - bounds[i][0]:
-            answer[i] = bounds[i][1]
-        else:
-            answer[i] += 1 - sum(answer)
-    return np.array(answer)
+def find_best(D, lower, upper, target_profit, x0, years_count):
+    # Ищет наименьший риск при доходе больше таргета.
+    target_profit **= years_count / D.shape[1]
+    d = cp.Variable((D.shape[0],))
+    if x0 is not None:
+        d.value = x0
+    D = D.T
+    prob = cp.Problem(
+        cp.Minimize(
+            cp.sum(cp.power(D @ d - cp.sum(D @ d) / D.shape[1], 2)) / D.shape[1]
+        ),
+        [d >= lower, d <= upper, cp.norm(d, 1) <= 1.0, target_profit <= cp.geo_mean(D @ d)]
+    )
+    prob.solve()
+    return d.value, np.prod(D @ d.value)**(1 / years_count), np.var(D @ d.value)
 
 
 def get_dict(distribution, keys):
@@ -125,19 +126,17 @@ def filter_solutions(rest, target_profit):
     front = []
     for i in rest:
         is_unique = True
-        for j in front:
-            if abs(j.profit - i.profit) < 0.001:
-                if i.profit < j.profit:
-                    j = i
+        for j in range(len(front)):
+            if abs(front[j].profit - i.profit) < 0.001:
+                if i.profit < front[j].profit:
+                    front[j] = i
                 is_unique = False
                 break
         if is_unique:
             front.append(i)
-    best = front[0]
+    best = front[-1]
     for i in front:
-        if i.profit - target_profit > 99.99 >= best.profit - target_profit:
-            best = i
-        if i.profit - target_profit > 99.99 and i.risk < best.risk:
+        if abs(i.profit - target_profit) < abs(best.profit - target_profit):
             best = i
     return best, front
 
@@ -146,26 +145,25 @@ def get_solutions(restriction: Restriction) -> Tuple[InvestStrategy, List[Invest
     # Принимает на вход ограничения. Преобразует их, если необходимо.
     # Если прошёл хотя бы час с прошлого обновления делает новый запрос по данным.
     # Находит оптимальный ответ и все ответы находящиеся на парето фронте.
-    global LAST_RENEW_TIME
     parse_checkboxes(restriction)
-    if LAST_RENEW_TIME + datetime.timedelta(hours=1) < datetime.datetime.now():
-        renew_all_data_if_necessary()
-        LAST_RENEW_TIME = datetime.datetime.now()
-    data, bounds, keys = get_right_input(restriction)
-    cons = ({'type': 'eq', 'fun': lambda x: 1 - sum(x)})
-    rest = []
-    last_distribution = get_x0(bounds)
-    risk_normalization = get_profit_and_risk(data, last_distribution, invest_period=1)[1] * 0.01
-    logging.info(f'Risk Normalization = {risk_normalization}')
-    for i in np.linspace(restriction.target_profit + 95, restriction.target_profit + 105, 11):
-        best_solutions = []
-        _ = minimize(fun=loss_func_creator(best_solutions, data, i, invest_period=1),
-                     x0=last_distribution, bounds=bounds, constraints=cons, options={'maxiter': 1000}).x
-        rest.append(InvestStrategy(id="Custom", distribution=get_dict(best_solutions[-1][2], keys),
-                                   profit=best_solutions[-1][0], risk=best_solutions[-1][1] / risk_normalization))
-        last_distribution = best_solutions[-1][2]
-        print('target = ', i, ' ans = ', best_solutions[-1][0], best_solutions[-1][1] / risk_normalization)
-    best, front = filter_solutions(rest, restriction.target_profit)
+    if singletons.LAST_RENEW_TIME + datetime.timedelta(hours=1) < datetime.datetime.now():
+        renew_russian_data_if_necessary()
+        renew_foreign_data_if_necessary()
+        singletons.LAST_RENEW_TIME = datetime.datetime.now()
+    years_count = int(restriction.analysis_time) / 365
+    data, lower, upper, keys = get_right_input(restriction)
+    dist, profit, risk = find_max(data, lower, upper, years_count)
+    last_distribution = dist
+    risk_norm = max(1e-7, float(risk))
+    print('target = max', ' ans = ', profit, ' risk_norm = ', risk_norm, ' risk = ', risk)
+    solutions = [InvestStrategy(id="Custom", distribution=get_dict(dist, keys), profit=profit * 100, risk=100)]
+    for i in np.flip(np.linspace(1, max(1.0, int(profit * 100) / 100), 1 + int((profit - 1) * 100))):
+        dist, profit, risk = find_best(data, lower, upper, i, last_distribution, years_count)
+        solutions.append(InvestStrategy(id="Custom", distribution=get_dict(dist, keys),
+                                        profit=profit * 100, risk=risk / risk_norm * 100))
+        last_distribution = dist
+        print('target = ', i, ' ans = ', profit, risk / risk_norm)
+    best, front = filter_solutions(solutions, restriction.target_profit + 100)
     logging.info(f'Algo best = {best}')
     logging.info(f'Algo front = {front}')
     return best, front
