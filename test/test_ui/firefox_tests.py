@@ -1,5 +1,6 @@
 import unittest
 
+import requests
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -14,6 +15,16 @@ from test.test_ui.user_account_test import UserAccountTests
 
 
 class FirefoxTest(unittest.TestCase):
+    def setUp(self) -> None:
+        create_user_url = "http://localhost:8000/user"
+        requests.post(
+            create_user_url,
+            json={
+                "login": "Ivan",
+                "password": "aaa"
+            },
+        )
+
     def test_firefox(self):
         driver_options = FirefoxOptions()
         driver_options.add_argument("--headless")
