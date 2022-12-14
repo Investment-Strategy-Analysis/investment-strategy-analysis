@@ -36,14 +36,16 @@ class UiTest(unittest.TestCase):
             },
         )
 
-        # self.driver_options = FirefoxOptions()
-        self.driver_options = ChromiumOptions()
-        # self.driver_options.add_argument("--headless")
-        # self.driver_options.add_argument("--no-sandbox")
-        # self.driver_options.add_argument("--disable-dev-shm-usage")
-        # self.service = FirefoxService(GeckoDriverManager().install())
-        self.service = ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
-        self.driver = webdriver.Chrome
+        self.driver_options = FirefoxOptions()
+        self.driver = webdriver.Firefox
+        self.driver_options.add_argument("--headless")
+        self.driver_options.add_argument("--no-sandbox")
+        self.driver_options.add_argument("--disable-dev-shm-usage")
+        self.service = FirefoxService(GeckoDriverManager().install())
+
+        # self.driver_options = ChromiumOptions()
+        # self.service = ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+        # self.driver = webdriver.Chrome
 
     def test_analyzer(self):
         driver = self.driver(service=self.service, options=self.driver_options)
