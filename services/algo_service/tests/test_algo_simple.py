@@ -173,10 +173,6 @@ def test_diff_history_length_price(restrict: Restriction):
     best, front = get_solutions(restrict)
     assert equals(best.risk, 100)
     assert equals(best.profit, 100.65913)
-=======
-    best, front = get_solutions(restrict)
-    assert equals(best.risk, 0)
-    assert equals(best.profit, 100)
 
 
 @pytest.mark.parametrize("restrict", test_data_big_restriction)
