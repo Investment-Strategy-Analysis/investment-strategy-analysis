@@ -41,6 +41,16 @@ test_data_small_restriction = [
                 checkboxes={checkbox.value.id: False for checkbox in Checkbox},
                 upper_border={index.value.id: 1 for index in Index},
                 lower_border={index.value.id: 0 for index in Index},
+                analysis_time=5),
+
+]
+
+
+test_data_restriction_2 = [
+    Restriction(target_profit=10,
+                checkboxes={checkbox.value.id: False for checkbox in Checkbox},
+                upper_border={index.value.id: 1 for index in Index},
+                lower_border={index.value.id: 0 for index in Index},
                 analysis_time=10),
 
 ]
@@ -129,12 +139,16 @@ def test_diff_expon_up_price(restrict: Restriction):
     assert equals(best.profit, 104.70622)
 
 
-# @pytest.mark.parametrize("restrict", test_data_restriction)
-# def test_wave_price(restrict: Restriction):
-#     global LAST_RENEW_TIME
-#     for key, val in singles.CURRENT_INDEXES.items():
-#         val.history = [1, 2, 1, 2, 1]
-#     singles.LAST_RENEW_TIME = datetime.now()
-#     best, front = get_solutions(restrict)
-#     assert equals(best.risk, 0)
-#     assert equals(best.profit, 100)
+@pytest.mark.parametrize("restrict", test_data_restriction_2)
+def test_diff_expon_up_price_2(restrict: Restriction):
+    step = 1
+    for key, val in singles.CURRENT_INDEXES.items():
+        val.history = [step**i for i in range(11)]
+        step += 0.00001
+    singles.CURRENT_INDEXES['RUB'].history = [1] * 100
+    singles.LAST_RENEW_TIME = datetime.now()
+    best, front = get_solutions(restrict)
+    assert equals(best.risk, 100)
+    assert equals(best.profit, 104.70622)
+
+
