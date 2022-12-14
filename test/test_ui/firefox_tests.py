@@ -1,3 +1,5 @@
+import logging
+import time
 import unittest
 
 import requests
@@ -17,6 +19,10 @@ from test.test_ui.title_test import TitleTests
 from test.test_ui.analyzer_test import AnalyzerTests
 from test.test_ui.user_account_test import UserAccountTests
 
+logging.basicConfig(format='%(asctime)s.%(msecs)03dZ %(name)s %(levelname)s %(message)s',
+                    datefmt="%Y-%m-%dT%H:%M:%S",
+                    level=logging.INFO)
+
 
 class UiTest(unittest.TestCase):
     def setUp(self) -> None:
@@ -25,10 +31,13 @@ class UiTest(unittest.TestCase):
 
         while True:
             r = requests.get(ping)
+            time.sleep(10)
             if r.ok:
                 break
 
-        requests.post(
+        logging.info("Docker is alive")
+
+        r = requests.post(
             create_user_url,
             json={
                 "login": "Ivan",
@@ -36,48 +45,57 @@ class UiTest(unittest.TestCase):
             },
         )
 
-        self.driver_options = FirefoxOptions()
-        self.driver = webdriver.Firefox
+        logging.info(f"User create status: {r.status_code}")
+
+        # self.driver_options = FirefoxOptions()
+        # self.driver = webdriver.Firefox
+        # self.service = FirefoxService(GeckoDriverManager().install())
+
+        self.driver_options = ChromiumOptions()
+        self.service = ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+        self.driver = webdriver.Chrome
+
         self.driver_options.add_argument("--headless")
         self.driver_options.add_argument("--no-sandbox")
         self.driver_options.add_argument("--disable-dev-shm-usage")
-        self.service = FirefoxService(GeckoDriverManager().install())
-
-        # self.driver_options = ChromiumOptions()
-        # self.service = ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
-        # self.driver = webdriver.Chrome
 
     def test_analyzer(self):
+        logging.info("Analyzer page test")
         driver = self.driver(service=self.service, options=self.driver_options)
         AnalyzerTests(driver)
         self.assertTrue(True)
         driver.close()
 
     def test_title(self):
+        logging.info("Title page test")
         driver = self.driver(service=self.service, options=self.driver_options)
         TitleTests(driver)
         self.assertTrue(True)
         driver.close()
 
     def test_help(self):
+        logging.info("Help page test")
         driver = self.driver(service=self.service, options=self.driver_options)
         HelpTests(driver)
         self.assertTrue(True)
         driver.close()
 
     def test_sign_up(self):
+        logging.info("Sign up page test")
         driver = self.driver(service=self.service, options=self.driver_options)
         SignUpTests(driver)
         self.assertTrue(True)
         driver.close()
 
     def test_log_in(self):
+        logging.info("Log in page test")
         driver = self.driver(service=self.service, options=self.driver_options)
         LogInTests(driver)
         self.assertTrue(True)
         driver.close()
 
     def test_account(self):
+        logging.info("Account page test")
         driver = self.driver(service=self.service, options=self.driver_options)
         UserAccountTests(driver)
         self.assertTrue(True)
