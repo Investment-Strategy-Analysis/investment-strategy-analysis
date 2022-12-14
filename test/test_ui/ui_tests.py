@@ -74,37 +74,37 @@ class UiTest(unittest.TestCase):
         self.assertTrue(True)
         driver.close()
 
-    def test_title(self):
-        logging.info("Title page test")
-        driver = self.driver(service=self.service, options=self.driver_options)
-        TitleTests(driver)
-        self.assertTrue(True)
-        driver.close()
-
-    def test_help(self):
-        logging.info("Help page test")
-        driver = self.driver(service=self.service, options=self.driver_options)
-        HelpTests(driver)
-        self.assertTrue(True)
-        driver.close()
-
-    def test_sign_up(self):
-        logging.info("Sign up page test")
-        driver = self.driver(service=self.service, options=self.driver_options)
-        SignUpTests(driver)
-        self.assertTrue(True)
-        driver.close()
-
-    def test_log_in(self):
-        logging.info("Log in page test")
-        driver = self.driver(service=self.service, options=self.driver_options)
-        LogInTests(driver)
-        self.assertTrue(True)
-        driver.close()
-
-    def test_account(self):
-        logging.info("Account page test")
-        driver = self.driver(service=self.service, options=self.driver_options)
-        UserAccountTests(driver)
-        self.assertTrue(True)
-        driver.close()
+    # def test_title(self):
+    #     logging.info("Title page test")
+    #     driver = self.driver(service=self.service, options=self.driver_options)
+    #     TitleTests(driver)
+    #     self.assertTrue(True)
+    #     driver.close()
+    #
+    # def test_help(self):
+    #     logging.info("Help page test")
+    #     driver = self.driver(service=self.service, options=self.driver_options)
+    #     HelpTests(driver)
+    #     self.assertTrue(True)
+    #     driver.close()
+    #
+    # def test_sign_up(self):
+    #     logging.info("Sign up page test")
+    #     driver = self.driver(service=self.service, options=self.driver_options)
+    #     SignUpTests(driver)
+    #     self.assertTrue(True)
+    #     driver.close()
+    #
+    # def test_log_in(self):
+    #     logging.info("Log in page test")
+    #     driver = self.driver(service=self.service, options=self.driver_options)
+    #     LogInTests(driver)
+    #     self.assertTrue(True)
+    #     driver.close()
+    #
+    # def test_account(self):
+    #     logging.info("Account page test")
+    #     driver = self.driver(service=self.service, options=self.driver_options)
+    #     UserAccountTests(driver)
+    #     self.assertTrue(True)
+    #     driver.close()

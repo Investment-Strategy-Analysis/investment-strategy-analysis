@@ -48,6 +48,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install requests webdriver-manager selenium 
 
-    - name: Run firefox UI tests
+    - name: Run UI tests
       run: |
-        python -m unittest test/test_ui/firefox_tests.py
+        python -m unittest test/test_ui/ui_tests.py

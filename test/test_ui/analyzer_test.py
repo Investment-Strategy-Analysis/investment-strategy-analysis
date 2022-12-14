@@ -145,6 +145,7 @@ class AnalyzerTests:
 
     def calculations_start_test(self):
         self.driver.get('http://localhost:5001/analyzer/')
+        time.sleep(2)
         optimal_config_button = self.page_objects.get_optimal_config_button()
         optimal_config_button.click()
         time.sleep(5)
