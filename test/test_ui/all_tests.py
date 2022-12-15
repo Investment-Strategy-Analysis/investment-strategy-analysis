@@ -12,6 +12,7 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.opera import OperaDriverManager
 from webdriver_manager.utils import ChromeType
+from webdriver_manager.core.utils import ChromeType
 
 from test.test_ui.login_test import LogInTests
 from test.test_ui.signup_test import SignUpTests

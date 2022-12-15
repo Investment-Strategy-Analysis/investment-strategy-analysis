@@ -2,9 +2,9 @@ import time
 
 from selenium.webdriver.common.by import By
 
-import login_test
-import page_checkers
-import signup_test
+from test.test_ui import login_test
+from test.test_ui import page_checkers
+from test.test_ui import signup_test
 
 
 class PageObjects:
@@ -56,48 +56,48 @@ class UserAccountTests:
     def access_from_title_page_test(self):
         """Проверяем, что можем войти в аккаунт с титульной страницы"""
         self.driver.get('http://localhost:5001')
-        time.sleep(10)
+        time.sleep(5)
 
         self.click_user_icon()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.log_in_page_check(self.driver)
 
     def access_from_help_page_test(self):
         """Проверяем, что можем войти в аккаунт со страницы Help"""
         self.driver.get('http://localhost:5001/help')
-        time.sleep(10)
+        time.sleep(5)
 
         self.click_user_icon()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.log_in_page_check(self.driver)
 
     def access_from_sign_up_page_test(self):
         """Проверяем, что можем войти в аккаунт со страницы регистрацией"""
         self.driver.get('http://localhost:5001/auth/signup')
-        time.sleep(10)
+        time.sleep(5)
 
         self.click_user_icon()
-        time.sleep(10)
+        time.sleep(5)
 
-        page_checkers.log_in_page_check(self.driver)
+        page_checkers.user_account_check(self.driver)
 
     def access_from_log_in_page_test(self):
         """Проверяем, что можем войти в аккаунт со страницы входа"""
         self.driver.get('http://localhost:5001/auth/login')
-        time.sleep(10)
+        time.sleep(5)
 
         self.click_user_icon()
-        time.sleep(10)
+        time.sleep(5)
 
         self.log_in('Ivan', 'aaa')
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.main_page_check(self.driver)
 
         self.click_user_icon()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.user_account_check(self.driver)
         assert 'Ivan' in self.driver.page_source
@@ -105,33 +105,31 @@ class UserAccountTests:
     def another_user_account_test(self):
         """Регистрируем другого пользователя, проверяем, что настройки аккаунта изменились"""
         self.driver.get('http://localhost:5001/auth/signup')
-        time.sleep(10)
+        time.sleep(5)
 
-        name, password = 'z', 'z'
+        name, password = 'name', 'a'
 
         self.sign_up(name, password)
-
-        self.click_user_icon()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.log_in_page_check(self.driver)
         self.log_in(name, password)
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.main_page_check(self.driver)
 
         self.click_user_icon()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.user_account_check(self.driver)
-        assert 'z' in self.driver.page_source
-        assert 'z@gmail.com' in self.driver.page_source
+        assert 'name' in self.driver.page_source
+        assert 'name@gmail.com' in self.driver.page_source
 
     def analyzer_link_test(self):
         """При нажатии на кнопку 'Analyzer' попадаем на главную страницу выбора стратегии"""
         analyzer_link = self.page_objects.get_analyzer_link()
         analyzer_link.click()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.main_page_check(self.driver)
 
@@ -139,14 +137,13 @@ class UserAccountTests:
         """При нажатии на кнопку 'Help' попадаем на страницу Help"""
         help_link = self.page_objects.get_help_link()
         help_link.click()
-        time.sleep(10)
+        time.sleep(5)
 
         page_checkers.help_page_check(self.driver)
 
     def run_all_tests(self):
         self.access_from_title_page_test()
         self.access_from_help_page_test()
-        self.access_from_sign_up_page()
         self.access_from_log_in_page_test()
         self.another_user_account_test()
         self.analyzer_link_test()
