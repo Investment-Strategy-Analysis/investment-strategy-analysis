@@ -86,7 +86,7 @@ class UserSettings(Base):
     __tablename__ = "user_settings"
     id = Column(Integer, primary_key=True)
     last_answer = relationship("LastAnswer", uselist=False)
-    photo = Column("photo", String)     # FIXME(bytes)
+    photo = Column("photo", String)
     email = Column("email", String)
 
     user_login = Column("user_login", String, ForeignKey("users.login"))

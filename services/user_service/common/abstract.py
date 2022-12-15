@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Any, Optional, List
 from pydantic import BaseModel
 from services.common.abstract import *
 
@@ -59,3 +59,13 @@ class Tokens(BaseModel):
 class UsernamePassword(BaseModel):
     username: str
     password: str
+
+
+class AnalyticItem(BaseModel):
+    restriction: Restriction
+    login: str
+    datatime: str
+
+
+class AnalyticQuery(BaseModel):
+    query: Optional[Dict[str, Any]] = None
