@@ -1,18 +1,18 @@
 from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options as ChromiumOptions
-# from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.chrome.options import Options as ChromiumOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-# from selenium.webdriver.safari.options import Options as SafariOptions
-# from selenium.webdriver.opera.options import Options as OperaOptions
-# from selenium.webdriver.chrome.service import Service as СhromiumService
-# from selenium.webdriver.edge.service import Service as EdgeService
+from selenium.webdriver.safari.options import Options as SafariOptions
+from selenium.webdriver.opera.options import Options as OperaOptions
+from selenium.webdriver.chrome.service import Service as СhromiumService
+from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
-# from webdriver_manager.chrome import ChromeDriverManager
-# from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-# from webdriver_manager.opera import OperaDriverManager
-# from webdriver_manager.utils import ChromeType
-# from webdriver_manager.core.utils import ChromeType
+from webdriver_manager.opera import OperaDriverManager
+from webdriver_manager.utils import ChromeType
+from webdriver_manager.core.utils import ChromeType
 
 from test.test_ui.login_test import LogInTests
 from test.test_ui.signup_test import SignUpTests
@@ -56,9 +56,9 @@ if __name__ == '__main__':
     driver.close()
 
     driver_options = FirefoxOptions()
-    # driver_options.add_argument("--headless")
-    # driver_options.add_argument("--no-sandbox")
-    # driver_options.add_argument("--disable-dev-shm-usage")
+    driver_options.add_argument("--headless")
+    driver_options.add_argument("--no-sandbox")
+    driver_options.add_argument("--disable-dev-shm-usage")
     driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=driver_options)
     print('Starting tests for Firefox...')
     AnalyzerTests(driver)
