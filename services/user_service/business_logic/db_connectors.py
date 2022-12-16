@@ -1,7 +1,7 @@
 from fastapi import status, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
-from typing import Union, List
-from services.user_service.common.abstract import User, Settings, UserSettings, Email, Password, Photo, Tokens, UsernamePassword
+from typing import Optional, Union, List
+from services.user_service.common.abstract import AnalyticItem, AnalyticQuery, User, Settings, UserSettings, Email, Password, Photo, Tokens, UsernamePassword
 from services.user_service.db.user_db_api import get_user_by_login as __get_user_by_login
 from services.user_service.db.user_db_api import save_user as __save_user
 from services.user_service.db.user_db_api import reset_settings as __reset_settings
@@ -12,6 +12,9 @@ from services.user_service.db.user_db_api import update_user_email as __update_u
 from services.user_service.db.user_db_api import update_user_password as __update_user_password
 from services.user_service.db.user_db_api import update_user_photo as __update_user_photo
 from services.user_service.db.user_db_api import delete_user_by_login as __delete_user_by_login
+from services.user_service.db.analytics_api import get_analytics_item as __get_analytics_item
+from services.user_service.db.analytics_api import get_analytics as __get_analytics
+from services.user_service.db.analytics_api import post_analytics_item as __post_analytics_item
 from services.user_service.api.authorization.utils import get_hashed_password, verify_password, create_access_token, create_refresh_token
 
 
@@ -76,3 +79,16 @@ async def update_user_photo(user: User, photo: Photo):
 
 async def delete_user(user: User):
     return __delete_user_by_login(user.login)
+
+
+# analytics
+async def get_analytics_item(id: str, user: User) -> Optional[AnalyticItem]:
+    return __get_analytics_item(user.login, id)
+
+
+async def get_analytics(query: AnalyticQuery, user: User) -> List[str]:
+    return __get_analytics(user.login, query)
+
+
+async def post_analytics_item(item: AnalyticItem, user: User) -> str:
+    return __post_analytics_item(user.login, item)

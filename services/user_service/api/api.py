@@ -3,13 +3,13 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Tuple
+from deprecated import deprecated
 import services.user_service.business_logic as bl
 from services.user_service.common.abstract import *
 from services.user_service.common.consts import DATEFMT, OK
 from services.user_service.api.authorization.deps import get_current_user, refresh_tokens
 from services.user_service.common.helpers import post
 from services.user_service.common.endpoints import *
-from deprecated import deprecated
 from services.common.singletons import STRATEGIES
 
 logging.basicConfig(format='%(asctime)s.%(msecs)03dZ %(name)s %(levelname)s %(message)s',
@@ -160,7 +160,6 @@ async def delete_user(user: User = Depends(get_current_user)):
     await bl.delete_user(user)
     return OK
 
-
 ### algorithm
 @deprecated(reason="use numbers in analysis_times field")
 @app.get('/settings/analysis_times', summary="show possible analysis times (deprecated)")
@@ -181,10 +180,31 @@ async def get_strategies() -> AnyList:      # data=[InvestStrategy]
     return AnyList(data=list(STRATEGIES.values()))
 
 
-# connectors (also without auth later)
+# algorithm solution
 @app.post('/solutions', summary="Get solutions")
 async def post_solutions(restriction: Restriction, user: User = Depends(get_current_user)) -> Tuple[InvestStrategy, List[InvestStrategy]]:
+    """get solutions"""
     logging.info(f"solutions, {user.login}")
-    settings = Settings(restrictions=restriction)
-    # await post_current_settings(settings, user)
+    item = AnalyticItem(restriction=restriction, login=user.login, datatime=str(datetime.datetime.now()))
+    await bl.post_analytics_item(item, user)
     return await post(SOLUTIONS, restriction.json())
+
+
+### analytics (only for admin)
+@app.get('/analytics/id/{id}', summary="Get analytics item by id (only for admin)")
+async def get_analytics_item(id: str, user: User = Depends(get_current_user)) -> Optional[AnalyticItem]:
+    """get analytic item by id (only for admin)"""
+    logging.info(f"analytics by id")
+    return await bl.get_analytics_item(id, user)
+
+
+# query.query examples:
+# null
+# {"match_all": {}}
+# {"match": {"login" : "a"}}
+# {"match": {"restriction.target_profit" : 0}}
+@app.post('/analytics/all', summary="Get analytics ids, filtered with query (only for admin)")
+async def get_analytics(query: AnalyticQuery, user: User = Depends(get_current_user)) -> List[str]:
+    """get analytics ids, filtered with query (only for admin)"""
+    logging.info(f"analytics ids")
+    return await bl.get_analytics(query, user)

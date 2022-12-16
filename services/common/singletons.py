@@ -6,4 +6,4 @@ STRATEGIES = {
     "strategy_3": InvestStrategy(id="strategy_3", description="RTSI=0.5, RTSOG=0.5", profit=15, risk=5, distribution={"RTSI": 0.5, "RTSOG": 0.5}),
     "strategy_4": InvestStrategy(id="strategy_4", description="RTSI=0.25, RTSOG=0.75", profit=10, risk=4, distribution={"RTSI": 0.25, "RTSOG": 0.75}),
     "strategy_5": InvestStrategy(id="strategy_5", description="RTSI=0, RTSOG=1", profit=5, risk=5, distribution={"RTSI": 0, "RTSOG": 1})
-}   # FIXME(rename ids)
+}

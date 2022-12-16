@@ -1,6 +1,8 @@
+import os
 from typing import Optional, List
 import logging
 from services.user_service.common.abstract import Email, User, Password, Photo, Settings, UserSettings
+from services.user_service.common.consts import ADMIN
 from services.user_service.common.helpers import db_session, db_engine
 from services.user_service.db.tables import Base
 from services.user_service.api.authorization.utils import get_hashed_password
@@ -157,3 +159,9 @@ def delete_user_by_login(login: str):
         session.delete(user)
         session.commit()
         logging.info(f"deleted user with login={login}")
+
+
+try:
+    save_user(User(login=ADMIN, password=get_hashed_password(os.environ["ADMIN_PASS"])))
+except:
+    pass

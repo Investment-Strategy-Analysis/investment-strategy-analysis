@@ -14,3 +14,4 @@ sqlmodel
 SQLAlchemy
 deprecated
 pytest
+elasticsearch
